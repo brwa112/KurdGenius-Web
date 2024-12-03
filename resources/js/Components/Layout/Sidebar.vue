@@ -1,10 +1,10 @@
 <template>
     <div :class="{ 'dark text-white-dark': semidark }">
         <nav
-            class="sidebar fixed min-h-screen h-full top-0 bottom-0 w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] z-50 transition-all duration-300">
+            class="sidebar fixed overflow-x-hidden min-h-screen h-full top-0 bottom-0 w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] z-50 transition-all duration-300">
             <div class="bg-white dark:bg-[#0e1726] h-full">
                 <div class="flex justify-between items-center px-4 py-3 mb-2">
-                    <div class="flex items-center px-1 py-1">
+                    <!-- <div class="flex items-center px-1 py-1">
                         <div class="flex-none">
                             <img class="rounded-2xl size-11 object-cover" src="/public/assets/images/user-profile.jpeg"
                                 alt="" />
@@ -18,7 +18,13 @@
                                 Admin
                             </p>
                         </div>
+                    </div> -->
+                    <div class="main-logo flex items-center shrink-0">
+                        <img class="w-8 ml-[5px] flex-none" :src="'/assets/images/logo.svg'" alt="" />
+                        <span
+                            class="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light">VRISTO</span>
                     </div>
+
                     <button type="button"
                         class="collapse-icon w-8 h-8 rounded-full flex items-center hover:bg-gray-500/10 dark:hover:bg-dark-light/10 dark:text-white-light transition duration-300 rtl:rotate-180 hover:text-primary"
                         @click="toggleMobileMenu">
@@ -51,7 +57,7 @@
                                 </svg>
 
                                 <span
-                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                     Dashboard
                                 </span>
                             </div>
@@ -84,7 +90,7 @@
                                         </svg>
 
                                         <span
-                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                             Chat
                                         </span>
                                     </div>
@@ -111,7 +117,7 @@
                                         </svg>
 
                                         <span
-                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                             Mailbox
                                         </span>
                                     </div>
@@ -132,7 +138,7 @@
                                         </svg>
 
                                         <span
-                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                             Todo List
                                         </span>
                                     </div>
@@ -153,7 +159,7 @@
                                         </svg>
 
                                         <span
-                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                             Calendar
                                         </span>
                                     </div>
@@ -176,7 +182,7 @@
                                             </svg>
 
                                             <span
-                                                class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                                 Invoice
                                             </span>
                                         </div>
@@ -250,7 +256,7 @@
                                     </svg>
 
                                     <span
-                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                         Components
                                     </span>
                                 </div>
@@ -369,7 +375,7 @@
                                     </svg>
 
                                     <span
-                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                         Elements
                                     </span>
                                 </div>
@@ -511,7 +517,7 @@
                                 </svg>
 
                                 <span
-                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                     Charts
                                 </span>
                             </div>
@@ -539,7 +545,7 @@
                                 </svg>
 
                                 <span
-                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                     Widgets
                                 </span>
                             </div>
@@ -561,7 +567,7 @@
                                 </svg>
 
                                 <span
-                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                     Font Icons
                                 </span>
                             </div>
@@ -592,7 +598,7 @@
                                 </svg>
 
                                 <span
-                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                     Dragndrop
                                 </span>
                             </div>
@@ -629,7 +635,7 @@
                                 </svg>
 
                                 <span
-                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                    class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                     Tables
                                 </span>
                             </div>
@@ -658,7 +664,7 @@
                                     </svg>
 
                                     <span
-                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                         Date Tables
                                     </span>
                                 </div>
@@ -789,7 +795,7 @@
                                     </svg>
 
                                     <span
-                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                         Forms
                                     </span>
                                 </div>
@@ -920,7 +926,7 @@
                                     </svg>
 
                                     <span
-                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                         Users
                                     </span>
                                 </div>
@@ -973,7 +979,7 @@
                                     </svg>
 
                                     <span
-                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
                                         Pages
                                     </span>
                                 </div>

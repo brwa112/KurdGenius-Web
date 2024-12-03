@@ -1,5 +1,5 @@
 <template>
-    <div class="main-section antialiased relative font-nunito text-sm text-black dark:text-white-dark font-normal full ltr"
+    <div class="main-section menu antialiased relative font-nunito text-sm text-black dark:text-white-dark font-normal collapsible-vertical full ltr"
         :class="{ 'toggle-sidebar': sidebar }">
 
         <!--  BEGIN MAIN CONTAINER  -->

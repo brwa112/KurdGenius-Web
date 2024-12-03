@@ -75,11 +75,11 @@
                             <p class="text-base font-bold leading-normal text-white-dark">Enter your email and password
                                 to login</p>
                         </div>
-                        <form class="space-y-5 dark:text-white" @submit.prevent="router.push('/')">
+                        <form @submit.prevent="login" class="space-y-5 dark:text-white">
                             <div>
                                 <label for="Email">Email</label>
                                 <div class="relative text-white-dark">
-                                    <input id="Email" type="email" placeholder="Enter Email"
+                                    <input id="Email" type="email" placeholder="Enter Email" v-model="form.email"
                                         class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                         <icon-mail :fill="true" />
@@ -90,7 +90,7 @@
                                 <label for="Password">Password</label>
                                 <div class="relative text-white-dark">
                                     <input id="Password" type="password" placeholder="Enter Password"
-                                        class="form-input ps-10 placeholder:text-white-dark" />
+                                        v-model="form.password" class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                         <icon-lock-dots :fill="true" />
                                     </span>
@@ -102,8 +102,8 @@
                                     <span class="text-white-dark">Subscribe to weekly newsletter</span>
                                 </label>
                             </div>
-                            <button type="submit"
-                                class="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                            <button type="submit" :disabled="form.processing"
+                                class="btn btn-primary !mt-6 w-full border-0 uppercase">
                                 Sign in
                             </button>
                         </form>

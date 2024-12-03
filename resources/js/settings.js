@@ -3,7 +3,7 @@ export const getDefaultSettings = () => {
         isDarkMode: false,
         mainLayout: 'app',
         theme: 'light',
-        menu: 'vertical',
+        menu: 'collapsible-vertical',
         layout: 'full',
         rtlClass: 'ltr',
         animation: '',
@@ -14,10 +14,9 @@ export const getDefaultSettings = () => {
             { name: 'english', code: 'en' },
             { name: 'arabic', code: 'ar' },
             { name: 'kurdish', code: 'ckb' },
-            { name: 'turkey', code: 'tr' }
         ],
         isShowMainLoader: true,
-        semidark: false,
+        semidark: true,
         toggleTheme: (payload) => {
             payload = payload || getDefaultSettings.theme; // light|dark|system
             localStorage.setItem('theme', payload || 'light');
