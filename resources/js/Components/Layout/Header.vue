@@ -335,7 +335,7 @@
 
                                         <!-- Logout -->
                                         <li class="border-t border-white-light dark:border-white-light/10">
-                                            <button type="button" @click="openLogout, close()"
+                                            <button type="button" @click="openLogout(), close()"
                                                 class="text-danger !py-3">
                                                 <icon-logout class="w-4.5 h-4.5 ltr:mr-2 rtl:ml-2 rotate-90 shrink-0" />
 
