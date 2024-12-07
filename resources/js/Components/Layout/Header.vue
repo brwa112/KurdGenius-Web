@@ -71,7 +71,7 @@
                                 <div class="relative">
                                     <input type="text"
                                         class="form-input px-4 sm:px-1 py-3.5 sm:py-1.5 !pe-10 sm:!pe-6 rounded-none lg:min-w-56 text-sm bg-white dark:bg-text-gray-800 sm:bg-transparent dark:sm:bg-transparent focus:right-0 focus:outline-none border-transparent dark:border-transparent focus:border-1 focus:border-transparent dark:focus:border-transparent"
-                                        placeholder="Search..." />
+                                        :placeholder="$t('nav.search')" />
                                     <button type="button" @click="search = !search"
                                         class="absolute size-5 top-1/2 -translate-y-1/2 end-3 sm:end-0 appearance-none peer-focus:text-primary">
                                         <svg class="size-5" viewBox="0 0 24 24" fill="none"
@@ -112,7 +112,7 @@
                                 </button>
                                 <template #content="{ close }">
                                     <ul
-                                        class="!px-2 !mt-2 text-dark dark:text-white-dark grid grid-cols-2 gap-2 font-semibold dark:text-white-light/90 w-[280px]">
+                                        class="!px-2 !mt-2 text-dark dark:text-white-dark grid grid-cols-1 gap-1 font-semibold dark:text-white-light/90 w-96 max-w-40">
                                         <template v-for="item in store.languageList" :key="item.code">
                                             <li>
                                                 <button type="button" class="w-full hover:text-primary"
@@ -161,7 +161,9 @@
                                                 <div
                                                     class="absolute h-full w-full bg-[url('/assets/images/menu-heade.jpg')] bg-no-repeat bg-center bg-cover inset-0">
                                                 </div>
-                                                <h4 class="font-semibold relative z-10 text-lg">Messages</h4>
+                                                <h4 class="font-semibold relative z-10 text-lg">
+                                                    {{ $t('nav.messages') }}
+                                                </h4>
                                             </div>
                                         </li>
                                         <template v-for="msg in messages" :key="msg.id">
@@ -233,7 +235,9 @@
                                         class="!py-0 !mt-2 text-dark dark:text-white-dark w-[300px] sm:w-[350px] divide-y dark:divide-white/10">
                                         <li>
                                             <div class="flex items-center px-4 py-2 justify-between font-semibold">
-                                                <h4 class="text-lg">Notification</h4>
+                                                <h4 class="text-lg">
+                                                    {{ $t('nav.notifications') }}
+                                                </h4>
                                                 <template v-if="notifications?.length">
                                                     <span class="badge bg-primary/80"
                                                         v-text="notifications?.length + 'New'"></span>
