@@ -40,18 +40,18 @@
                     class="flex-1 ltr:sm:ml-0 ltr:ml-auto sm:rtl:mr-0 rtl:mr-auto flex items-center space-x-4 lg:space-x-8 rtl:space-x-reverse dark:text-[#d0d2d6]">
 
                     <div class="flex items-center gap-3 me-auto">
-                        <div class="ltr:mr-2 rtl:ml-2">
+                        <!-- <div class="ltr:mr-2 rtl:ml-2">
                             <ul class="flex items-center space-x-2 rtl:space-x-reverse dark:text-[#d0d2d6]">
                                 <li>
                                     <button type="button"
                                         class="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
-                                        <Svg name="calendar" class="size-5"></Svg>
+                                        <Svg name="calender_outline" class="size-5"></Svg>
                                     </button>
                                 </li>
                                 <li>
                                     <button type="button"
                                         class="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
-                                        <Svg name="edit" class="size-5"></Svg>
+                                        <Svg name="siderbar" class="size-5"></Svg>
                                     </button>
                                 </li>
                                 <li>
@@ -61,7 +61,7 @@
                                     </button>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
 
                         <!-- Search -->
                         <div class="sm:border border-white-light dark:border-white/10 rounded-md px-2">
