@@ -42,7 +42,11 @@
                     <h5 class="font-semibold text-lg dark:text-white-light">Social Input</h5>
                 </div>
                 <div class="mb-5">
-                    <SocialInput type="fb" />
+                    <VInput v-model="form.facebook" :class="{ 'border border-red-300 rounded-md': form.errors.facebook }">
+                        <template #before>
+                            <Svg name="facebook" class="w-6 h-6 text-gray-400"></Svg>
+                        </template>
+                    </VInput>
                 </div>
             </div>
             <!-- Validate Input -->
@@ -67,7 +71,7 @@ import { ref } from 'vue';
 import IconInput from '@/Components/Inputs/IconInput.vue';
 import MultiSelect from '@/Components/Inputs/MultiSelect.vue';
 import PhoneSelect from '@/Components/Inputs/PhoneSelect.vue';
-import SocialInput from '@/Components/Inputs/SocialInput.vue';
+import VInput from '@/Components/Inputs/VInput.vue';
 import ValidateInput from '@/Components/Inputs/ValidateInput.vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, sameAs } from '@vuelidate/validators';

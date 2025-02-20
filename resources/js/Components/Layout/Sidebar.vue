@@ -43,25 +43,70 @@
                 }" class="h-[calc(100vh-80px)] relative">
                     <ul class="relative font-semibold space-y-0.5 p-4 py-0">
                         <li class="menu nav-item">
-                            <Link :href="route('dashboard')" class="nav-link group w-full"
+                            <Link :href="route('control.dashboard')" class="nav-link group w-full"
                                 :class="{ active: $page.component === 'Dashboard' }">
                             <div class="flex items-center">
-                                <svg class="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.5"
-                                        d="M2 12.2039C2 9.91549 2 8.77128 2.5192 7.82274C3.0384 6.87421 3.98695 6.28551 5.88403 5.10813L7.88403 3.86687C9.88939 2.62229 10.8921 2 12 2C13.1079 2 14.1106 2.62229 16.116 3.86687L18.116 5.10812C20.0131 6.28551 20.9616 6.87421 21.4808 7.82274C22 8.77128 22 9.91549 22 12.2039V13.725C22 17.6258 22 19.5763 20.8284 20.7881C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.7881C2 19.5763 2 17.6258 2 13.725V12.2039Z"
-                                        fill="currentColor" />
-                                    <path
-                                        d="M9 17.25C8.58579 17.25 8.25 17.5858 8.25 18C8.25 18.4142 8.58579 18.75 9 18.75H15C15.4142 18.75 15.75 18.4142 15.75 18C15.75 17.5858 15.4142 17.25 15 17.25H9Z"
-                                        fill="currentColor" />
-                                </svg>
+                                <Svg name="home_angle" class="size-5"></Svg>
 
                                 <span
                                     class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
-                                    Dashboard
+                                    {{ $t('nav.dashboard') }}
                                 </span>
                             </div>
                             </Link>
+                        </li>
+
+                        <h2
+                            class="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1">
+                            <svg class="w-4 h-5 flex-none hidden" viewBox="0 0 24 24" stroke="currentColor"
+                                stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            <span>{{ $t('nav.system') }}</span>
+                        </h2>
+
+                        <li class="nav-item">
+                            <ul>
+                                <li class="nav-item">
+                                    <Link :href="route('control.system.users.index')" class="nav-link group w-full"
+                                        :class="{ active: $page.component === 'Users/Index' }">
+                                    <div class="flex items-center">
+                                        <Svg name="user" class="size-5"></Svg>
+
+                                        <span
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
+                                            {{ $t('nav.users') }}
+                                        </span>
+                                    </div>
+                                    </Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link :href="route('control.permissions.index')" class="nav-link group w-full"
+                                        :class="{ active: $page.component === 'Permissions' }">
+                                    <div class="flex items-center">
+                                        <Svg name="user" class="size-5"></Svg>
+
+                                        <span
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
+                                            {{ $t('nav.permissions') }}
+                                        </span>
+                                    </div>
+                                    </Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link :href="route('control.roles.index')" class="nav-link group w-full"
+                                        :class="{ active: $page.component === 'Roles' }">
+                                    <div class="flex items-center">
+                                        <Svg name="user" class="size-5"></Svg>
+
+                                        <span
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#7d96c5] dark:group-hover:text-white-dark">
+                                            {{ $t('nav.roles') }}
+                                        </span>
+                                    </div>
+                                    </Link>
+                                </li>
+                            </ul>
                         </li>
 
                         <h2
@@ -76,7 +121,7 @@
                         <li class="nav-item">
                             <ul>
                                 <li class="nav-item">
-                                    <Link :href="route('chat')" class="nav-link group w-full"
+                                    <Link :href="route('control.chat')" class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Apps/Chat' }">
                                     <div class="flex items-center">
                                         <svg class="group-hover:!text-primary" width="20" height="20"
@@ -97,7 +142,7 @@
                                     </Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link :href="route('mailbox')" class="nav-link group w-full"
+                                    <Link :href="route('control.mailbox')" class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Apps/Mailbox' }">
                                     <div class="flex items-center">
                                         <svg class="group-hover:!text-primary" width="20" height="20"
@@ -124,7 +169,7 @@
                                     </Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link :href="route('todolist')" class="nav-link group w-full"
+                                    <Link :href="route('control.todolist')" class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Apps/Todolist' }">
                                     <div class="flex items-center">
                                         <svg class="group-hover:!text-primary" width="20" height="20"
@@ -145,7 +190,7 @@
                                     </Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link :href="route('calendar')" class="nav-link group w-full"
+                                    <Link :href="route('control.calendar')" class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Apps/Calendar' }">
                                     <div class="flex items-center">
                                         <svg class="group-hover:!text-primary" width="20" height="20"
@@ -198,25 +243,25 @@
                                     <vue-collapsible :isOpen="activeDropdown === '/admin/apps/invoice'">
                                         <ul class="sub-menu text-gray-500">
                                             <li>
-                                                <Link :href="route('list')"
+                                                <Link :href="route('control.list')"
                                                     :class="{ active: $page.component === 'Apps/Invoice/List' }">
                                                 List
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link :href="route('preview')"
+                                                <Link :href="route('control.preview')"
                                                     :class="{ active: $page.component === 'Apps/Invoice/Preview' }">
                                                 Preview
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link :href="route('add')"
+                                                <Link :href="route('control.add')"
                                                     :class="{ active: $page.component === 'Apps/Invoice/Add' }">
                                                 Add
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link :href="route('edit')"
+                                                <Link :href="route('control.edit')"
                                                     :class="{ active: $page.component === 'Apps/Invoice/Edit' }">
                                                 Edit
                                                 </Link>
@@ -272,85 +317,85 @@
                             <vue-collapsible :isOpen="activeDropdown === '/admin/components'">
                                 <ul class="sub-menu text-gray-500">
                                     <li>
-                                        <Link :href="route('tabs')"
+                                        <Link :href="route('control.tabs')"
                                             :class="{ active: $page.component === 'Components/Tabs' }">
                                         Tabs
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('accordions')"
+                                        <Link :href="route('control.accordions')"
                                             :class="{ active: $page.component === 'Components/Accordions' }">
                                         Accordions
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('modals')"
+                                        <Link :href="route('control.modals')"
                                             :class="{ active: $page.component === 'Components/Modals' }">
                                         Modals
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('cards')"
+                                        <Link :href="route('control.cards')"
                                             :class="{ active: $page.component === 'Components/Cards' }">
                                         Cards
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('carousel')"
+                                        <Link :href="route('control.carousel')"
                                             :class="{ active: $page.component === 'Components/Carousel' }">
                                         Carousel
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('countdown')"
+                                        <Link :href="route('control.countdown')"
                                             :class="{ active: $page.component === 'Components/Countdown' }">
                                         Countdown
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('counter')"
+                                        <Link :href="route('control.counter')"
                                             :class="{ active: $page.component === 'Components/Counter' }">
                                         Counter
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('sweetalert')"
+                                        <Link :href="route('control.sweetalert')"
                                             :class="{ active: $page.component === 'Components/Sweetalert' }">
                                         Sweet Alerts
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('timeline')"
+                                        <Link :href="route('control.timeline')"
                                             :class="{ active: $page.component === 'Components/Timeline' }">
                                         Timeline
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('notifications')"
+                                        <Link :href="route('control.notifications')"
                                             :class="{ active: $page.component === 'Components/Notifications' }">
                                         Notifications
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('mediaobject')"
+                                        <Link :href="route('control.mediaobject')"
                                             :class="{ active: $page.component === 'Components/MediaObject' }">
                                         Mediao Object
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('listgroup')"
+                                        <Link :href="route('control.listgroup')"
                                             :class="{ active: $page.component === 'Components/Listgroup' }">
                                         Listg Group
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('pricingtable')"
+                                        <Link :href="route('control.pricingtable')"
                                             :class="{ active: $page.component === 'Components/PricingTable' }">
                                         Pricing Tables
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('lightbox')"
+                                        <Link :href="route('control.lightbox')"
                                             :class="{ active: $page.component === 'Components/Lightbox' }">
                                         Lightbox
                                         </Link>
@@ -391,109 +436,109 @@
                             <vue-collapsible :isOpen="activeDropdown === '/admin/elements'">
                                 <ul class="sub-menu text-gray-500">
                                     <li>
-                                        <Link :href="route('alerts')"
+                                        <Link :href="route('control.alerts')"
                                             :class="{ active: $page.component === 'Elements/Alerts' }">
                                         Alerts
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('avatar')"
+                                        <Link :href="route('control.avatar')"
                                             :class="{ active: $page.component === 'Elements/Avatar' }">
                                         Avatar
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('badges')"
+                                        <Link :href="route('control.badges')"
                                             :class="{ active: $page.component === 'Elements/Badges' }">
                                         Badges
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('breadcrumbs')"
+                                        <Link :href="route('control.breadcrumbs')"
                                             :class="{ active: $page.component === 'Elements/Breadcrumbs' }">
                                         Breadcrumbs
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('buttons')"
+                                        <Link :href="route('control.buttons')"
                                             :class="{ active: $page.component === 'Elements/Buttons' }">
                                         Buttons
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('button-group')"
+                                        <Link :href="route('control.button-group')"
                                             :class="{ active: $page.component === 'Elements/ButtonsGroup' }">
                                         Button Groups
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('color-library')"
+                                        <Link :href="route('control.color-library')"
                                             :class="{ active: $page.component === 'Elements/ColorLibrary' }">
                                         Color Library
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('dropdown')"
+                                        <Link :href="route('control.dropdown')"
                                             :class="{ active: $page.component === 'Elements/Dropdown' }">
                                         Dropdown
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('infobox')"
+                                        <Link :href="route('control.infobox')"
                                             :class="{ active: $page.component === 'Elements/Infobox' }">
                                         Infobox
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('jumbotron')"
+                                        <Link :href="route('control.jumbotron')"
                                             :class="{ active: $page.component === 'Elements/Jumbotron' }">
                                         Jumbotron
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('loader')"
+                                        <Link :href="route('control.loader')"
                                             :class="{ active: $page.component === 'Elements/Loader' }">
                                         Loader
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('pagination')"
+                                        <Link :href="route('control.pagination')"
                                             :class="{ active: $page.component === 'Elements/Pagination' }">
                                         Pagination
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('popovers')"
+                                        <Link :href="route('control.popovers')"
                                             :class="{ active: $page.component === 'Elements/Popovers' }">
                                         Popovers
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('progressbar')"
+                                        <Link :href="route('control.progressbar')"
                                             :class="{ active: $page.component === 'Elements/ProgressBar' }">
                                         Progress Bar
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('search')"
+                                        <Link :href="route('control.search')"
                                             :class="{ active: $page.component === 'Elements/Search' }">
                                         Search
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('tooltips')"
+                                        <Link :href="route('control.tooltips')"
                                             :class="{ active: $page.component === 'Elements/Tooltips' }">
                                         Tooltips
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('treeview')"
+                                        <Link :href="route('control.treeview')"
                                             :class="{ active: $page.component === 'Elements/Treeview' }">
                                         Treeview
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('typography')"
+                                        <Link :href="route('control.typography')"
                                             :class="{ active: $page.component === 'Elements/Typography' }">
                                         Typography
                                         </Link>
@@ -503,7 +548,7 @@
                         </li>
 
                         <li class="menu nav-item">
-                            <Link :href="route('charts')" class="nav-link group w-full"
+                            <Link :href="route('control.charts')" class="nav-link group w-full"
                                 :class="{ active: $page.component === 'Charts' }">
                             <div class="flex items-center">
                                 <svg class="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24"
@@ -525,7 +570,7 @@
                         </li>
 
                         <li class="menu nav-item">
-                            <Link :href="route('widgets')" class="nav-link group w-full"
+                            <Link :href="route('control.widgets')" class="nav-link group w-full"
                                 :class="{ active: $page.component === 'Widgets' }">
                             <div class="flex items-center">
                                 <svg class="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24"
@@ -553,7 +598,7 @@
                         </li>
 
                         <li class="menu nav-item">
-                            <Link :href="route('font-icons')" class="nav-link group w-full"
+                            <Link :href="route('control.font-icons')" class="nav-link group w-full"
                                 :class="{ active: $page.component === 'FontIcons' }">
                             <div class="flex items-center">
                                 <svg class="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24"
@@ -575,7 +620,7 @@
                         </li>
 
                         <li class="menu nav-item">
-                            <Link :href="route('dragndrop')" class="nav-link group w-full"
+                            <Link :href="route('control.dragndrop')" class="nav-link group w-full"
                                 :class="{ active: $page.component === 'Dragndrop' }">
                             <div class="flex items-center">
                                 <svg class="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24"
@@ -615,7 +660,7 @@
                         </h2>
 
                         <li class="menu nav-item">
-                            <Link :href="route('tables')" class="nav-link group w-full"
+                            <Link :href="route('control.tables')" class="nav-link group w-full"
                                 :class="{ active: $page.component === 'Tables' }">
                             <div class="flex items-center">
                                 <svg class="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24"
@@ -680,91 +725,91 @@
                             <vue-collapsible :isOpen="activeDropdown === '/admin/datatables'">
                                 <ul class="sub-menu text-gray-500">
                                     <li>
-                                        <Link :href="route('custom')"
+                                        <Link :href="route('control.custom')"
                                             :class="{ active: $page.component === 'Datatables/Custom' }">
                                         Custom
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('datatable.basic')"
+                                        <Link :href="route('control.datatable.basic')"
                                             :class="{ active: $page.component === 'Datatables/Basic' }">
                                         Basic
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('advanced')"
+                                        <Link :href="route('control.advanced')"
                                             :class="{ active: $page.component === 'Datatables/Advanced' }">
                                         Advanced
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('skin')"
+                                        <Link :href="route('control.skin')"
                                             :class="{ active: $page.component === 'Datatables/Skin' }">
                                         Skin
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('order-sorting')"
+                                        <Link :href="route('control.order-sorting')"
                                             :class="{ active: $page.component === 'Datatables/OrderSorting' }">
                                         Order Sorting
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('columns-filter')"
+                                        <Link :href="route('control.columns-filter')"
                                             :class="{ active: $page.component === 'Datatables/ColumnsFilter' }">
                                         Columns Filter
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('multi-column')"
+                                        <Link :href="route('control.multi-column')"
                                             :class="{ active: $page.component === 'Datatables/MultiColumn' }">
                                         Multi Column
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('multiple-tables')"
+                                        <Link :href="route('control.multiple-tables')"
                                             :class="{ active: $page.component === 'Datatables/MultipleTables' }">
                                         Multiple Tables
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('alt-pagination')"
+                                        <Link :href="route('control.alt-pagination')"
                                             :class="{ active: $page.component === 'Datatables/AltPagination' }">
                                         Alt Pagination
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('checkbox')"
+                                        <Link :href="route('control.checkbox')"
                                             :class="{ active: $page.component === 'Datatables/Checkbox' }">
                                         Checkbox
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('range-search')"
+                                        <Link :href="route('control.range-search')"
                                             :class="{ active: $page.component === 'Datatables/RangeSearch' }">
                                         Range Search
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('export')"
+                                        <Link :href="route('control.export')"
                                             :class="{ active: $page.component === 'Datatables/Export' }">
                                         Export
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('sticky-header')"
+                                        <Link :href="route('control.sticky-header')"
                                             :class="{ active: $page.component === 'Datatables/StickyHeader' }">
                                         Sticky Header
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('clone-header')"
+                                        <Link :href="route('control.clone-header')"
                                             :class="{ active: $page.component === 'Datatables/CloneHeader' }">
                                         Clone Header
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('column-chooser')"
+                                        <Link :href="route('control.column-chooser')"
                                             :class="{ active: $page.component === 'Datatables/ColumnChooser' }">
                                         Column Chooser
                                         </Link>
@@ -810,91 +855,91 @@
                             <vue-collapsible :isOpen="activeDropdown === '/admin/form'">
                                 <ul class="sub-menu text-gray-500">
                                     <li>
-                                        <Link :href="route('custom-input')"
+                                        <Link :href="route('control.custom-input')"
                                             :class="{ active: $page.component === 'Form/Custom' }">
                                         Custom
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('form.basic')"
+                                        <Link :href="route('control.form.basic')"
                                             :class="{ active: $page.component === 'Form/Basic' }">
                                         Basic
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('input_group')"
+                                        <Link :href="route('control.input_group')"
                                             :class="{ active: $page.component === 'Form/InputGroup' }">
                                         Input Group
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('layouts')"
+                                        <Link :href="route('control.layouts')"
                                             :class="{ active: $page.component === 'Form/Layouts' }">
                                         Layouts
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('validation')"
+                                        <Link :href="route('control.validation')"
                                             :class="{ active: $page.component === 'Form/Validation' }">
                                         Validation
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('input_mask')"
+                                        <Link :href="route('control.input_mask')"
                                             :class="{ active: $page.component === 'Form/InputMask' }">
                                         Input Mask
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('select')"
+                                        <Link :href="route('control.select')"
                                             :class="{ active: $page.component === 'Form/Select' }">
                                         Select
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('touchspin')"
+                                        <Link :href="route('control.touchspin')"
                                             :class="{ active: $page.component === 'Form/Touchspin' }">
                                         Touchspin
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('checkbox-radio')"
+                                        <Link :href="route('control.checkbox-radio')"
                                             :class="{ active: $page.component === 'Form/CheckboxRadio' }">
                                         Checkbox Radio
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('switches')"
+                                        <Link :href="route('control.switches')"
                                             :class="{ active: $page.component === 'Form/Switches' }">
                                         Switches
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('file_upload')"
+                                        <Link :href="route('control.file_upload')"
                                             :class="{ active: $page.component === 'Form/FileUpload' }">
                                         File Upload
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('quill_editor')"
+                                        <Link :href="route('control.quill_editor')"
                                             :class="{ active: $page.component === 'Form/QuillEditor' }">
                                         Quill Editor
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('markdown_editor')"
+                                        <Link :href="route('control.markdown_editor')"
                                             :class="{ active: $page.component === 'Form/MarkdownEditor' }">
                                         Markdown Editor
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('daterange_picker')"
+                                        <Link :href="route('control.daterange_picker')"
                                             :class="{ active: $page.component === 'Form/DatePicker' }">
                                         Daterange Picker
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('clipboard')"
+                                        <Link :href="route('control.clipboard')"
                                             :class="{ active: $page.component === 'Form/Clipboard' }">
                                         Clipboard
                                         </Link>
@@ -942,13 +987,13 @@
                             <vue-collapsible :isOpen="activeDropdown === '/admin/users'">
                                 <ul class="sub-menu text-gray-500">
                                     <li>
-                                        <Link :href="route('profile')"
+                                        <Link :href="route('control.profile')"
                                             :class="{ active: $page.component === 'Users/Profile' }">
                                         Profile
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('account-settings')"
+                                        <Link :href="route('control.account-settings')"
                                             :class="{ active: $page.component === 'Users/AccountSettings' }">
                                         Account Settings
                                         </Link>
@@ -995,24 +1040,24 @@
                             <vue-collapsible :isOpen="['/admin/pages', '/admin/pages/error'].includes(activeDropdown)">
                                 <ul class="sub-menu text-gray-500">
                                     <li>
-                                        <Link :href="route('knowledgebase')"
+                                        <Link :href="route('control.knowledgebase')"
                                             :class="{ active: $page.component === 'Pages/KnowledgeBase' }">
                                         Knowledge Base
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('contact')"
+                                        <Link :href="route('control.contact')"
                                             :class="{ active: $page.component === 'Pages/contact' }">
                                         Contact Form
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('faq')" :class="{ active: $page.component === 'Pages/Faq' }">
+                                        <Link :href="route('control.faq')" :class="{ active: $page.component === 'Pages/Faq' }">
                                         Faq
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('coming-soon')"
+                                        <Link :href="route('control.coming-soon')"
                                             :class="{ active: $page.component === 'Pages/ComingSoon' }">
                                         Coming Soon
                                         </Link>
@@ -1039,19 +1084,19 @@
                                         <vue-collapsible :isOpen="subActive === '/admin/pages/error'">
                                             <ul :unmount="false" class="sub-menu text-gray-500">
                                                 <li>
-                                                    <Link :href="route('error-404')"
+                                                    <Link :href="route('control.error-404')"
                                                         :class="{ active: $page.component === 'Pages/Error404' }">
                                                     404
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link :href="route('error-500')"
+                                                    <Link :href="route('control.error-500')"
                                                         :class="{ active: $page.component === 'Pages/Error500' }">
                                                     500
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link :href="route('error-503')"
+                                                    <Link :href="route('control.error-503')"
                                                         :class="{ active: $page.component === 'Pages/Error503' }">
                                                     503
                                                     </Link>
@@ -1060,7 +1105,7 @@
                                         </vue-collapsible>
                                     </li>
                                     <li>
-                                        <Link :href="route('maintenence')"
+                                        <Link :href="route('control.maintenence')"
                                             :class="{ active: $page.component === 'Pages/Maintenence' }">
                                         Maintenence
                                         </Link>

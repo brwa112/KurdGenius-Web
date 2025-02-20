@@ -8,4 +8,9 @@ return [
     'search' => 'Search...',
     'messages' => 'Messages',
     'notifications' => 'Notifications',
+    'dashboard' => 'Dashboard',
+    'users' => 'Users',
+    'system' => 'System',
+    'permissions' => 'Permissions',
+    'roles' => 'Roles',
 ];

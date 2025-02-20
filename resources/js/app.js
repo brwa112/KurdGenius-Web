@@ -12,6 +12,9 @@ import VueEasymde from 'vue3-easymde';
 import { i18nVue } from 'laravel-vue-i18n'
 import layout from '@/Layouts/Admin.vue';
 import Svg from '@/Components/Svg.vue';
+import helpers from './helpers';
+import permissions from './permissions';
+import Vue3Shortkey from 'vue3-shortkey';
 
 const app = createApp({});
 
@@ -24,7 +27,7 @@ const { el, App, props, plugin } = createInertiaApp({
     return page;
   },
   setup({ el, App, props, plugin }) {
-    const vueApp = createApp({ render: () => h(App, props) })
+    const app = createApp({ render: () => h(App, props), provide: { helpers } })
       .use(plugin)
       .use(ZiggyVue)
       .use(i18nVue, {
@@ -41,7 +44,13 @@ const { el, App, props, plugin } = createInertiaApp({
       .use(VueEasymde)
       .component('Popper', Popper)
       .component('Svg', Svg)
+      .use(permissions)
+      .use(Vue3Shortkey)
       .mount(el);
+
+    // app.config.globalProperties.helpers = helpers;
+
+    // app.mount(el);
   },
 });
 

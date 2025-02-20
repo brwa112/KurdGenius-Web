@@ -20,7 +20,7 @@ class AuthController extends Controller
         ]);
 
         if (auth()->attempt($request->only('email', 'password'))) {
-            return redirect()->route('dashboard');
+            return redirect()->route('control.dashboard');
         }
 
         return Inertia::render('Auth/Login', [

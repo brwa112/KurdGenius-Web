@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+// use RolePermissionSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,5 +22,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => 'password'
         ]);
+
+        $this->call(RolePermissionSeeder::class);
     }
 }
