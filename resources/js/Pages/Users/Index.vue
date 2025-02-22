@@ -71,8 +71,8 @@
 
                     <template #user="data">
                         <div class="flex items-center gap-2">
-                            <!-- <img :src="data.value.avatar ? data.value.avatar : `/assets/images/avatar.png`"
-                                class="w-9 h-9 rounded-full max-w-none" alt="user-profile" /> -->
+                            <img :src="data.value.avatar ? data.value.avatar : `/assets/images/avatar.png`"
+                                class="w-9 h-9 rounded-full max-w-none" alt="user-profile" />
                             <div class="flex flex-col">
                                 <div class="font-semibold">{{ data.value.name }}</div>
                                 <div class="font-semibold text-xs text-gray-400">{{ data.value.email }}</div>
@@ -85,15 +85,6 @@
                             {{ data.value.is_active ? $t('system.yes') : $t('system.no') }}
                         </span>
                     </template>
-
-                    <!-- <template #permissions="data">
-                        <div class="flex flex-col">
-                            <div v-for="(permission, index) in ['Using CRM', 'Managing Attendance', 'Viewing Reports']" :key="index" class="flex items-center gap-1">
-                                <div :data="data" class="size-1.5 bg-green-500 rounded-full"></div>
-                                <div class="font-semibold">{{ permission }}</div>
-                            </div>
-                        </div>
-                    </template> -->
 
                     <template #roles="data">
                         <div class="flex flex-col">
@@ -114,7 +105,8 @@
                                 <tippy>{{ $t('system.view') }}</tippy>
                             </div> -->
                             <div class="text-center">
-                                <Link v-if="$can('edit_users')" :href="route('control.system.users.edit', data.value.id)" v-tippy>
+                                <Link v-if="$can('edit_users')"
+                                    :href="route('control.system.users.edit', data.value.id)" v-tippy>
                                 <Svg name="pencil" class="size-5"></Svg>
                                 </Link>
                                 <tippy>{{ $t('system.update') }}</tippy>
@@ -176,21 +168,17 @@ const columns =
             field: 'user',
             title: wTrans('system.user')
         },
-        // {
-        //     field: 'department.name',
-        //     title: wTrans('system.department')
-        // },
-        // {
-        //     field: 'position',
-        //     title: wTrans('system.position')
-        // },
-        // {
-        //     field: 'is_active',
-        //     title: wTrans('common.active')
-        // },
+        {
+            field: 'phone',
+            title: wTrans('system.phone')
+        },
         {
             field: 'roles',
             title: wTrans('system.roles')
+        },
+        {
+            field: 'is_active',
+            title: wTrans('system.is_active')
         },
         {
             field: 'actions',

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'logo' => 'Safe Data',
     'cancel' => 'Cancel',
     'english' => 'English',
     'arabic' => 'Arabic',
@@ -21,4 +22,6 @@ return [
     'updated' => 'Updated!',
     'created' => 'Created!',
     'deleted' => 'Deleted!',
+    'upload_image' => 'Upload Image',
+    'remove_image' => 'Remove Image',
 ];

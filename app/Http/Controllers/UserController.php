@@ -80,9 +80,16 @@ class UserController extends Controller
         }
 
         $user->update($data);
-        
-        $user->syncRoles(collect($data['roles'])->pluck('id'));
-        $user->syncPermissions(collect($data['permissions'])->pluck('id'));
+
+        if ($request->hasFile('avatar')) {
+            $user->clearMediaCollection('avatar');
+            $user->addMediaFromRequest('avatar')->preservingOriginal()->toMediaCollection('avatar');
+        } elseif ($request->input('remove_avatar')) {
+            $user->clearMediaCollection('avatar');
+        }
+
+        $user->roles()->sync(collect($data['roles'])->pluck('id'));
+        $user->permissions()->sync(collect($data['permissions'])->pluck('id'));
     }
 
     protected function options()

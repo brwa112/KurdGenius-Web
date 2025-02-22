@@ -18,4 +18,7 @@ return [
     'email' => 'Email',
     'phone' => 'Phone',
     'save_changes' => 'Save Changes',
+    'is_active' => 'Active',
+    'yes' => 'Yes',
+    'no' => 'No',
 ];

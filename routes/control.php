@@ -4,21 +4,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
-use Illuminate\Support\Facades\App;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 if (app()->isProduction()) {
     URL::forceScheme('https');
 }
-
-// Route Locale
-Route::post('lang/{locale}', function ($locale) {
-    session()->put('locale', $locale);
-    if (in_array($locale, ['en', 'ar', 'ckb']))
-        App::setLocale($locale);
-})->name('lang');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');

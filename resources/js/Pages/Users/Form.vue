@@ -1,114 +1,110 @@
 <template>
-    <!-- <div class="2xl:max-w-7xl mx-auto"> -->
     <div class="mx-auto">
+
+        <Head>
+            <title>{{ $t('common.logo') }} - {{ $t(form.id ? 'system.edit_user' : 'system.new_user') }}</title>
+        </Head>
+
         <ul class="flex space-x-2 rtl:space-x-reverse">
             <li class="text-gray-500">
                 <span>{{ $t('system.system') }}</span>
             </li>
             <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
-                <span>{{ $t('system.new_user') }}</span>
+                <Link :href="route('control.system.users.index')" class="duration-200 hover:text-primary">
+                {{ $t('system.users') }}
+                </Link>
+            </li>
+            <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
+                <span v-if="form.id">{{ $t('system.edit_user') }}</span>
+                <span v-else>{{ $t('system.new_user') }}</span>
             </li>
         </ul>
-
-        {{ form.errors }}
 
         <form @submit.prevent="save" v-shortkey="['ctrl', 's']" @shortkey="save" autocomplete="off">
             <div class="pt-5 flex flex-col lg:flex-row gap-5">
                 <div class="flex flex-col w-full lg:w-4/12 gap-5 mb-5">
-
-                    <!-- Image -->
-                    <div class="custom-file-container w-auto" data-upload-id="image">
-                        <div class="panel">
-
-                            <!-- Actions -->
-                            <div class="flex items-center justify-between gap-3 mb-4">
-                                <!-- Back -->
-
-                                <Link :href="route('control.system.users.index')"
-                                    class="group flex items-center text-primary">
-                                <Svg name="arrow_left" class="size-4.5 mb-0.5 rtl:rotate-180"></Svg>
-                                <h1 class="font-bold text-sm group-hover:underline">
-                                    {{ $t('system.users') }}
-                                </h1>
-                                </Link>
-                            </div>
-
-                            <!-- Image -->
-                            <div class="flex items-center gap-px xl:gap-1.5 -ms-3.5 xl:-ms-2">
-                                <!-- Avatar -->
-                                <div class="custom-file-container w-auto" data-upload-id="avatar">
-                                    <div :class="{ 'border border-red-300 rounded-md': form.errors.avatar }"
-                                        class="dropdown">
-                                        <Popper :placement="rtlClass === 'rtl' ? 'bottom-end' : 'bottom-start'"
-                                            offsetDistance="0" class="relative align-middle">
-                                            <button type="button"
-                                                class="group btn outline-none border-none hover:underline shadow-none btn-sm text-sm text-primary font-bold dropdown-toggle flex items-center gap-0.5">
-                                                <div class="relative size-16 xl:size-20">
-                                                    <div
-                                                        class="custom-file-container__image-preview !size-16 xl:!size-20 !rounded-full !object-fit !mb-5 !mt-0 !overflow-hidden">
-                                                    </div>
-                                                    <div
-                                                        class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full duration-500 opacity-0 group-hover:opacity-100">
-                                                        <Svg name="edit_image"
-                                                            class="size-7 xl:size-9 text-white"></Svg>
-                                                    </div>
-                                                </div>
-                                            </button>
-                                            <template #content="{ close }">
-                                                <ul @click="close()"
-                                                    class="whitespace-nowrap border border-gray-100 dark:border-gray-700 !-mt-5 !py-1">
-                                                    <li>
-                                                        <button type="button" @click="uploadImage">
-                                                            {{ $t('crm.upload_image') }}
-                                                            <label class="hidden">
-                                                                <button type="button"
-                                                                    class="relative w-full custom-file-container__custom-file__custom-file-input !cursor-pointer !opacity-100 text-start px-4 !py-2 font-normal text-sm text-gray-600 hover:text-primary hover:bg-primary/10">
-                                                                    <span class="relative z-10">{{
-                                                                        $t('crm.upload_image') }}</span>
-                                                                    <input @input="form.avatar = $event.target.files[0]"
-                                                                        ref="imageProfile" type="file" title=""
-                                                                        class="absolute !inset-0 z-0 w-full !cursor-pointer opacity-0"
-                                                                        accept="image/*" />
-                                                                    <input type="hidden" name="MAX_FILE_SIZE"
-                                                                        value="10485760" />
-                                                                </button>
-                                                                <span
-                                                                    class="custom-file-container__custom-file__custom-file-control hidden"></span>
-                                                            </label>
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button @click.prevent="form.avatar = ''" type="button"
-                                                            class="custom-file-container__image-clear">
-                                                            {{ $t('crm.remove_image') }}
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </template>
-                                        </Popper>
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-col">
-                                    <p class="font-semibold text-lg xl:text-xl">{{ form.name }}</p>
-                                    <p class="text-sm font-normal">
-                                        {{ form.department?.name }}
-                                    </p>
-                                    <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <p class="font-normal text-xs xl:text-sm truncate overflow-hidden max-w-full">
-                                            {{ $helpers.formatPhoneNumber(form.phone) }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-1 text-danger" v-if="form.errors.avatar" v-html="form.errors.avatar"></div>
-                        </div>
-                    </div>
-
-                    <!-- Login Settings -->
                     <div class="col-span-1 w-full">
+
                         <div class="panel">
+                            <!-- Image -->
+                            <div class="custom-file-container w-auto" data-upload-id="image">
+
+                                <!-- Image -->
+                                <div class="flex flex-col justify-center items-center gap-px xl:gap-1.5">
+                                    <!-- Avatar -->
+                                    <div class="custom-file-container w-auto" data-upload-id="avatar">
+                                        <div :class="{ 'border border-red-300 rounded-md': form.errors.avatar }"
+                                            class="dropdown">
+                                            <Popper :placement="rtlClass === 'rtl' ? 'bottom-end' : 'bottom-start'"
+                                                offsetDistance="0" class="relative align-middle">
+                                                <button type="button"
+                                                    class="group btn outline-none border-none hover:underline shadow-none btn-sm text-sm text-primary font-bold dropdown-toggle flex items-center gap-0.5">
+                                                    <div class="relative size-24 xl:size-32">
+                                                        <div
+                                                            class="custom-file-container__image-preview !size-24 xl:!size-32 !rounded-full !object-fit !mb-5 !mt-0 !overflow-hidden">
+                                                        </div>
+                                                        <div
+                                                            class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full duration-500 opacity-0 group-hover:opacity-100">
+                                                            <Svg name="edit_image"
+                                                                class="size-7 xl:size-9 text-white"></Svg>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <template #content="{ close }">
+                                                    <ul @click="close()"
+                                                        class="whitespace-nowrap border border-gray-100 dark:border-gray-700 !-mt-5 !py-1">
+                                                        <li>
+                                                            <button type="button" @click="uploadImage">
+                                                                {{ $t('common.upload_image') }}
+                                                                <label class="hidden">
+                                                                    <button type="button"
+                                                                        class="relative w-full custom-file-container__custom-file__custom-file-input !cursor-pointer !opacity-100 text-start px-4 !py-2 font-normal text-sm text-gray-600 hover:text-primary hover:bg-primary/10">
+                                                                        <span class="relative z-10">{{
+                                                                            $t('common.upload_image') }}</span>
+                                                                        <input
+                                                                            @input="form.avatar = $event.target.files[0]"
+                                                                            ref="imageProfile" type="file" title=""
+                                                                            class="absolute !inset-0 z-0 w-full !cursor-pointer opacity-0"
+                                                                            accept="image/*" />
+                                                                        <input type="hidden" name="MAX_FILE_SIZE"
+                                                                            value="10485760" />
+                                                                    </button>
+                                                                    <span
+                                                                        class="custom-file-container__custom-file__custom-file-control hidden"></span>
+                                                                </label>
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <!-- <button @click.prevent="form.avatar = ''" type="button" -->
+                                                            <button @click="removeImage()" type="button"
+                                                                class="custom-file-container__image-clear">
+                                                                {{ $t('common.remove_image') }}
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </template>
+                                            </Popper>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="flex flex-col">
+                                        <p class="font-semibold text-lg xl:text-xl">{{ form.name }}</p>
+                                        <div class="flex items-center gap-1.5 whitespace-nowrap">
+                                            <p
+                                                class="font-normal text-xs xl:text-sm truncate overflow-hidden max-w-full">
+                                                {{ $helpers.formatPhoneNumber(form.phone) }}
+                                            </p>
+                                        </div>
+                                    </div> -->
+                                </div>
+
+                                <div class="mt-1 text-danger" v-if="form.errors.avatar" v-html="form.errors.avatar">
+                                </div>
+                            </div>
+
+                            <div class="col-span-full mx-auto w-2/3 border-b border-gray-100 dark:border-[#191e3a] my-3"></div>
+
+                            <!-- Login Settings -->
                             <div class="mb-5">
                                 <div class="grid grid-cols-1 gap-5">
 
@@ -134,7 +130,8 @@
                                         </VInput>
 
                                         <div class="mt-1 text-danger" v-if="form.errors.email"
-                                            v-html="form.errors.email"></div>
+                                            v-html="form.errors.email">
+                                        </div>
                                     </div>
 
                                     <!-- Phone One -->
@@ -145,7 +142,8 @@
                                         <PhoneSelect v-model="form.phone"
                                             :class="{ 'border border-red-300 rounded-md': form.errors.phone }" />
                                         <div class="mt-1 text-danger" v-if="form.errors.phone"
-                                            v-html="form.errors.phone"></div>
+                                            v-html="form.errors.phone">
+                                        </div>
                                     </div>
 
                                     <!-- Password -->
@@ -172,6 +170,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -209,7 +208,7 @@
                                     <!-- Roles -->
                                     <div class="col-span-full xl:col-span-1">
                                         <label for="roles">{{ $t('system.roles') }}</label>
-                                        <div class="flex flex-col gap-2 divide-y divide-gray-100">
+                                        <div class="flex flex-col gap-2 divide-y divide-gray-100 dark:divide-[#191e3a]">
 
                                             <div v-for="(role, i) in roles" :key="i"
                                                 class="flex flex-col gap-2 -my-1 py-1.5 pt-2">
@@ -248,13 +247,14 @@
                                                 <input
                                                     @change="toggleAllSpecificPermission($event.target.checked, permission)"
                                                     type="checkbox" class="form-checkbox size-4.5" />
-                                                <span class="text-xs cursor-pointer">{{ $t('common.' + permission)
-                                                    }}</span>
+                                                <span class="text-xs cursor-pointer">
+                                                    {{ $t('common.' + permission) }}
+                                                </span>
                                             </label>
 
                                         </div>
 
-                                        <div class="flex flex-col gap-2 divide-y divide-gray-100">
+                                        <div class="flex flex-col gap-2 divide-y divide-gray-100 dark:divide-[#191e3a]">
                                             <div v-for="(permissions, group) in permission_groups" :key="group"
                                                 class="flex flex-col gap-1 pt-2">
                                                 <label @click.prevent="toggleGroupPermissions(permissions)"
@@ -310,7 +310,7 @@ import Swal from 'sweetalert2';
 import PhoneSelect from '@/Components/Inputs/PhoneSelect.vue';
 import MultiSelect from '@/Components/Inputs/MultiSelect.vue';
 import ValidateInput from '@/Components/Inputs/ValidateInput.vue';
-import { useForm, usePage, Link } from '@inertiajs/vue3';
+import { useForm, usePage, Link, Head } from '@inertiajs/vue3';
 import InputWithCurrency from '@/Components/Inputs/InputWithCurrency.vue';
 import VInput from '@/Components/Inputs/VInput.vue';
 import Spinner from '@/Components/Spinner.vue';
@@ -327,11 +327,12 @@ const props = defineProps({
 });
 
 console.log(props.user);
+const avatar = ref(props.user?.avatar);
 
 const inetilizeAvatar = () => {
     new FileUploadWithPreview('avatar', {
         images: {
-            baseImage: props.user?.avatar || '/assets/images/avatar.png',
+            baseImage: avatar.value || '/assets/images/avatar.png',
         },
     });
 }
@@ -345,35 +346,17 @@ const uploadImage = () => {
     imageProfile.value.click();
 };
 
-const avatarForm = useForm({
-    avatar: null,
-})
-
-function saveAvatar() {
-    // avatarForm.post(route('control.dashboard.crm.customers.upload_avatar', { customer: props.customer.id }), {
-    //     onFinish: () => {
-    //         inetilizeAvatar();
-    //     },
-    //     onError: (errors) => {
-    //         inetilizeAvatar();
-
-    //         Object.keys(errors).forEach((key) => {
-    //             $helpers.toast(errors[key], 'error');
-    //         });
-    //     }
-    // })
-}
-
 let form = useForm({
     id: props.user?.id || null,
     name: props.user?.name || '',
-    avatar: props.user?.avatar || '',
+    avatar: avatar.value || '',
     email: props.user?.email || '',
     phone: props.user?.phone || '',
     password: '',
     permissions: props.user?.permissions || [],
     roles: props.user?.roles || [],
     is_active: props.user?.is_active == 1 ? true : false,
+    remove_avatar: false,
 });
 
 
@@ -404,6 +387,15 @@ const save = () => {
                 $helpers.toast(trans('common.record') + ' ' + trans('common.updated'));
             },
         });
+};
+
+const removeImage = () => {
+    form.avatar = '';
+    form.remove_avatar = true;
+    avatar.value = '';
+    imageProfile.value = null;
+    inetilizeAvatar();
+    console.log('removeImage');
 };
 
 

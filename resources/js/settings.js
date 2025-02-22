@@ -41,7 +41,7 @@ export const getDefaultSettings = () => {
             }
             localStorage.setItem('language', lang);
 
-            axios.post(route('control.lang', { locale: lang }))
+            axios.post(route('lang', { locale: lang }))
                 .catch(error => {
                     console.log(error);
                 });

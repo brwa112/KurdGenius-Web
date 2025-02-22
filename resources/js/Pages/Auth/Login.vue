@@ -81,19 +81,20 @@
                         </div>
                         <form @submit.prevent="login" class="space-y-5 dark:text-white">
                             <div>
-                                <label for="Email">{{ $t('auth.email') }}</label>
-                                <div class="relative text-white-dark">
-                                    <input id="Email" type="email" placeholder="Enter Email" v-model="form.email"
+                                <label for="login">{{ $t('auth.email_or_phone') }}</label>
+                                <div dir="ltr" class="relative text-white-dark">
+                                    <input id="login" type="login" :placeholder="$t('auth.email_or_phone')" v-model="form.login"
                                         class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
-                                        <icon-mail :fill="true" />
+                                         <Svg name="user" class="size-5"></Svg>
                                     </span>
                                 </div>
+                                <p class="text-sm text-red-500 m-1">{{ form.errors.login }}</p>
                             </div>
                             <div>
                                 <label for="Password">{{ $t('auth.password') }}</label>
-                                <div class="relative text-white-dark">
-                                    <input id="Password" placeholder="Enter Password" :type="passwordView"
+                                <div dir="ltr" class="relative text-white-dark">
+                                    <input id="Password" :placeholder="$t('common.enter') + ' ' + $t('auth.password')" :type="passwordView"
                                         v-model="form.password" class="form-input ps-10 placeholder:text-white-dark" />
                                     <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                         <icon-lock-dots :fill="true" />
@@ -218,7 +219,7 @@ const page = usePage()
 console.log(page.props)
 
 const form = useForm({
-    email: 'test@example.com',
+    login: 'test@example.com',
     password: 'password',
 });
 

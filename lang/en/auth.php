@@ -17,6 +17,7 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'active' => 'This user is not active or not found in the system.',
 
     // custom
     'login' => 'Login',
@@ -42,5 +43,6 @@ return [
     'employee' => 'Employee',
     'manager' => 'Manager',
     'phone_number' => 'Phone Number',
+    'email_or_phone' => 'Email or Phone Number',
 
 ];

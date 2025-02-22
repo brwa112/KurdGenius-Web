@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
 
+// logout 
 Route::middleware('auth')->group(function () {
-
-    // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
