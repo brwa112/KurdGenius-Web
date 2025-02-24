@@ -3,20 +3,25 @@
     <div class="datatable relative">
 
         <!-- table header -->
-        <div class="w-full flex items-center justify-between py-1 px-1.5 bg-[#f6f8fa] dark:bg-[#1a2941] border border-b-0 border-gray-100 dark:border-[#191e3a]">
+        <div v-if="isTop"
+            class="w-full flex items-center justify-between py-1 px-1.5 bg-[#f6f8fa] dark:bg-[#1a2941] border border-b-0 border-gray-100 dark:border-[#191e3a]">
             <div class="relative block sm:min-w-64">
-                <input v-model="search" type="text" class="form-input h-8 shadow-none pe-8" :placeholder="$t('common.search')" />
+                <input v-model="search" type="text" class="form-input h-8 shadow-none pe-8"
+                    :placeholder="$t('common.search')" />
                 <Svg name="search" class="size-3 absolute end-2 top-1/2 -translate-y-1/2"></Svg>
             </div>
             <div class="flex items-center gap-2">
                 <!-- Export Btn -->
-                <vue3-json-excel v-if="exportable" type="xlsx" :data="prepareData(props.rows)" :name="namefile" class="btn btn-sm shadow-none duration-0 border cursor-pointer font-semibold bg-white border-[#e0e6ed] dark:border-[#253b5c] dark:bg-[#1b2e4b] text-gray-500 dark:text-white-dark">
+                <vue3-json-excel v-if="exportable" type="xlsx" :data="prepareData(props.rows.data)" :name="namefile"
+                    class="btn btn-sm shadow-none duration-0 border cursor-pointer font-semibold bg-white border-[#e0e6ed] dark:border-[#253b5c] dark:bg-[#1b2e4b] text-gray-500 dark:text-white-dark">
                     {{ $t('common.export') }}
                 </vue3-json-excel>
                 <!-- columns filter -->
                 <div class="dropdown">
-                    <Popper :placement="rtlClass === 'rtl' ? 'bottom-end' : 'bottom-start'" offsetDistance="0" class="align-middle">
-                        <button type="button" class="flex items-center border font-semibold bg-white border-[#e0e6ed] dark:border-[#253b5c] rounded-md p-1 text-sm dark:bg-[#1b2e4b] text-gray-700 dark:text-white-dark">
+                    <Popper :placement="rtlClass === 'rtl' ? 'bottom-end' : 'bottom-start'" offsetDistance="0"
+                        class="align-middle">
+                        <button type="button"
+                            class="flex items-center border font-semibold bg-white border-[#e0e6ed] dark:border-[#253b5c] rounded-md p-1 text-sm dark:bg-[#1b2e4b] text-gray-700 dark:text-white-dark">
                             <Svg name="columns" class="size-5"></Svg>
                         </button>
                         <template #content>
@@ -25,7 +30,10 @@
                                     <li>
                                         <div class="flex items-center px-4 py-1">
                                             <label class="cursor-pointer mb-0">
-                                                <input type="checkbox" class="form-checkbox" :id="`chk-${i}`" :value="col.field" @change="(e) => $helpers.updateDatatableColumnVisibility(col, e.target.checked, columns)" :checked="!col.hide" />
+                                                <input type="checkbox" class="form-checkbox" :id="`chk-${i}`"
+                                                    :value="col.field"
+                                                    @change="(e) => $helpers.updateDatatableColumnVisibility(col, e.target.checked, columns)"
+                                                    :checked="!col.hide" />
                                                 <span :for="`chk-${i}`" class="ltr:ml-2 rtl:mr-2">
                                                     {{ col.title }}
                                                 </span>
@@ -39,49 +47,64 @@
                 </div>
             </div>
         </div>
-        <vue3-datatable @sortChange="sortChanged" ref="datatable" :skin="skin" :columns="columns" :rows="filtered(props.rows)" v-bind="$attrs" :hasCheckbox="checkable" :sortable="true" :sortColumn="sort_column" :sortDirection="sort_direction" :firstArrow="double_arrows" :lastArrow="last_arrow" :previousArrow="previous_arrow" :nextArrow="next_arrow" class="alt-pagination">
+
+        <!-- <vue3-datatable ref="datatable" :skin="skin" :columns="columns" :rows="filtered(props.rows)" v-bind="$attrs" :hasCheckbox="checkable" :sortable="true" :sort-column="null" :firstArrow="double_arrows" :lastArrow="last_arrow" :previousArrow="previous_arrow" :nextArrow="next_arrow" class="alt-pagination"> -->
+        <vue3-datatable ref="datatable" :skin="skin" :columns="columns" :rows="rows" v-bind="$attrs"
+            :hasCheckbox="checkable" :sortable="true" :firstArrow="double_arrows" :lastArrow="last_arrow"
+            :previousArrow="previous_arrow" :nextArrow="next_arrow" class="alt-pagination" :pagination="false"
+            :sortColumn="props.sortBy ?? filter.sort_by" :sortDirection="props.sortDirection ?? filter.sort_direction"
+            @sortChange="changeSort">
             <template v-for="column in columns" v-slot:[column.field]="data">
                 <slot v-if="hasSlot(column.field)" :name="column.field" v-bind="data"></slot>
                 <template v-else>
-                    {{ typeof column?.format == 'function' ? column.format(get_property(props.rows.find(x => x.id == data.value.id), column.field),props.rows.find(x => x.id == data.value.id))  : get_property(props.rows.find(x => x.id == data.value.id), column.field)}}
+                    {{typeof column?.format == 'function' ? column.format(get_property(rows.find(x => x.id
+                        ==
+                        data.value.id), column.field), rows.find(x => x.id == data.value.id)) :
+                        get_property(rows.find(x => x.id == data.value.id), column.field)}}
                 </template>
             </template>
         </vue3-datatable>
+
+        <!-- pagination -->
+        <div v-if="isPaginate"
+            class="flex items-center justify-between px-3 py-2 bg-[#f6f8fa] dark:bg-[#1a2941] border border-t-0 border-gray-100 dark:border-[#191e3a]">
+            <div class="flex items-center gap-2">
+                <!-- <span class="text-sm text-gray-500 dark:text-white-dark">
+                    {{ $t('common.showing') }} {{ props.rows.meta ? props.rows.meta.current_page :
+                        props.rows.current_page }} {{
+                        $t('crm.of') }}
+                    {{ props.rows.meta ? props.rows.meta.last_page : props.rows.current_page }}
+                </span> -->
+                <!-- select per page -->
+                <select v-model="numberRows" @change="resetDatatable" class="form-select text-white-dark min-w-20">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <div class="block">
+                <Pagination :data="props.rows" />
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script setup>
-import { inject, onMounted, ref, useSlots, defineAsyncComponent } from 'vue';
+import { inject, onMounted, ref, useSlots, defineAsyncComponent, watch, reactive } from 'vue';
 import Vue3Datatable from '@bhplugin/vue3-datatable';
 import Svg from '@/Components/Svg.vue';
 import vue3JsonExcel from 'vue-json-excel3';
-
-const sort_column = ref(null);
-const sort_direction = ref(null);
-
-const sortChanged = (column) => {
-
-    // const mapping = {
-    //     customer: 'customer_name'
-    // }
-
-    // if (mapping[column.field]) {
-    //     sort_column.value = mapping[column.field];
-    // } else {
-    //     sort_column.value = column.field;
-    // }
-
-    // sort_direction.value = sort_direction.value !== 'asc' ? 'asc' : 'desc';
-};
-
-const search = ref('');
+import { Link } from '@inertiajs/vue3';
+import Pagination from '@Components/Common/Pagination.vue';
 
 const $helpers = inject('helpers');
 const rtlClass = inject('rtlClass');
 
 const props = defineProps({
     columns: Array,
-    rows: Array,
+    rows: [Object, Array],
     skin: {
         type: String,
         default: 'whitespace-nowrap table-hover table-striped'
@@ -101,13 +124,66 @@ const props = defineProps({
     checkable: {
         type: Boolean,
         default: true
+    },
+    search: {
+        type: String,
+        default: ''
+    },
+    isPaginate: {
+        type: Boolean,
+        default: true
+    },
+    isTop: {
+        type: Boolean,
+        default: true
+    },
+    numberRows: {
+        type: [Number, String],
+        default: 10
+    },
+    sortBy: {
+        type: String,
+        // default: 'id'
+    },
+    sortDirection: {
+        type: String,
+        // default: 'desc'
+    },
+    filter: {
+        type: Object,
+        default: () => ({})
     }
 });
 
-console.log(props.columns);
+const datatable = ref(null);
 
-const datatable = ref(null)
+const rows = ref(props.isPaginate ? props.rows.data : props.rows);
 
+watch(() => props.rows, (newValue) => {
+    rows.value = props.isPaginate ? newValue.data : newValue;
+});
+
+const numberRows = ref(props.numberRows);
+
+const emits = defineEmits(['update:search', 'change', 'update:numberRows', 'update:sortBy', 'update:sortDirection']);
+
+watch(numberRows, (newValue) => {
+    emits('update:numberRows', newValue);
+    emits('change', newValue);
+});
+
+const changeSort = (data) => {
+    emits('update:sortBy', data.field);
+    emits('update:sortDirection', data.direction);
+    emits('change', data);
+};
+
+watch(() => props.sortDirection, (newValue) => {
+    console.log('newValue', newValue);
+    datatable.value.sortDirection = newValue;
+});
+
+const search = ref(props.search);
 const columns = ref(props.columns);
 
 const filtered = (rows) => {
@@ -118,10 +194,16 @@ const filtered = (rows) => {
     });
 };
 
+watch(search, (newValue) => {
+    emits('update:search', newValue);
+    emits('change', newValue);
+});
+
 const slots = useSlots();
 
 onMounted(() => {
-    // columns.value = columns.value.map(col => $helpers.getDatatableColumnVisibility(col))
+    columns.value = columns.value.map(col => $helpers.getDatatableColumnVisibility(col))
+    // search.value = props.search;
 });
 
 const resetDatatable = () => {
@@ -158,7 +240,8 @@ const parts = formatter.formatToParts(new Date());
 const currentTimestamp = `${parts.find(p => p.type === 'year').value}_${parts.find(p => p.type === 'month').value}_${parts.find(p => p.type === 'day').value}_${parts.find(p => p.type === 'hour').value}_${parts.find(p => p.type === 'minute').value}_${parts.find(p => p.type === 'second').value}`;
 const namefile = `Data_${currentTimestamp}.xlsx`;
 const prepareData = (data) => {
-    return data.map(row => {
+    console.log('data', data);
+    return data?.map(row => {
         return columns.value.filter(x => !x?.hide && !x?.field?.toString()?.startsWith('action')).map(col => {
             return {
                 [col.title]: typeof col.export_format == 'function' ? col.export_format(row) : get_property(row, col.field)

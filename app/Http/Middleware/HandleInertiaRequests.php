@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Inertia\Middleware;
+use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -45,9 +46,16 @@ class HandleInertiaRequests extends Middleware
                 'params' => $request->route()->parameters(),
             ],
             'auth' => [
-                'user' => fn () => $request->user()
+                'user' => fn() => $request->user()
                     ? User::where('id', $request->user()->id)->with(['roles', 'permissions'])->first()
                     : null,
+            ],
+            'ziggy' => fn() => [
+                ...(new Ziggy)->toArray(),
+                'location' => $request->url(),
+                'route' => $request->route()->getName(),
+                'params' => $request->route()->parameters(),
+                'query' => $request->query(),
             ],
         ]);
     }

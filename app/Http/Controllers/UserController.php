@@ -6,21 +6,35 @@ use App\Http\Requests\UserRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    // generate all functions for user
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', User::class);
 
+        $filters = $this->getFilters($request);
+
         $users = User::with('roles', 'permissions')
-            ->orderBy('name')
-            ->get();
+            ->search($filters['search'])
+            ->orderBy($filters['sort_by'], $filters['sort_direction'])
+            ->paginate($filters['number_rows']);
 
         return Inertia::render('Users/Index', [
             'users' => $users,
+            'filter' => $filters,
+        ]);
+    }
+
+    protected function getFilters(Request $request)
+    {
+        return collect([
+            'search' => $request->query('filter')['search'] ?? '',
+            'number_rows' => $request->query('filter')['number_rows'] ?? 10,
+            'sort_by' => $request->query('filter')['sort_by'] ?? 'id',
+            'sort_direction' => $request->query('filter')['sort_direction'] ?? 'desc',
         ]);
     }
 
@@ -92,6 +106,17 @@ class UserController extends Controller
 
         $user->roles()->sync(collect($data['roles'])->pluck('id'));
         $user->permissions()->sync(collect($data['permissions'])->pluck('id'));
+    }
+
+    public function destroy($user)
+    {
+        $this->authorize('delete', User::class);
+
+        $user = User::findOrFail($user);
+
+        $user->delete();
+
+        // return redirect()->route('control.system.users.index');
     }
 
     protected function options()

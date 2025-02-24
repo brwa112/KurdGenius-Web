@@ -24,4 +24,7 @@ return [
     'deleted' => 'Deleted!',
     'upload_image' => 'Upload Image',
     'remove_image' => 'Remove Image',
+    'are_you_sure' => 'Are you sure?',
+    'delete_this' => 'You won\'t be able to revert this!',
+    'confirm' => 'Yes, delete it!',
 ];

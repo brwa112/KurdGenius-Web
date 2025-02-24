@@ -67,7 +67,9 @@
                 </div>
 
                 <!-- Datatable -->
-                <Datatable :rows="users" :columns="columns" :totalRows="users?.length">
+                <Datatable :rows="users" :columns="columns" :totalRows="users.data?.length" @change="apply_filter"
+                    v-model:search="filters.search" v-model:numberRows="filters.number_rows" :filter="props.filter"
+                    v-model:sortBy="filters.sort_by" v-model:sortDirection="filters.sort_direction">
 
                     <template #user="data">
                         <div class="flex items-center gap-2">
@@ -127,7 +129,7 @@
     </div>
 </template>
 <script setup>
-import { inject, ref } from 'vue';
+import { inject, reactive, ref } from 'vue';
 import { useForm, Link, Head, router } from '@inertiajs/vue3';
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogOverlay } from '@headlessui/vue';
 import Svg from '@/Components/Svg.vue';
@@ -136,6 +138,7 @@ import { trans } from 'laravel-vue-i18n';
 import Swal from 'sweetalert2';
 import PhoneSelect from '@/Components/Inputs/PhoneSelect.vue';
 import Datatable from '@/Components/Datatable.vue';
+import { initializeFilters, useFilters, updateFilters, resetFilters, doesFilterApplied } from '@/Plugins/FiltersPlugin';
 
 const rtlClass = inject('rtlClass');
 const $helpers = inject('helpers');
@@ -144,16 +147,20 @@ const groupFilter = ref('all');
 
 const props = defineProps([
     'users',
-    'company',
-    'errors'
+    'filter',
 ]);
 
-const create_user = () => {
-    return route('control.system.users.create');
-};
+const filters = initializeFilters({
+    search: '',
+    number_rows: 10,
+    sort_by: 'id',
+    sort_direction: 'desc',
+});
 
-const edit_user = (user) => {
-    return route('control.system.users.edit', { user: user });
+const apply_filter = () => {
+    updateFilters({
+        ...filters,
+    });
 };
 
 const columns =
@@ -190,31 +197,20 @@ const columns =
 const callDelete = (id) => {
     Swal.fire({
         icon: 'warning',
-        title: trans('system.are_you_sure'),
-        text: trans('system.delete_this'),
+        title: trans('common.are_you_sure'),
+        text: trans('common.delete_this'),
         showCancelButton: true,
-        confirmButtonText: trans('system.confirm'),
-        cancelButtonText: trans('system.cancel'),
+        confirmButtonText: trans('common.confirm'),
+        cancelButtonText: trans('common.cancel'),
         padding: '2em',
         customClass: 'sweet-alerts',
     }).then((result) => {
         if (result.value) {
-
-            if (props.company?.id) {
-
-                // router.delete(route('control.dashboard.system.companies.users.destroy', { company: props.company.id, user: props.users.find(user => user.id === id) }), {
-                //     onSuccess: () => {
-                //         $helpers.toast(trans('common.record') + ' ' + trans('common.deleted'));
-                //     },
-                //     onFinish: () => {
-                //         if (props.errors.message) {
-                //             $helpers.toast(props.errors.message, 'error');
-                //         }
-                //     }
-                // });
-
-            }
-
+            router.delete(route('control.system.users.destroy', { user: id }), {
+                onSuccess: () => {
+                    $helpers.toast(trans('common.record') + ' ' + trans('common.deleted'));
+                },
+            });
         }
     });
 };
