@@ -12,6 +12,8 @@ class ProductRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
             'url' => 'nullable|url',
+
+            'user_id' => 'required|exists:users,id',
         ];
     }
 }

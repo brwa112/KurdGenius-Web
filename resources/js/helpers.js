@@ -188,4 +188,9 @@ export default {
         console.log(...args);
         return args;
     },
+    openUrl(url) {
+        if (typeof window !== 'undefined') {
+            window.open(url, '_blank');
+        }
+    },
 }

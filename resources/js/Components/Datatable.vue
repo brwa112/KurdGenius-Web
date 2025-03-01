@@ -49,10 +49,10 @@
         </div>
 
         <vue3-datatable ref="datatable" :skin="skin" :columns="columns" :rows="rows" v-bind="$attrs"
-            :hasCheckbox="checkable" :sortable="true" :firstArrow="double_arrows" :lastArrow="last_arrow"
-            :previousArrow="previous_arrow" :nextArrow="next_arrow" class="alt-pagination" :pagination="false"
+            :hasCheckbox="checkable" :firstArrow="double_arrows" :lastArrow="last_arrow" :previousArrow="previous_arrow"
+            :nextArrow="next_arrow" class="alt-pagination" :pagination="false" :sortable="true"
             :sortColumn="filter.sort_by" :sortDirection="filter.sort_direction" :isServerMode="true"
-            :totalRows="totalRows" @sortChange="changeSort">
+            :totalRows="totalRows" @change="changeSort($event)">
             <template v-for="column in columns" v-slot:[column.field]="data">
                 <slot v-if="hasSlot(column.field)" :name="column.field" v-bind="data"></slot>
                 <template v-else>
@@ -181,13 +181,12 @@ watch(numberRows, (newValue) => {
 });
 
 const changeSort = (data) => {
-    emits('update:sortBy', data.field);
-    emits('update:sortDirection', data.direction);
+    emits('update:sortBy', data.sort_column);
+    emits('update:sortDirection', data.sort_direction);
     emits('change', data);
 };
 
 watch(() => props.sortDirection, (newValue) => {
-    console.log('newValue', newValue);
     datatable.value.sortDirection = newValue;
 });
 
@@ -248,7 +247,6 @@ const parts = formatter.formatToParts(new Date());
 const currentTimestamp = `${parts.find(p => p.type === 'year').value}_${parts.find(p => p.type === 'month').value}_${parts.find(p => p.type === 'day').value}_${parts.find(p => p.type === 'hour').value}_${parts.find(p => p.type === 'minute').value}_${parts.find(p => p.type === 'second').value}`;
 const namefile = `Data_${currentTimestamp}.xlsx`;
 const prepareData = (data) => {
-    console.log('data', data);
     return data?.map(row => {
         return columns.value.filter(x => !x?.hide && !x?.field?.toString()?.startsWith('action')).map(col => {
             return {

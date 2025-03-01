@@ -15,7 +15,7 @@ class ProductController extends Controller
 
         $filters = $this->getFilters($request);
 
-        $products = Product::query()
+        $products = Product::query()->with('user')
             ->search($filters['search'])
             ->orderBy($filters['sort_by'], $filters['sort_direction'])
             ->paginate($filters['number_rows']);

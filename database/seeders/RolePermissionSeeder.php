@@ -13,6 +13,21 @@ class RolePermissionSeeder extends Seeder
     {
         // Create permissions
         $permissions = [
+            'dashboard' => [
+                'view'
+            ],
+            'products' => [
+                'view',
+                'create',
+                'edit',
+                'delete'
+            ],
+            'services' => [
+                'view',
+                'create',
+                'edit',
+                'delete'
+            ],
             'users' => [
                 'view',
                 'create',

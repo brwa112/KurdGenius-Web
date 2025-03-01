@@ -127,6 +127,15 @@
                     v-model:search="filters.search" v-model:numberRows="filters.number_rows" :filter="props.filter"
                     v-model:sortBy="filters.sort_by" v-model:sortDirection="filters.sort_direction">
 
+                    <template #user="data">
+                        <Link class="flex items-center gap-2 text-center"
+                            :href="route('control.system.users.edit', data.value.user.id)">
+                        <img :src="data.value.user.avatar ? data.value.user.avatar : `/assets/images/avatar.png`"
+                            class="w-9 h-9 rounded-full max-w-none" alt="user-profile" />
+                        <div class="text-[15px] font-bold">{{ data.value.user.name }}</div>
+                        </Link>
+                    </template>
+
                     <template #description="data">
                         <div class="truncate max-w-96">
                             {{ data.value.description }}
@@ -134,9 +143,10 @@
                     </template>
 
                     <template #url="data">
-                        <a v-if="data.value.url" :href="data.value.url" class="text-primary hover:underline" target="_blank">
+                        <button type="button" v-if="data.value.url" @click="$helpers.openUrl(data.value.url)"
+                            class="text-primary hover:underline">
                             {{ $t('pages.view_link') }}
-                        </a>
+                        </button>
                     </template>
 
                     <template v-if="$can('edit_products') || $can('delete_products')" #actions="data">
@@ -162,9 +172,10 @@
         </div>
     </div>
 </template>
+
 <script setup>
 import { inject, onMounted, ref, watch } from 'vue';
-import { useForm, Head, usePage } from '@inertiajs/vue3';
+import { useForm, Head, usePage, Link } from '@inertiajs/vue3';
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogOverlay } from '@headlessui/vue';
 import { wTrans, trans } from 'laravel-vue-i18n';
 import Swal from 'sweetalert2';
@@ -201,6 +212,7 @@ let form = useForm({
     name: '',
     description: '',
     url: '',
+    user_id: usePage().props.auth.user.id,
 });
 
 const save = () => {
@@ -255,21 +267,29 @@ const columns =
             type: 'number',
         },
         {
+            field: 'user',
+            title: wTrans('common.user'),
+            sort: false,
+        },
+        {
             field: 'name',
             title: wTrans('common.name')
         },
         {
             field: 'description',
-            title: wTrans('common.description')
+            title: wTrans('common.description'),
+            sort: false,
         },
         {
             field: 'url',
-            title: wTrans('pages.url')
+            title: wTrans('pages.url'),
+            sort: false,
         },
         {
             field: 'actions',
             title: wTrans('common.actions'),
-            width: '50px'
+            width: '50px',
+            sort: false,
         },
     ]) || [];
 

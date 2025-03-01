@@ -15,7 +15,7 @@ class ServiceController extends Controller
 
         $filters = $this->getFilters($request);
 
-        $services = Service::query()
+        $services = Service::query()->with('user')
             ->search($filters['search'])
             ->orderBy($filters['sort_by'], $filters['sort_direction'])
             ->paginate($filters['number_rows']);

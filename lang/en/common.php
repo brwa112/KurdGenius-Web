@@ -32,4 +32,5 @@ return [
     'description' => 'Description',
     'discard' => 'Discard',
     'save' => 'Save',
+    'user' => 'User',
 ];
