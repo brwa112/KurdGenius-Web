@@ -134,8 +134,8 @@
 
                         <li class="nav-item">
                             <ul>
-                                <li class="nav-item">
-                                    <Link v-if="$can('view_users')" :href="route('control.system.users.index')"
+                                <li v-if="$can('view_users')" class="nav-item">
+                                    <Link :href="route('control.system.users.index')"
                                         class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Users/Index' }">
                                     <div class="flex items-center">
@@ -148,7 +148,7 @@
                                     </div>
                                     </Link>
                                 </li>
-                                <li class="nav-item">
+                                <li v-if="$can('view_roles')" class="nav-item">
                                     <Link :href="route('control.system.permissions.index')" class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Permissions' }">
                                     <div class="flex items-center">
@@ -161,7 +161,7 @@
                                     </div>
                                     </Link>
                                 </li>
-                                <li class="nav-item">
+                                <li v-if="$can('view_permissions')" class="nav-item">
                                     <Link :href="route('control.system.roles.index')" class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Roles' }">
                                     <div class="flex items-center">

@@ -43,7 +43,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        return Inertia::render('Users/Form', [
+        return Inertia::render('System/Users/Form', [
             ...$this->options(),
         ]);
     }
@@ -78,7 +78,7 @@ class UserController extends Controller
 
         $user = User::with('roles', 'permissions')->findOrFail($user);
 
-        return Inertia::render('Users/Form', [
+        return Inertia::render('System/Users/Form', [
             'user' => $user->load('roles', 'permissions'),
             ...$this->options(),
         ]);
