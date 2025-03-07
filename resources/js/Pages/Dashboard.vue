@@ -1,5 +1,10 @@
 <template>
     <div>
+
+        <Head>
+            <title>{{ $t('dashboard.dashboard') }}</title>
+        </Head>
+
         <ul class="flex space-x-2 rtl:space-x-reverse">
             <li>
                 <p>{{ $t('dashboard.dashboard') }}</p>

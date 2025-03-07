@@ -227,8 +227,8 @@ const emits = defineEmits();
 const page = usePage()
 
 const form = useForm({
-    login: 'test@example.com',
-    password: 'password',
+    login: '',
+    password: '',
 });
 
 const errors = ref(form.errors)
