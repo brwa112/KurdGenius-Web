@@ -37,4 +37,6 @@ return [
     'updated_at' => 'Updated At',
     'yes' => 'Yes',
     'no' => 'No',
+
+    'columns' => 'Columns'
 ];

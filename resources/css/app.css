@@ -8,12 +8,6 @@
 /* animation */
 @import 'animate.css';
 
-/* quill editor */
-@import 'quill-editor.css';
-
-/* full calendar */
-@import 'fullcalendar.css';
-
 /* swiper */
 @import 'swiper.css';
 
@@ -22,12 +16,6 @@
 
 /* tippy */
 @import 'tippy.css';
-
-/* range-slider */
-@import 'range-slider.css';
-
-/* flatpickr */
-@import 'flatpickr.css';
 
 /* file upload with preview */
 @import 'file-upload-preview.css';

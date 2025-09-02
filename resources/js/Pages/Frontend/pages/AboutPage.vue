@@ -93,7 +93,7 @@
                                 <!-- Button -->
                                 <div class="button-about">
                                     <button class="primary-button-about py-4 px-3 cursor-none">
-                                        Get Started
+                                        SEND MESSAGE
                                         <span class="round" />
                                     </button>
                                 </div>

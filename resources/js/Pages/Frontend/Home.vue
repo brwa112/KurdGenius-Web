@@ -70,8 +70,6 @@
 
 <script setup>
 import { ref, onMounted, inject, watch } from 'vue';
-import { gsap } from 'gsap';
-import { Observer } from 'gsap/Observer';
 
 import HeroPage from './pages/HeroPage.vue';
 import ProductsPage from './pages/ProductsPage.vue';
@@ -81,16 +79,12 @@ import AnimationBg from './components/AnimationBg.vue';
 import ClientsPage from './pages/ClientsPage.vue';
 import AboutPage from './pages/AboutPage.vue';
 
-gsap.registerPlugin(Observer);
-
 const props = defineProps([
     'services',
     'clients',
     'products',
     'hosting',
 ]);
-
-
 </script>
 
 <script>

@@ -1,29 +1,34 @@
 <template>
-    <multiselect :label="label" :track-by="trackBy" :options="list" class="custom-multiselect w-full whitespace-nowrap"
-        v-model="valueInput" :multiple="multiple"
-        :placeholder="placeholder ? $t('crm.please_select') : ''" :value="modelValue" selected-label=""
-        select-label="" deselect-label="">
-        <template v-slot:noResult>
-            {{ $t('crm.no_results_found') }}
-        </template>
-        <template v-slot:option="{ option }">
-            <div v-if="option && typeof option === 'object' && option !== null" class="w-full flex items-center gap-2">
-                <slot name="prefix" :data="option"></slot>
+    <div>
+        <multiselect :label="label" :track-by="trackBy" :options="list"
+            :class="{ 'border border-red-300 rounded-md': error }" class="custom-multiselect w-full whitespace-nowrap"
+            v-model="valueInput" :multiple="multiple" :placeholder="placeholder ? $t('common.please_select') : ''"
+            :value="modelValue" selected-label="" select-label="" deselect-label="">
+            <template v-slot:noResult>
+                {{ $t('common.no_results_found') }}
+            </template>
+            <template v-slot:option="{ option }">
+                <div v-if="option && typeof option === 'object' && option !== null"
+                    class="w-full flex items-center gap-2">
+                    <slot name="prefix" :data="option"></slot>
 
-                <span>{{ checkObject(option[label]) }} {{ option.value ? ' - ' : '' }}</span>
-                <span>{{ option.value }}</span>
-            </div>
-            <div v-if="option && typeof option === 'string' && option !== null" class="w-full flex items-center gap-2">
-                <span>{{ option }}</span>
-            </div>
-        </template>
-        <template v-slot:singleLabel="{ option }">
-            <div v-if="option && typeof option === 'object' && option !== null" class="w-full flex items-center">
-                <span>{{ checkObject(option[label]) }} {{ option.value ? ' - ' : '' }}</span>
-                <span>{{ option.value }}</span>
-            </div>
-        </template>
-    </multiselect>
+                    <span>{{ checkObject(option[label]) }} {{ option.value && showValue ? ' - ' : '' }}</span>
+                    <span v-if="showValue">{{ option.value }}</span>
+                </div>
+                <div v-if="option && typeof option === 'string' && option !== null"
+                    class="w-full flex items-center gap-2">
+                    <span>{{ option }}</span>
+                </div>
+            </template>
+            <template v-slot:singleLabel="{ option }">
+                <div v-if="option && typeof option === 'object' && option !== null" class="w-full flex items-center">
+                    <span>{{ checkObject(option[label]) }} {{ option.value && showValue ? ' - ' : '' }}</span>
+                    <span v-if="showValue">{{ option.value }}</span>
+                </div>
+            </template>
+        </multiselect>
+        <p v-if="error" class="text-red-500 text-xs mt-1 ms-0.5">{{ error }}</p>
+    </div>
 </template>
 
 <script setup>
@@ -55,9 +60,17 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    error: {
+        type: String,
+        default: '',
+    },
+    showValue: {
+        type: Boolean,
+        default: true,
+    },
 });
 
-const language = inject('language');
+const language = ref(localStorage.getItem('language') || 'en');
 
 const emits = defineEmits(['update:modelValue']);
 

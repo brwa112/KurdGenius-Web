@@ -23,7 +23,7 @@
 <script setup>
 import { ref, reactive, computed, inject } from 'vue';
 import apexchart from 'vue3-apexcharts';
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 
 const theme = inject('theme');
 const rtlClass = inject('rtlClass');
