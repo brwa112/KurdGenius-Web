@@ -1,7 +1,7 @@
 <template>
     <div>
         <multiselect :label="label" :track-by="trackBy" :options="list"
-            :class="{ 'border border-red-300 rounded-md': error }" class="custom-multiselect w-full whitespace-nowrap"
+            :class="{ 'border border-red-300 rounded-md': error }" class="custom-multiselect w-full whitespace-nowrap capitalize"
             v-model="valueInput" :multiple="multiple" :placeholder="placeholder ? $t('common.please_select') : ''"
             :value="modelValue" selected-label="" select-label="" deselect-label="">
             <template v-slot:noResult>
@@ -9,7 +9,7 @@
             </template>
             <template v-slot:option="{ option }">
                 <div v-if="option && typeof option === 'object' && option !== null"
-                    class="w-full flex items-center gap-2">
+                    class="w-full flex items-center gap-2 capitalize">
                     <slot name="prefix" :data="option"></slot>
 
                     <span v-if="parentKey">
@@ -27,7 +27,7 @@
                 </div>
             </template>
             <template v-slot:singleLabel="{ option }">
-                <div v-if="option && typeof option === 'object' && option !== null" class="w-full flex items-center">
+                <div v-if="option && typeof option === 'object' && option !== null" class="w-full flex items-center capitalize">
                     <span v-if="parentKey">{{ $t(`${parentKey}.${option[label]}`) }} {{ option.value && showValue ? ' - ' : '' }}</span>
                     <span v-else>{{ checkObject(option[label]) }} {{ option.value && showValue ? ' - ' : '' }}</span>
                     <span v-if="showValue">{{ option.value }}</span>

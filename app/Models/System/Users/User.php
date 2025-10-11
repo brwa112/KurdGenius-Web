@@ -10,7 +10,7 @@ use App\Models\System\Settings\Reasons\Log;
 use App\Models\System\Settings\Settings\FontSize;
 use App\Models\System\Settings\Settings\Theme;
 use App\Models\System\Settings\System\LayerOneGroupNamePermissions;
-use App\Models\System\Settings\System\LayerOnePermission;
+use App\Models\System\Settings\System\GroupPermission;
 use App\Models\System\Settings\System\UserType;
 use App\Models\System\Users\UserSettings;
 use App\Models\Traits\UserScopes;
@@ -63,14 +63,9 @@ class User extends Authenticatable implements HasMedia
         return $this->hasOne(UserSettings::class);
     }
 
-    public function LayerOneGroupName()
+    public function groupPermissions()
     {
-        return $this->hasMany(LayerOneGroupNamePermissions::class);
-    }
-
-    public function LayerOnePermission()
-    {
-        return $this->hasMany(LayerOnePermission::class);
+        return $this->hasMany(GroupPermission::class);
     }
 
     public function fontsize()

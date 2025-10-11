@@ -22,7 +22,7 @@
                             </Link>
                         </li>
 
-                        <h2 v-if="$can('view_services' || 'view_products' || 'view_hostings' || 'view_clients')"
+                        <h2 v-if="$can('view_services|view_products|view_hostings|view_clients')"
                             class="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1">
                             <Svg name="line" class="w-4 h-5 flex-none hidden"></Svg>
                             <span>{{ $t('nav.pages') }}</span>

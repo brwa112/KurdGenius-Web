@@ -86,7 +86,7 @@
                                             @click="toggleGroupPermissions(permissions)"
                                             :checked="isGroupChecked(permissions)" @click.stop />
                                         <span class="capitalize cursor-pointer leading-3">{{
-                                            permissions[0].layer_one_permission.name }}</span>
+                                            permissions[0].group_permissions.name }}</span>
                                     </label>
                                     <div class="flex gap-1 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
                                         <p class="font-medium text-primary">
@@ -109,9 +109,9 @@
                                             ]">
                                             <span class="text-xs cursor-pointer">
                                                 {{ $t('common.' + (permission?.name || '')
-                                                    .replace('_' + permissions[0].layer_one_permission.name, '')) ||
+                                                    .replace('_' + permissions[0].group_permissions.name, '')) ||
                                                     (permission?.name || '')
-                                                        .replace('_' + permissions[0].layer_one_permission.name, '') }}
+                                                        .replace('_' + permissions[0].group_permissions.name, '') }}
                                             </span>
                                         </button>
                                     </div>

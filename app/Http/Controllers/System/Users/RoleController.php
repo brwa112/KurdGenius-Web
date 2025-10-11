@@ -28,12 +28,10 @@ class RoleController extends Controller
         return Inertia::render('System/Users/Roles/Index', [
             'roles' => $roles,
             'permissions' => Permission::query()
-                ->with('layerOnePermission')
-                ->get()->groupBy('layer_one_permission_id')
+                ->with('groupPermissions')
+                ->get()->groupBy('group_permission_id')
         ]);
     }
-
-
 
     private function getSortableFields(): array
     {
@@ -51,8 +49,8 @@ class RoleController extends Controller
         return Inertia::render('System/Users/Roles/Form', [
             'roles' => Role::query()->with('permissions')->get(),
             'permissions' => Permission::query()
-                ->with('layerOnePermission')
-                ->get()->groupBy('layer_one_permission_id')
+                ->with('groupPermissions')
+                ->get()->groupBy('group_permission_id')
         ]);
     }
 
@@ -90,8 +88,8 @@ class RoleController extends Controller
             'role' => $role->load('permissions'),
             'roles' => Role::query()->with('permissions')->get(),
             'permissions' => Permission::query()
-                ->with('layerOnePermission')
-                ->get()->groupBy('layer_one_permission_id')
+                ->with('groupPermissions')
+                ->get()->groupBy('group_permission_id')
         ]);
     }
 

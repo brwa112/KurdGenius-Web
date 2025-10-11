@@ -20,6 +20,7 @@ import ImageUploadVue from 'image-upload-vue'
 import Particles from "@tsparticles/vue3";
 import { loadFull } from "tsparticles";
 import { MotionPlugin } from '@vueuse/motion'
+import Spinner from '@/Components/Spinner.vue';
 
 
 const app = createApp({});
@@ -50,7 +51,8 @@ const { el, App, props, plugin } = createInertiaApp({
       .use(VueEasymde)
       .component('Popper', Popper)
       .component('Svg', Svg)
-      .use(permissions)
+      .component('Spinner', Spinner)
+      // .use(permissions)
       .use(Vue3Shortkey)
       .use(ImageUploadVue)
       .use(Particles, {
@@ -59,6 +61,7 @@ const { el, App, props, plugin } = createInertiaApp({
         },
       })
       .use(MotionPlugin)
+      .use(PermissionPlugin)
       .mount(el);
 
     // app.config.globalProperties.helpers = helpers;

@@ -8,9 +8,11 @@ use App\Models\Pages\Client;
 use App\Models\Pages\Hosting;
 use App\Models\Pages\Product;
 use App\Models\Pages\Service;
+use App\Models\System\Users\Permission;
 use App\Models\System\Users\User;
 use App\Policies\ClientPolicy;
 use App\Policies\HostingPolicy;
+use App\Policies\PermissionPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\ServicePolicy;
 use App\Policies\UserPolicy;
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         Product::class => ProductPolicy::class,
         Hosting::class => HostingPolicy::class,
         Client::class => ClientPolicy::class,
+        Permission::class => PermissionPolicy::class,
     ];
 
     /**

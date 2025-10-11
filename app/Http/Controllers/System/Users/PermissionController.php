@@ -11,7 +11,7 @@ use App\Models\System\Users\Permission;
 use App\Traits\HandlesSorting;
 use App\Http\Requests\LayerTwoPermissionRequest;
 use App\Traits\LogsActivity;
-use App\Models\System\Settings\System\LayerOnePermission;
+use App\Models\System\Settings\System\GroupPermission;
 
 
 class PermissionController extends Controller
@@ -25,17 +25,17 @@ class PermissionController extends Controller
         $filters = $this->getFilters($request);
 
         $query = Permission::query()
-            ->with('layerOnePermission')
+            ->with('groupPermissions')
             ->search($filters['search']);
 
         $this->applySortingToQuery($query, $filters['sort_by'], $filters['sort_direction'], $this->getSortableFields());
 
         $permissions = $query->paginate($filters['number_rows']);
 
-        $layerOnePermissions = LayerOnePermission::query()->select('id', 'name','layer_one_group_id')->get();
+        $groupPermissions = GroupPermission::query()->select('id', 'name')->get();
         return Inertia::render('System/Users/Permissions/Index', [
             'permissions' => $permissions,
-            'layerOnePermissions' => $layerOnePermissions,
+            'groupPermissions' => $groupPermissions,
             'filter' => $filters,
         ]);
     }
@@ -49,28 +49,28 @@ class PermissionController extends Controller
             'name' => $this->simpleSort('permissions.name'),
 
             // Related model sorting (package belongsTo)
-            'layerOnePermission.name' => $this->relatedSort(
-                LayerOnePermission::class,
+            'groupPermissions.name' => $this->relatedSort(
+                GroupPermission::class,
                 'name',
-                'layer_one_permissions.id',
-                'layer_one_permissions.layer_one_group_id'
+                'group_permissions.id',
+                'group_permissions.layer_one_group_id'
             ),
 
         ];
     }
 
-    public function store(LayerTwoPermissionRequest $request)
+    public function store(Request $request)
     {
-        // Todo:: Check if the user has permission to create permissions
         $this->authorize('create', Permission::class);
+
         $data = $request->validated();
 
-        $permissionName = PermissionHelper::makePermissionName($data['name'], $data['layer_one_permission_id']);
+        $permissionName = PermissionHelper::makePermissionName($data['name'], $data['group_permission_id']);
 
         $permission = Permission::create([
             'name' => $permissionName,
             'guard_name' => 'web', // Default guard
-            'layer_one_permission_id' => $data['layer_one_permission_id'],
+            'group_permission_id' => $data['group_permission_id'],
         ]);
 
         $this->logCreated('Permission ' . $permissionName, $permission->id);
@@ -78,18 +78,18 @@ class PermissionController extends Controller
         return redirect()->back();
     }
 
-    public function update(LayerTwoPermissionRequest $request, Permission $permission)
+    public function update(Request $request, Permission $permission)
     {
         // Todo:: Check if the user has permission to update permissions
 
         $this->authorize('update', $permission);
         $data = $request->validated();
 
-        $permissionName = PermissionHelper::makePermissionName($data['name'], $data['layer_one_permission_id']);
+        $permissionName = PermissionHelper::makePermissionName($data['name'], $data['group_permission_id']);
 
         $permission->update([
             'name' => $permissionName,
-            'layer_one_permission_id' => $data['layer_one_permission_id'],
+            'group_permission_id' => $data['group_permission_id'],
         ]);
         $this->logUpdated('Permission ' . $permissionName, $permission->id);
         return redirect()->back();

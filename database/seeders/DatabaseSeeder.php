@@ -2,15 +2,12 @@
 
 namespace Database\Seeders;
 
-
+use App\Models\System\Settings\System\GroupPermission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\System\Users\UserSettings;
 use Database\Seeders\RolePermissionSeeder;
-use App\Models\System\Settings\System\LayerOnePermission;
-use App\Models\System\Settings\System\LayerOneGroupNamePermissions;
 use App\Models\System\Settings\System\UserType;
 use App\Models\System\Users\User;
 use App\Traits\GenerateSlugKey;
@@ -30,7 +27,7 @@ class DatabaseSeeder extends Seeder
         DB::transaction(function () {
             $this->createUserTypes();
             $user = $this->createTestUser();
-            // $this->createGroupsAndPermissions($user);
+            $this->createPermissions($user);
             $this->callAdditionalSeeders();
             $this->createUserSettings($user);
             $this->createDeveloperUser();
@@ -94,46 +91,7 @@ class DatabaseSeeder extends Seeder
         $this->createUserSettings($user);
     }
 
-    private function createGroupsAndPermissions(User $user): void
-    {
-        $groups = $this->createPermissionGroups($user);
-        $this->createPermissions($user, $groups['system']);
-    }
-
-    private function createPermissionGroups(User $user): array
-    {
-        $groupsData = [
-            'system' => [
-                'name' => 'system',
-                'slug' => 'system',
-                'description' => 'Core system administration and configuration',
-            ],
-            'sales' => [
-                'name' => 'sales',
-                'slug' => 'sales',
-                'description' => 'Sales management and customer relations',
-            ],
-            'purchase' => [
-                'name' => 'purchase',
-                'slug' => 'purchase',
-                'description' => 'Purchase and procurement management',
-            ],
-        ];
-
-        $createdGroups = [];
-
-        foreach ($groupsData as $key => $groupData) {
-            $createdGroups[$key] = LayerOneGroupNamePermissions::firstOrCreate(
-                ['name' => $groupData['name'], 'user_id' => $user->id],
-                array_merge($groupData, ['user_id' => $user->id])
-            );
-        }
-
-        return $createdGroups;
-    }
-
-
-    private function createPermissions(User $user, LayerOneGroupNamePermissions $systemGroup): void
+    private function createPermissions(User $user): void
     {
         $permissionsData = [
             [
@@ -142,24 +100,9 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Manage clients and their data',
             ],
             [
-                'name' => 'resellers',
-                'slug' => 'resellers',
-                'description' => 'Manage resellers and their data',
-            ],
-            [
                 'name' => 'users',
                 'slug' => 'users',
                 'description' => 'Manage users and their permissions',
-            ],
-            [
-                'name' => 'reseller_packages',
-                'slug' => 'reseller-packages',
-                'description' => 'Manage resellers and their data',
-            ],
-            [
-                'name' => 'client_packages',
-                'slug' => 'client-packages',
-                'description' => 'Manage packages and their data',
             ],
             [
                 'name' => 'settings',
@@ -172,18 +115,8 @@ class DatabaseSeeder extends Seeder
                 'description' => 'System settings and configurations',
             ],
             [
-                'name' => 'currencies',
-                'slug' => 'currencies',
-                'description' => 'System settings and configurations',
-            ],
-            [
                 'name' => 'permissions',
                 'slug' => 'permissions',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'layer_one_permissions',
-                'slug' => 'layer-one-permissions',
                 'description' => 'System settings and configurations',
             ],
             [
@@ -192,53 +125,8 @@ class DatabaseSeeder extends Seeder
                 'description' => 'System settings and configurations',
             ],
             [
-                'name' => 'client_status',
-                'slug' => 'client-status',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'max_users',
-                'slug' => 'max-users',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'max_clients',
-                'slug' => 'max-clients',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'durations',
-                'slug' => 'durations',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'ports',
-                'slug' => 'ports',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'storage',
-                'slug' => 'storage',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'dbtypes',
-                'slug' => 'dbtypes',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'max_clients',
-                'slug' => 'max-clients',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'layer_one_group_name_permissions',
-                'slug' => 'layer-one-group-name-permissions',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'layer_one_permissions',
-                'slug' => 'layer-one-permissions',
+                'name' => 'group_permissions',
+                'slug' => 'group-permissions',
                 'description' => 'System settings and configurations',
             ],
             [
@@ -256,26 +144,6 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Manage translations for the application',
             ],
             [
-                'name' => 'font_scale',
-                'slug' => 'font-scale',
-                'description' => 'Manage font scale settings for the application',
-            ],
-            [
-                'name' => 'dbtemplate',
-                'slug' => 'dbtemplate',
-                'description' => 'Manage client database templates',
-            ],
-            [
-                'name' => 'reseller_status_history',
-                'slug' => 'reseller-status-history',
-                'description' => 'Manage reseller status history',
-            ],
-            [
-                'name' => 'client_status_history',
-                'slug' => 'client-status-history',
-                'description' => 'Manage client status history',
-            ],
-            [
                 'name' => 'logs',
                 'slug' => 'logs',
                 'description' => 'Manage client status history',
@@ -288,17 +156,14 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($permissionsData as $permissionData) {
-            LayerOnePermission::firstOrCreate(
+            GroupPermission::firstOrCreate(
                 [
                     'name' => $permissionData['name'],
                     'slug' => $permissionData['slug'],
-                    'layer_one_group_id' => $systemGroup->id,
+                    'description' => $permissionData['description'] ?? null,
                     'user_id' => $user->id,
                 ],
-                array_merge($permissionData, [
-                    'layer_one_group_id' => $systemGroup->id,
-                    'user_id' => $user->id,
-                ])
+                array_merge($permissionData, ['user_id' => $user->id])
             );
         }
     }
@@ -318,8 +183,8 @@ class DatabaseSeeder extends Seeder
     private function callAdditionalSeeders(): void
     {
         $this->call([
-            RolePermissionSeeder::class,
             TranslationsSeeder::class,
+            RolePermissionSeeder::class,
         ]);
     }
 }

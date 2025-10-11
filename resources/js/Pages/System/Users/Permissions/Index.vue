@@ -77,13 +77,12 @@
                                                     </div>
                                                     <div>
                                                         <label for="name" class="required">
-                                                            {{ $t('system.layer_one_permission') }}
+                                                            {{ $t('system.group_permission') }}
                                                         </label>
-                                                        <MultiSelect v-model="form.layer_one_permission_id"
-                                                            :list="props.layerOnePermissions" label="name" track-by="id"
-                                                            :multiple="false"
-                                                            :error="form.errors.layer_one_permission_id" />
-
+                                                        <MultiSelect v-model="form.group_permission_id"
+                                                            :list="props.groupPermissions" label="name" track-by="id"
+                                                            :multiple="false" :parent-key="'system'"
+                                                            :error="form.errors.group_permission_id" />
                                                     </div>
                                                 </div>
                                                 <div class="flex justify-end items-center mt-5">
@@ -114,8 +113,8 @@
                     :filter="props.filter" v-model:sortBy="filters.sort_by"
                     v-model:sortDirection="filters.sort_direction">
 
-                    <template #group_name_name="data">
-                        {{ data.value.group_name?.name ?? '-' }}
+                    <template #group_permissions="data">
+                        {{ data.value.group_permissions?.name ?? '-' }}
                     </template>
 
                     <template #updated_at="data">
@@ -168,9 +167,11 @@ import VInput from '@/Components/Inputs/VInput.vue';
 
 const props = defineProps({
     permissions: Object,
-    layerOnePermissions: Array,
+    groupPermissions: Array,
     filter: Object
 });
+
+console.log('Props received:', props.groupPermissions);
 
 const $helpers = inject('helpers');
 
@@ -183,7 +184,7 @@ const filters = initializeFilters({
 
 const form = useForm({
     name: "",
-    layer_one_permission_id: null,
+    group_permission_id: null,
 });
 
 
@@ -196,7 +197,7 @@ const apply_filter = () => {
 const columns = ref([
     { field: 'id', title: 'ID', width: '25px', type: 'number' },
     { field: 'name', title: wTrans('common.name') },
-    { field: 'layer_one_permission.name', title: wTrans('system.group_name') },
+    { field: 'group_permissions.name', title: wTrans('system.group_name') },
     { field: 'updated_at', title: wTrans('common.updated_at'), type: 'date', hide: true },
     { field: 'created_at', title: wTrans('common.created_at'), type: 'date' },
     { field: 'actions', title: wTrans('common.actions'), width: '50px', sort: false },
@@ -211,7 +212,7 @@ const toggleModal = (row) => {
         // Edit mode
         form.id = row.id;
         form.name = row.name;
-        form.layer_one_permission_id = $helpers.getObjectById(row.layer_one_permission_id, props.layerOnePermissions) || null;
+        form.group_permission_id = $helpers.getObjectById(row.group_permission_id, props.groupPermissions) || null;
     } else {
         // Create mode
         form.id = null;

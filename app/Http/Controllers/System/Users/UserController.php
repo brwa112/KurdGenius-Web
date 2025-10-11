@@ -182,11 +182,11 @@ class UserController extends Controller
             ])
             ->get();
         $permission_groups = Permission::query()
-            ->select(['id', 'name', 'layer_one_permission_id'])
-            ->with(['layerOnePermission:id,name'])
+            ->select(['id', 'name', 'group_permission_id'])
+            ->with(['groupPermissions:id,name'])
             ->get()
             ->groupBy(function ($permission) {
-                return $permission->layerOnePermission->name ?? 'Uncategorized';
+                return $permission->groupPermissions->name ?? 'Uncategorized';
             });
 
         return [

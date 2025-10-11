@@ -97,7 +97,6 @@ const checkSettings = () => {
     theme.value = localStorage.getItem('theme') || settings.theme
     rtlClass.value = localStorage.getItem('rtlClass') || settings.rtl
     language.value = localStorage.getItem('language') || settings.locale
-    console.log('Settings checked:', { theme: theme.value, rtlClass: rtlClass.value, language: language.value });
     // Reload font settings when settings are checked
     loadFontPreference()
 }
@@ -106,7 +105,6 @@ onMounted(() => {
     setTimeout(() => {
         isShowMainLoader.value = false
     }, 500)
-    console.log('User language:', page.props.auth?.user?.settings?.language.direction);
 
     // Initialize theme and language settings
     settings.toggleTheme(page.props.auth?.user?.settings?.theme)

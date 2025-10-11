@@ -2,8 +2,7 @@
 
 namespace App\Models\System\Users;
 
-
-use App\Models\System\Settings\System\LayerOnePermission;
+use App\Models\System\Settings\System\GroupPermission;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Permission extends SpatiePermission
@@ -11,13 +10,12 @@ class Permission extends SpatiePermission
     protected $fillable = [
         'name',
         'guard_name',
-        'group',
-        'layer_one_permission_id'
+        'group_permission_id',
     ];
 
-    public function layerOnePermission()
+    public function groupPermissions()
     {
-        return $this->belongsTo(LayerOnePermission::class, 'layer_one_permission_id');
+        return $this->belongsTo(GroupPermission::class, 'group_permission_id');
     }
 
     public function scopeSearch($query, $search)

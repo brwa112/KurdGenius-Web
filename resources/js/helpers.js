@@ -193,4 +193,31 @@ export default {
             window.open(url, '_blank');
         }
     },
+    // generate a random username we use it in different places
+    generateUsername(prefix = 'client_', length = 8) {
+        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let randomStr = '';
+        for (let i = 0; i < length; i++) {
+            randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return prefix + randomStr;
+    },
+
+    // generate a random password we use it in different places
+    generatePassword(length = 12) {
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|';
+        let password = '';
+        for (let i = 0; i < length; i++) {
+            password += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return password;
+    },
+
+    // i created this function to get the id of that object
+    getObjectById(rawId, data) {
+        const exampleType = data?.[0]?.id;
+        const id = typeof exampleType === 'number' ? Number(rawId) : String(rawId);
+        return data.find(opt => opt.id === id) || null;
+    }
+
 }

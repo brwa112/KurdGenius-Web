@@ -29,7 +29,7 @@ return new class extends Migration
             $table->bigIncrements('id'); // permission id
             $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
             $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
-            $table->string('group');     // For MyISAM use string('group', 225); // (or 166 for InnoDB with Redundant/Compact row format)
+            $table->unsignedBigInteger('group_permission_id'); // Foreign key to group_permissions table
             $table->timestamps();
 
             $table->unique(['name', 'guard_name']);
