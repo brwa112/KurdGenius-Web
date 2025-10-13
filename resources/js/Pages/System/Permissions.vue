@@ -45,16 +45,16 @@ const resetForm = () => {
 
 <template>
     <div class="max-w-4xl mx-auto p-6 bg-white rounded shadow">
-        <h2 class="text-xl font-bold mb-4">Permissions Management</h2>
+        <h2 class="b-text-xl font-bold mb-4">Permissions Management</h2>
 
         <form @submit.prevent="submit">
             <div>
                 <input v-model="form.name" placeholder="Permission Name" class="border p-2 w-full" />
-                <div v-if="form.errors.name" class="text-red-500 text-sm mt-1">{{ form.errors.name }}</div>
+                <div v-if="form.errors.name" class="text-red-500 b-text-sm mt-1">{{ form.errors.name }}</div>
             </div>
             <div class="mt-2">
                 <input v-model="form.group" placeholder="Permission Group" class="border p-2 w-full" />
-                <div v-if="form.errors.group" class="text-red-500 text-sm mt-1">{{ form.errors.group }}</div>
+                <div v-if="form.errors.group" class="text-red-500 b-text-sm mt-1">{{ form.errors.group }}</div>
             </div>
 
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 mt-3 rounded">
@@ -69,7 +69,7 @@ const resetForm = () => {
 
         <div class="mt-4">
             <div v-for="(group, groupName) in permissions" :key="groupName" class="mt-6">
-                <h3 class="text-lg font-bold">{{ groupName }}</h3>
+                <h3 class="b-text-lg font-bold">{{ groupName }}</h3>
                 <ul>
                     <li v-for="permission in group" :key="permission.id"
                         class="border-b p-2 flex justify-between items-center">

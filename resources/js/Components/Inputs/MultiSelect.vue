@@ -34,7 +34,7 @@
                 </div>
             </template>
         </multiselect>
-        <p v-if="error" class="text-red-500 text-xs mt-1 ms-0.5">{{ error }}</p>
+        <p v-if="error" class="text-red-500 b-text-xs mt-1 ms-0.5">{{ error }}</p>
     </div>
 </template>
 

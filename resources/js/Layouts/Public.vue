@@ -1,5 +1,5 @@
 <template>
-    <div class="main-section antialiased relative font-nunito text-sm text-black dark:text-gray-200 font-normal ltr">
+    <div class="main-section antialiased relative font-nunito b-text-sm text-black dark:text-gray-200 font-normal ltr">
 
         <!-- screen loader -->
         <div v-show="isShowMainLoader"

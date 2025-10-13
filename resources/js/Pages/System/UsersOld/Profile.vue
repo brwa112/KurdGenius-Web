@@ -12,7 +12,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-5">
                 <div class="panel">
                     <div class="flex items-center justify-between mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Profile</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Profile</h5>
                         <Link href="/users/user-account-settings"
                             class="ltr:ml-auto rtl:mr-auto btn btn-primary p-2 rounded-full">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@
                         <div class="flex flex-col justify-center items-center">
                             <img src="/public/assets/images/profile-34.jpeg" alt=""
                                 class="w-24 h-24 rounded-full object-cover mb-5" />
-                            <p class="font-semibold text-primary text-xl">Jimmy Turner</p>
+                            <p class="font-semibold text-primary b-text-xl">Jimmy Turner</p>
                         </div>
                         <ul class="mt-5 flex flex-col max-w-[160px] m-auto space-y-4 font-semibold text-white-dark">
                             <li class="flex items-center gap-2">
@@ -157,7 +157,7 @@
                 </div>
                 <div class="panel lg:col-span-2 xl:col-span-3">
                     <div class="mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Task</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Task</h5>
                     </div>
                     <div class="mb-5">
                         <div class="table-responsive text-[#515365] dark:text-white-light font-semibold">
@@ -251,7 +251,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div class="panel">
                     <div class="mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Summary</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Summary</h5>
                     </div>
                     <div class="space-y-4">
                         <div class="border border-[#ebedf2] rounded dark:bg-[#1b2e4b] dark:border-0">
@@ -273,7 +273,7 @@
                                 <div class="ltr:ml-4 rtl:mr-4 flex items-start justify-between flex-auto font-semibold">
                                     <h6 class="text-white-dark text-[13px] dark:text-white-dark">
                                         Income <span
-                                            class="block text-base text-[#515365] dark:text-white-light">$92,600</span>
+                                            class="block b-text-base text-[#515365] dark:text-white-light">$92,600</span>
                                     </h6>
                                     <p class="ltr:ml-auto rtl:mr-auto text-secondary">90%</p>
                                 </div>
@@ -298,7 +298,7 @@
                                 <div class="ltr:ml-4 rtl:mr-4 flex items-start justify-between flex-auto font-semibold">
                                     <h6 class="text-white-dark text-[13px] dark:text-white-dark">
                                         Profit <span
-                                            class="block text-base text-[#515365] dark:text-white-light">$37,515</span>
+                                            class="block b-text-base text-[#515365] dark:text-white-light">$37,515</span>
                                     </h6>
                                     <p class="ltr:ml-auto rtl:mr-auto text-info">65%</p>
                                 </div>
@@ -324,7 +324,7 @@
                                 <div class="ltr:ml-4 rtl:mr-4 flex items-start justify-between flex-auto font-semibold">
                                     <h6 class="text-white-dark text-[13px] dark:text-white-dark">
                                         Expenses <span
-                                            class="block text-base text-[#515365] dark:text-white-light">$55,085</span>
+                                            class="block b-text-base text-[#515365] dark:text-white-light">$55,085</span>
                                     </h6>
                                     <p class="ltr:ml-auto rtl:mr-auto text-warning">80%</p>
                                 </div>
@@ -334,7 +334,7 @@
                 </div>
                 <div class="panel">
                     <div class="flex items-center justify-between mb-10">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Pro Plan</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Pro Plan</h5>
                         <a href="javascript:;" class="btn btn-primary">Renew Now</a>
                     </div>
                     <div class="group">
@@ -345,7 +345,7 @@
                         </ul>
                         <div class="flex items-center justify-between mb-4 font-semibold">
                             <p
-                                class="flex items-center rounded-full bg-dark px-2 py-1 text-xs text-white-light font-semibold">
+                                class="flex items-center rounded-full bg-dark px-2 py-1 b-text-xs text-white-light font-semibold">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ltr:mr-1 rtl:ml-1">
                                     <circle opacity="0.5" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
@@ -364,7 +364,7 @@
                 </div>
                 <div class="panel">
                     <div class="flex items-center justify-between mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Payment History</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Payment History</h5>
                     </div>
                     <div>
                         <div class="border-b border-[#ebedf2] dark:border-[#1b2e4b]">
@@ -479,7 +479,7 @@
                 </div>
                 <div class="panel">
                     <div class="flex items-center justify-between mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Card Details</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Card Details</h5>
                     </div>
                     <div>
                         <div class="border-b border-[#ebedf2] dark:border-[#1b2e4b]">

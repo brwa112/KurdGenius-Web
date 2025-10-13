@@ -6,7 +6,7 @@
                 <div class="main-logo flex items-center shrink-0">
                     <img class="w-8 ml-[5px] flex-none" :src="'/assets/images/safelogo.png'" alt="" />
                     <h1
-                        class="text-xl ms-2 font-bold leading-none align-middle uppercase inline text-white dark:text-white-light">
+                        class="b-text-xl ms-2 font-bold leading-none align-middle uppercase inline text-white dark:text-white-light">
                         {{ $t('common.logo') }}
                     </h1>
                 </div>
@@ -37,7 +37,7 @@
                                 :class="{ '!block': search }" @submit.prevent="search = false">
                                 <div class="relative">
                                     <input type="text"
-                                        class="form-input px-4 sm:px-1 py-2 !ps-10 sm:!ps-9 rounded-none lg:min-w-56 text-sm bg-white dark:bg-text-gray-800 sm:bg-transparent dark:sm:bg-transparent focus:right-0 focus:outline-none border-transparent dark:border-transparent focus:border-1 focus:border-transparent dark:focus:border-transparent"
+                                        class="form-input px-4 sm:px-1 py-2 !ps-10 sm:!ps-9 rounded-none lg:min-w-56 b-text-sm bg-white dark:bg-text-gray-800 sm:bg-transparent dark:sm:bg-transparent focus:right-0 focus:outline-none border-transparent dark:border-transparent focus:border-1 focus:border-transparent dark:focus:border-transparent"
                                         :placeholder="$t('nav.search')" />
                                     <div
                                         class="hidden sm:block absolute size-5 top-1/2 -translate-y-1/2 start-2 appearance-none peer-focus:text-primary">
@@ -75,7 +75,7 @@
                                     <div
                                         class="ps-7 pe-2 py-0.5 -ms-5 hidden md:flex items-center gap-5 text-start bg-gray-50 bg-opacity-5 rounded-e-full">
                                         <div class="block -space-y-0.5">
-                                            <h4 class="text-xs font-bold">
+                                            <h4 class="b-text-xs font-bold">
                                                 {{ $page.props.auth?.user?.name }}
                                             </h4>
                                             <p class="text-black/60 dark:text-dark-light/60" style="font-size: 10px;">
@@ -98,7 +98,7 @@
                                                     alt="avatar" />
                                             </div>
                                             <div class="ltr:pl-4 rtl:pr-4 truncate">
-                                                <h4 class="text-base">
+                                                <h4 class="b-text-base">
                                                     {{ $page.props.auth.user?.name }}
                                                 </h4>
                                                 <p class="text-black/60 dark:text-dark-light/60" style="font-size: 14px;">
@@ -143,23 +143,23 @@
                                                             <DialogPanel
                                                                 class="w-full max-w-md transform overflow-hidden rounded-lg bg-white dark:bg-[#182438] p-6 shadow-xl transition-all">
                                                                 <DialogTitle as="h3"
-                                                                    class="text-lg font-medium leading-6 text-gray-900 dark:text-info-light">
+                                                                    class="b-text-lg font-medium leading-6 text-gray-900 dark:text-info-light">
                                                                     {{ $t('nav.sign_out') }}
                                                                 </DialogTitle>
                                                                 <div class="mt-2">
-                                                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                                    <p class="b-text-sm text-gray-500 dark:text-gray-400">
                                                                         {{ $t('nav.sign_out_message') }}
                                                                     </p>
                                                                 </div>
 
                                                                 <div class="mt-4 flex gap-3">
                                                                     <button type="button"
-                                                                        class="inline-flex justify-center rounded-md border border-transparent duration-300 bg-blue-100 dark:bg-blue-500 px-4 py-2 text-sm font-medium text-blue-900 dark:text-gray-100 hover:bg-blue-200 dark:hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                                        class="inline-flex justify-center rounded-md border border-transparent duration-300 bg-blue-100 dark:bg-blue-500 px-4 py-2 b-text-sm font-medium text-blue-900 dark:text-gray-100 hover:bg-blue-200 dark:hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                                                         @click="closeLogout">
                                                                         {{ $t('common.cancel') }}
                                                                     </button>
                                                                     <Link :href="route('auth.logout')"
-                                                                        class="inline-flex justify-center rounded-md border border-transparent duration-300 bg-red-100 dark:bg-red-500 px-4 py-2 text-sm font-medium text-red-900 dark:text-gray-100 hover:bg-red-200 dark:hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                                                                        class="inline-flex justify-center rounded-md border border-transparent duration-300 bg-red-100 dark:bg-red-500 px-4 py-2 b-text-sm font-medium text-red-900 dark:text-gray-100 hover:bg-red-200 dark:hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
                                                                         @click="closeLogout">
                                                                     {{ $t('nav.sign_out') }}
                                                                     </Link>

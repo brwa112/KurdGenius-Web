@@ -10,10 +10,10 @@
                 class="form-input ltr:rounded-l-none rtl:rounded-r-none" />
         </div>
         <template v-if="isSubmit && !error">
-            <p class="text-[#1abc9c] mt-1 text-xs mx-10">Looks Good!</p>
+            <p class="text-[#1abc9c] mt-1 b-text-xs mx-10">Looks Good!</p>
         </template>
         <template v-if="isSubmit && error">
-            <p class="text-danger mt-1 text-xs mx-10">Please fill the Email</p>
+            <p class="text-danger mt-1 b-text-xs mx-10">Please fill the Email</p>
         </template>
     </div>
 </template>

@@ -36,7 +36,7 @@
                                         <Popper :placement="rtlClass === 'rtl' ? 'bottom-end' : 'bottom-start'"
                                             offsetDistance="0" class="relative align-middle">
                                             <button type="button"
-                                                class="group btn outline-none border-none hover:underline shadow-none btn-sm text-sm text-primary font-bold dropdown-toggle flex items-center gap-0.5">
+                                                class="group btn outline-none border-none hover:underline shadow-none btn-sm b-text-sm text-primary font-bold dropdown-toggle flex items-center gap-0.5">
                                                 <div class="relative size-24 xl:size-32">
                                                     <div
                                                         class="custom-file-container__image-preview !size-24 xl:!size-32 !rounded-full !object-fit !mb-5 !mt-0 !overflow-hidden">
@@ -56,7 +56,7 @@
                                                             {{ $t('common.upload_image') }}
                                                             <label class="hidden">
                                                                 <button type="button"
-                                                                    class="relative w-full custom-file-container__custom-file__custom-file-input !cursor-pointer !opacity-100 text-start px-4 !py-2 font-normal text-sm text-gray-600 hover:text-primary hover:bg-primary/10">
+                                                                    class="relative w-full custom-file-container__custom-file__custom-file-input !cursor-pointer !opacity-100 text-start px-4 !py-2 font-normal b-text-sm text-gray-600 hover:text-primary hover:bg-primary/10">
                                                                     <span class="relative z-10">{{
                                                                         $t('common.upload_image') }}</span>
                                                                     <input @input="form.avatar = $event.target.files[0]"
@@ -162,7 +162,7 @@
                     <!-- Access -->
                     <div class="panel">
                         <div class="mb-3">
-                            <h5 class="font-semibold text-lg dark:text-white-light">
+                            <h5 class="font-semibold b-text-lg dark:text-white-light">
                                 {{ $t('common.access') }}
                             </h5>
                         </div>
@@ -187,7 +187,7 @@
                     <!-- Roles -->
                     <div class="panel">
                         <div class="mb-3">
-                            <h5 class="font-semibold text-lg dark:text-white-light">
+                            <h5 class="font-semibold b-text-lg dark:text-white-light">
                                 {{ $t('system.roles') }}
                             </h5>
                         </div>
@@ -222,7 +222,7 @@
                     <!-- Permissions -->
                     <div class="panel">
                         <div class="mb-3">
-                            <h5 class="font-semibold text-lg dark:text-white-light">
+                            <h5 class="font-semibold b-text-lg dark:text-white-light">
                                 {{ $t('system.permissions') }}
                             </h5>
                         </div>
@@ -234,7 +234,7 @@
                                         :key="permission" class="inline-flex">
                                         <input @change="toggleAllSpecificPermission($event.target.checked, permission)"
                                             type="checkbox" class="form-checkbox size-4.5" />
-                                        <span class="text-xs cursor-pointer">
+                                        <span class="b-text-xs cursor-pointer">
                                             {{ $t('common.' + permission) }}
                                         </span>
                                     </label>
@@ -253,7 +253,7 @@
                                                     @change="togglePermission($event.target.checked, permission, permissions)"
                                                     :checked="form.permissions?.filter(x => x.name == permission.name)?.length"
                                                     type="checkbox" class="form-checkbox size-4.5" />
-                                                <span class="text-xs cursor-pointer">
+                                                <span class="b-text-xs cursor-pointer">
                                                     {{ $t('common.' + (permission?.name || '')
                                                         .replace('_' + group, '')) || (permission?.name || '')
                                                             .replace('_' + group, '') }}

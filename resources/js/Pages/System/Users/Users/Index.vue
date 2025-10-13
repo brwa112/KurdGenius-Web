@@ -73,7 +73,7 @@
                                 class="w-9 h-9 rounded-full max-w-none" alt="user-profile" />
                             <div class="flex flex-col">
                                 <div class="font-semibold">{{ data.value.name }}</div>
-                                <div class="font-semibold text-xs text-gray-400">{{ data.value.email }}</div>
+                                <div class="font-semibold b-text-xs text-gray-400">{{ data.value.email }}</div>
                             </div>
                         </div>
                     </template>
@@ -94,14 +94,14 @@
                     </template>
 
                     <template #updated_at="data">
-                        <span v-tippy dir="ltr" class="text-sm font-bold ltr">
+                        <span v-tippy dir="ltr" class="b-text-sm font-bold ltr">
                             {{ data.value.updated_at ? $helpers.formatCustomDate(data.value.updated_at) : '' }}
                         </span>
                         <tippy>{{ $helpers.formatCustomDate(data.value.updated_at, true) }}</tippy>
                     </template>
 
                     <template #created_at="data">
-                        <span v-tippy dir="ltr" class="text-sm font-bold ltr">
+                        <span v-tippy dir="ltr" class="b-text-sm font-bold ltr">
                             {{ data.value.created_at ? $helpers.formatCustomDate(data.value.created_at) : '' }}
                         </span>
                         <tippy>{{ $helpers.formatCustomDate(data.value.created_at, true) }}</tippy>

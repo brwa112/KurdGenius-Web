@@ -45,8 +45,8 @@
 
                                             <div class="flex flex-col items-start">
                                                 <h1>{{ countOption.label }}</h1>
-                                                <p class="text-xs text-gray-500">{{ countOption.description }}</p>
-                                                <p class="text-xs text-gray-500">{{ countOption?.email }}</p>
+                                                <p class="b-text-xs text-gray-500">{{ countOption.description }}</p>
+                                                <p class="b-text-xs text-gray-500">{{ countOption?.email }}</p>
                                             </div>
                                         </div>
                                         <Svg name="check" class="size-5" :class="{ 'hidden': !checkSelect(countOption.id) }"></Svg>

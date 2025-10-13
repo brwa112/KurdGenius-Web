@@ -39,7 +39,7 @@
                 <div class="w-full lg:w-4/12 2xl:w-3/12">
                     <div class="panel sticky top-20">
                         <div class="mb-3">
-                            <h5 class="font-semibold text-lg dark:text-white-light">
+                            <h5 class="font-semibold b-text-lg dark:text-white-light">
                                 {{ $t('system.information') }}
                             </h5>
                         </div>
@@ -56,7 +56,7 @@
                                         <Popper :placement="rtlClass === 'rtl' ? 'bottom-end' : 'bottom-start'"
                                             offsetDistance="0" class="relative align-middle">
                                             <button type="button"
-                                                class="group btn outline-none border-none hover:underline shadow-none btn-sm text-sm text-primary font-bold dropdown-toggle flex items-center gap-0.5">
+                                                class="group btn outline-none border-none hover:underline shadow-none btn-sm b-text-sm text-primary font-bold dropdown-toggle flex items-center gap-0.5">
                                                 <div class="relative size-24 xl:size-32">
                                                     <div
                                                         class="custom-file-container__image-preview !size-24 xl:!size-32 !rounded-full !object-fit !mb-5 !mt-0 !overflow-hidden">
@@ -76,7 +76,7 @@
                                                             {{ $t('common.upload_image') }}
                                                             <label class="hidden">
                                                                 <button type="button"
-                                                                    class="relative w-full custom-file-container__custom-file__custom-file-input !cursor-pointer !opacity-100 text-start px-4 !py-2 font-normal text-sm text-gray-600 hover:text-primary hover:bg-primary/10">
+                                                                    class="relative w-full custom-file-container__custom-file__custom-file-input !cursor-pointer !opacity-100 text-start px-4 !py-2 font-normal b-text-sm text-gray-600 hover:text-primary hover:bg-primary/10">
                                                                     <span class="relative z-10">{{
                                                                         $t('common.upload_image') }}</span>
                                                                     <input @input="form.avatar = $event.target.files[0]"
@@ -184,10 +184,10 @@
                         <!-- User Status -->
                         <div class="flex items-center justify-between pt-2">
                             <div>
-                                <label for="user_activity" class="text-sm font-medium leading-3">
+                                <label for="user_activity" class="b-text-sm font-medium leading-3">
                                     {{ $t('system.user_activity') }}
                                 </label>
-                                <p class="text-xs">
+                                <p class="b-text-xs">
                                     {{ $t('system.enable_or_disable_user_access') }}
                                 </p>
                             </div>
@@ -207,10 +207,10 @@
                     <!-- Roles -->
                     <div class="panel">
                         <div class="mb-3">
-                            <h5 class="font-semibold text-lg dark:text-white-light">
+                            <h5 class="font-semibold b-text-lg dark:text-white-light">
                                 {{ $t('system.roles') }}
                             </h5>
-                            <p class="text-sm">
+                            <p class="b-text-sm">
                                 {{ $t('system.assign_roles_to_user') }}
                             </p>
                         </div>
@@ -223,7 +223,7 @@
                                         <span class="flex flex-col">
                                             <span class="capitalize">{{ role.name }}</span>
                                         </span>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                                        <p class="b-text-xs text-gray-500 dark:text-gray-400">
                                             {{ role.permissions?.length || 0 }} {{ $t('system.permissions') }}
                                         </p>
                                     </div>
@@ -245,10 +245,10 @@
                     <div class="">
                         <div class="panel">
                             <div class="mb-3">
-                                <h5 class="font-semibold text-lg dark:text-white-light">
+                                <h5 class="font-semibold b-text-lg dark:text-white-light">
                                     {{ $t('system.permissions') }}
                                 </h5>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                <p class="b-text-sm text-gray-600 dark:text-gray-400">
                                     {{ $t('system.fine_tune_user_permissions') }}
                                 </p>
                             </div>
@@ -264,7 +264,7 @@
                                             <span class="capitalize cursor-pointer leading-3">{{ group }}</span>
                                         </label>
                                         <div
-                                            class="flex gap-1 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                            class="flex gap-1 b-text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
                                             <p class="font-medium text-primary">
                                                 {{permissions.filter(gp => form.permissions?.some(fp => fp.name ===
                                                     gp.name)).length}}
@@ -278,12 +278,12 @@
                                             <button v-for="(permission, i) in permissions" :key="i" type="button"
                                                 @click="togglePermission(!form.permissions?.filter(x => x.name == permission.name)?.length, permission, permissions)"
                                                 :class="[
-                                                    'px-4 capitalize py-2 rounded-full text-sm font-medium transition',
+                                                    'px-4 capitalize py-2 rounded-full b-text-sm font-medium transition',
                                                     form.permissions?.filter(x => x.name == permission.name)?.length
                                                         ? 'bg-primary text-white shadow'
                                                         : 'bg-gray-200 dark:bg-[#1b2e4b] hover:bg-primary hover:text-white'
                                                 ]">
-                                                <span class="text-xs cursor-pointer">
+                                                <span class="b-text-xs cursor-pointer">
                                                     {{ $t('common.' + (permission?.name || '')
                                                         .replace('_' + group, '')) || (permission?.name || '')
                                                             .replace('_' + group, '') }}
@@ -304,12 +304,12 @@
             <div
                 class="sticky bottom-0 bg-white dark:bg-gray-900 border-t border-[#d3d3d3] dark:border-[#1b2e4b] p-3 -mx-6">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                    <div class="b-text-sm text-gray-600 dark:text-gray-400">
                         <span v-if="form.id">
                             {{ $t('system.last_updated') }}: {{ $helpers.formatCustomDate(user?.updated_at, true) }}
                         </span>
                         <span v-else>{{ $t('system.creating_new_user_account') }}</span>
-                        <p class="text-danger text-xs" v-if="form.errors.permissions" v-html="form.errors.permissions">
+                        <p class="text-danger b-text-xs" v-if="form.errors.permissions" v-html="form.errors.permissions">
                         </p>
                     </div>
                     <div class="flex items-center gap-3">

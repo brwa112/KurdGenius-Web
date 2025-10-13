@@ -30,7 +30,7 @@
 }
 
 .datatable .bh-pagination select {
-  @apply rounded-md border border-[#e0e6ed] bg-white pl-2 pr-4 py-1.5 text-sm font-semibold text-black focus:border-primary focus:ring-transparent dark:border-[#17263c] dark:bg-[#121e32] dark:text-gray-200 dark:focus:border-primary;
+  @apply rounded-md border border-[#e0e6ed] bg-white pl-2 pr-4 py-1.5 b-text-sm font-semibold text-black focus:border-primary focus:ring-transparent dark:border-[#17263c] dark:bg-[#121e32] dark:text-gray-200 dark:focus:border-primary;
 }
 
 .datatable .bh-pagination .bh-pagination-number{

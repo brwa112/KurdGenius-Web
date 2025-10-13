@@ -15,7 +15,7 @@
                                 <Svg name="home_angle" class="size-5"></Svg>
 
                                 <span
-                                    class="ps-3 lg:text-base text-black dark:text-gray-300 dark:group-hover:text-gray-200">
+                                    class="ps-3 lg:b-text-base text-black dark:text-gray-300 dark:group-hover:text-gray-200">
                                     {{ $t('nav.dashboard') }}
                                 </span>
                             </div>

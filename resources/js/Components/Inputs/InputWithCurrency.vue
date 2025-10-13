@@ -4,7 +4,7 @@
         <div class="bg-[#eee] flex justify-center items-center font-semibold rounded-md ltr:rounded-l-none rtl:rounded-r-none border ltr:border-l-0 rtl:border-r-0 border-[#e0e6ed] dark:border-[#17263c] dark:bg-[#1b2e4b]">
             <div class="dropdown">
                 <Popper :placement="rtlClass === 'rtl' ? 'bottom-start' : 'bottom-end'" offsetDistance="0" class="align-middle">
-                    <button type="button" class="btn outline-none border-none shadow-none btn-sm text-sm font-bold dropdown-toggle px-3.5">
+                    <button type="button" class="btn outline-none border-none shadow-none btn-sm b-text-sm font-bold dropdown-toggle px-3.5">
                         <span>{{ selected.symbol }}</span>
                     </button>
                     <template #content="{ close }">

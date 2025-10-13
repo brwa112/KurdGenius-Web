@@ -26,7 +26,7 @@
                         </div>
 
                         <!-- User Info -->
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-1">
+                        <h3 class="b-text-xl font-semibold text-gray-900 dark:text-white mb-1">
                             {{ user.name }}
                         </h3>
                         <p class="text-gray-600 dark:text-gray-400 mb-4">
@@ -36,16 +36,16 @@
                         <!-- Profile Stats -->
                         <div class="grid grid-cols-1 gap-4 text-center border-t pt-4 dark:border-gray-700">
                             <div>
-                                <div class="text-lg font-semibold text-primary capitalize">
+                                <div class="b-text-lg font-semibold text-primary capitalize">
                                     {{ userRoles }}
                                 </div>
-                                <div class="text-xs text-gray-500">{{ $t('system.privilege') }}</div>
+                                <div class="b-text-xs text-gray-500">{{ $t('system.privilege') }}</div>
                             </div>
                             <!-- <div>
-                                <div class="text-lg font-semibold text-success">
+                                <div class="b-text-lg font-semibold text-success">
                                     {{ $t(`system.${userAuthority}`) }}
                                 </div>
-                                <div class="text-xs text-gray-500">{{ $t('system.authority') }}</div>
+                                <div class="b-text-xs text-gray-500">{{ $t('system.authority') }}</div>
                             </div> -->
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <Svg name="setup" class="size-5 text-primary"></Svg>
                         </div>
                         <div>
-                            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            <h2 class="b-text-xl font-semibold text-gray-900 dark:text-white">
                                 {{ $t('system.appearance_settings') }}
                             </h2>
                         </div>
@@ -70,19 +70,19 @@
                         <!-- Typography Section -->
                         <div class="space-y-4">
                             <h3
-                                class="text-lg font-medium text-gray-900 dark:text-white border-b pb-2 dark:border-gray-700">
+                                class="b-text-lg font-medium text-gray-900 dark:text-white border-b pb-2 dark:border-gray-700">
                                 {{ $t('system.typography') }}
                             </h3>
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                 <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label class="block b-text-sm font-medium text-gray-700 dark:text-gray-300">
                                         {{ $t('system.font_size') }}
                                     </label>
                                     <MultiSelect v-model="form.font_scale" :list="scaleOptions" label="name"
                                         value="value" :showValue="false" :error="form.errors.font_scale" />
                                 </div>
                                 <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label class="block b-text-sm font-medium text-gray-700 dark:text-gray-300">
                                         {{ $t('system.font_weight') }}
                                     </label>
                                     <MultiSelect v-model="form.font_weight" :list="weightOptions" label="name"
@@ -94,12 +94,12 @@
                         <!-- Localization Section -->
                         <div class="space-y-4">
                             <h3
-                                class="text-lg font-medium text-gray-900 dark:text-white border-b pb-2 dark:border-gray-700">
+                                class="b-text-lg font-medium text-gray-900 dark:text-white border-b pb-2 dark:border-gray-700">
                                 {{ $t('system.localization') }}
                             </h3>
                             <div class="grid grid-cols-1 lg:grid-cols-1 gap-4">
                                 <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label class="block b-text-sm font-medium text-gray-700 dark:text-gray-300">
                                         {{ $t('system.language') }}
                                     </label>
                                     <MultiSelect v-model="form.language_id" :list="page.props.languages" label="slug"
@@ -111,11 +111,11 @@
                         <!-- Theme Section -->
                         <div class="space-y-4">
                             <h3
-                                class="text-lg font-medium text-gray-900 dark:text-white border-b pb-2 dark:border-gray-700">
+                                class="b-text-lg font-medium text-gray-900 dark:text-white border-b pb-2 dark:border-gray-700">
                                 {{ $t('system.visual_theme') }}
                             </h3>
                             <div class="space-y-2">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label class="block b-text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ $t('system.theme') }}
                                 </label>
                                 <MultiSelect v-model="form.theme" :list="props.theme" label="slug" value="name"

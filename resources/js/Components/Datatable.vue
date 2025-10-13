@@ -17,7 +17,7 @@
                             <template #popper="{ hide }">
                                 <ul
                                     class="whitespace-nowrap text-gray-500 dark:text-white-dark  dark:bg-[#121e32] border border-gray-200 dark:border-[#191e3a] rounded shadow-lg p-1">
-                                    <li class=" text-gray-500 dark:text-white-dark text-xs mx-2 mb-1">
+                                    <li class=" text-gray-500 dark:text-white-dark b-text-xs mx-2 mb-1">
                                         {{ $t('common.columns') }}
                                     </li>
                                     <template v-for="(col, i) in columns" :key="i">
@@ -61,21 +61,21 @@
                         :class="['flex items-center gap-1.5 rounded-md p-2.5 leading-3 border font-semibold bg-white border-[#e0e6ed] dark:border-transparent dark:bg-[#121e32] text-gray-500 dark:text-white-dark', { 'opacity-50 cursor-not-allowed': selectedCount === 0 }]">
                         <Svg name="trash_fill" class="size-4"></Svg>
                         {{ $t('common.delete') }}
-                        <span class="text-xs text-gray-400">({{ selectedCount || 0 }})</span>
+                        <span class="b-text-xs text-gray-400">({{ selectedCount || 0 }})</span>
                     </button>
                     <button v-if="false && selectedCount" type="button" @click="confirmBulkRestore"
                         :disabled="selectedCount === 0"
                         :class="['flex items-center gap-1.5 rounded-md p-2.5 leading-3 border font-semibold bg-white border-[#e0e6ed] dark:border-transparent dark:bg-[#121e32] text-gray-500 dark:text-white-dark', { 'opacity-50 cursor-not-allowed': selectedCount === 0 }]">
                         <Svg name="restore" class="size-4"></Svg>
                         {{ $t('common.restore') }}
-                        <span class="text-xs text-gray-400">({{ selectedCount || 0 }})</span>
+                        <span class="b-text-xs text-gray-400">({{ selectedCount || 0 }})</span>
                     </button>
                     <vue3-json-excel v-if="exportable && selectedCount > 0" type="xlsx" :data="prepareSelectedData()"
                         :name="namefileSelected"
                         class="flex items-center gap-1.5 rounded-md p-2.5 leading-3 border cursor-pointer font-semibold bg-white border-[#e0e6ed] dark:border-transparent dark:bg-[#121e32] text-gray-500 dark:text-white-dark">
                         <Svg name="export" class="size-4"></Svg>
                         {{ $t('common.export') }}
-                        <span class="text-xs text-gray-400">({{ selectedCount || 0 }})</span>
+                        <span class="b-text-xs text-gray-400">({{ selectedCount || 0 }})</span>
                     </vue3-json-excel>
                     <slot name="datatable-actions"></slot>
                 </div>
@@ -109,7 +109,7 @@
                     <MultiSelect :list="perPageOptions" v-model="pagePerSelected" :label="'name'" :multiple="false"
                         :placeholder="false" />
                 </div>
-                <span class="text-sm text-gray-500 dark:text-white-dark">
+                <span class="b-text-sm text-gray-500 dark:text-white-dark">
                     {{ $t('common.showing') }} {{ props.rows.meta ? props.rows.meta.current_page :
                         props.rows.current_page }} {{
                         $t('common.of') }}

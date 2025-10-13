@@ -46,12 +46,12 @@ const resetForm = () => {
 
 <template>
     <div class="max-w-4xl mx-auto p-6 bg-white rounded shadow">
-        <h2 class="text-xl font-bold mb-4">Roles Management</h2>
+        <h2 class="b-text-xl font-bold mb-4">Roles Management</h2>
 
         <form @submit.prevent="submit">
             <div>
                 <input v-model="form.name" placeholder="Role Name" class="border p-2 w-full" />
-                <div v-if="form.errors.name" class="text-red-500 text-sm mt-1">{{ form.errors.name }}</div>
+                <div v-if="form.errors.name" class="text-red-500 b-text-sm mt-1">{{ form.errors.name }}</div>
             </div>
 
             <div class="mt-2">
@@ -59,7 +59,7 @@ const resetForm = () => {
                     <input type="checkbox" v-model="form.permissions" :value="perm.name" />
                     {{ perm.name }}
                 </label>
-                <div v-if="form.errors.permissions" class="text-red-500 text-sm mt-1">{{ form.errors.permissions }}
+                <div v-if="form.errors.permissions" class="text-red-500 b-text-sm mt-1">{{ form.errors.permissions }}
                 </div>
             </div>
 
@@ -77,7 +77,7 @@ const resetForm = () => {
             <li v-for="role in roles" :key="role.id" class="border-b p-2 flex justify-between items-center">
                 <div>
                     <strong>{{ role.name }}</strong>
-                    <span class="text-sm text-gray-600">({{ role.permissions.map(p => p.name).join(', ') }})</span>
+                    <span class="b-text-sm text-gray-600">({{ role.permissions.map(p => p.name).join(', ') }})</span>
                 </div>
                 <div>
                     <button @click="edit(role)" class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>

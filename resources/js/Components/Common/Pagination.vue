@@ -7,7 +7,7 @@
                 <!-- :href="(slotProps.computed?.prevPageUrl || '').replace('http://', 'https://')" -->
                 <component :is="slotProps.computed.prevPageUrl ? 'Link' : 'span'"
                     :href="slotProps.computed?.prevPageUrl"
-                    class="page-link relative inline-flex -me-px rtl:rotate-180 items-center px-2 py-1 text-sm font-medium border rounded-l-md focus:z-20 disabled:opacity-50"
+                    class="page-link relative inline-flex -me-px rtl:rotate-180 items-center px-2 py-1 b-text-sm font-medium border rounded-l-md focus:z-20 disabled:opacity-50"
                     :class="itemClasses, { 'opacity-50': !slotProps.computed.prevPageUrl }"
                     :disabled="!slotProps.computed.prevPageUrl" v-on="slotProps.prevButtonEvents">
                     <slot name="prev-nav">
@@ -21,7 +21,7 @@
 
                 <component :is="page === slotProps.computed.currentPage || page == '...' ? 'span' : 'Link'"
                     :href="prepareNewUrl(page)"
-                    class="page-link relative inline-flex items-center px-2 py-2 text-xs sm:text-sm font-medium border focus:z-20"
+                    class="page-link relative inline-flex items-center px-2 py-2 b-text-xs sm:b-text-sm font-medium border focus:z-20"
                     :class="[
                         page == slotProps.computed.currentPage ? activeClasses : itemClasses,
                         page == slotProps.computed.currentPage ? 'z-30' : '',
@@ -34,7 +34,7 @@
 
                 <component :is="slotProps.computed.nextPageUrl ? 'Link' : 'span'"
                     :href="slotProps.computed?.nextPageUrl"
-                    class="page-link relative inline-flex rtl:rotate-180 items-center px-2 py-1 text-sm font-medium border rounded-r-md focus:z-20 disabled:opacity-50"
+                    class="page-link relative inline-flex rtl:rotate-180 items-center px-2 py-1 b-text-sm font-medium border rounded-r-md focus:z-20 disabled:opacity-50"
                     :class="itemClasses, { 'opacity-50': !slotProps.computed.nextPageUrl }"
                     :disabled="!slotProps.computed.nextPageUrl" v-on="slotProps.nextButtonEvents">
                     <slot name="next-nav">

@@ -10,7 +10,7 @@
         </ul>
         <div class="pt-5">
             <div class="flex items-center justify-between mb-5">
-                <h5 class="font-semibold text-lg dark:text-white-light">Settings</h5>
+                <h5 class="font-semibold b-text-lg dark:text-white-light">Settings</h5>
             </div>
             <TabGroup>
                 <TabList
@@ -82,7 +82,7 @@
                         <div>
                             <form
                                 class="border border-[#ebedf2] dark:border-[#191e3a] rounded-md p-4 mb-5 bg-white dark:bg-[#0e1726]">
-                                <h6 class="text-lg font-bold mb-5">General Information</h6>
+                                <h6 class="b-text-lg font-bold mb-5">General Information</h6>
                                 <div class="flex flex-col sm:flex-row">
                                     <div class="ltr:sm:mr-4 rtl:sm:ml-4 w-full sm:w-2/12 mb-5">
                                         <img src="/public/assets/images/profile-34.jpeg" alt=""
@@ -148,7 +148,7 @@
                             </form>
                             <form
                                 class="border border-[#ebedf2] dark:border-[#191e3a] rounded-md p-4 bg-white dark:bg-[#0e1726]">
-                                <h6 class="text-lg font-bold mb-5">Social</h6>
+                                <h6 class="b-text-lg font-bold mb-5">Social</h6>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                     <div class="flex">
                                         <div
@@ -212,7 +212,7 @@
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
                                 <div class="panel">
                                     <div class="mb-5">
-                                        <h5 class="font-semibold text-lg mb-4">Billing Address</h5>
+                                        <h5 class="font-semibold b-text-lg mb-4">Billing Address</h5>
                                         <p>
                                             Changes to your <span class="text-primary">Billing</span> information will take
                                             effect starting with scheduled
@@ -225,7 +225,7 @@
                                                 <h6 class="text-[#515365] font-bold dark:text-white-dark text-[15px]">
                                                     Address #1
                                                     <span
-                                                        class="block text-white-dark dark:text-white-light font-normal text-xs mt-1">2249
+                                                        class="block text-white-dark dark:text-white-light font-normal b-text-xs mt-1">2249
                                                         Caynor Circle, New Brunswick, New Jersey</span>
                                                 </h6>
                                                 <div class="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
@@ -238,7 +238,7 @@
                                                 <h6 class="text-[#515365] font-bold dark:text-white-dark text-[15px]">
                                                     Address #2
                                                     <span
-                                                        class="block text-white-dark dark:text-white-light font-normal text-xs mt-1">4262
+                                                        class="block text-white-dark dark:text-white-light font-normal b-text-xs mt-1">4262
                                                         Leverton Cove Road, Springfield, Massachusetts</span>
                                                 </h6>
                                                 <div class="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
@@ -251,7 +251,7 @@
                                                 <h6 class="text-[#515365] font-bold dark:text-white-dark text-[15px]">
                                                     Address #3
                                                     <span
-                                                        class="block text-white-dark dark:text-white-light font-normal text-xs mt-1">2692
+                                                        class="block text-white-dark dark:text-white-light font-normal b-text-xs mt-1">2692
                                                         Berkshire Circle, Knoxville, Tennessee</span>
                                                 </h6>
                                                 <div class="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
@@ -264,7 +264,7 @@
                                 </div>
                                 <div class="panel">
                                     <div class="mb-5">
-                                        <h5 class="font-semibold text-lg mb-4">Payment History</h5>
+                                        <h5 class="font-semibold b-text-lg mb-4">Payment History</h5>
                                         <p>
                                             Changes to your <span class="text-primary">Payment Method</span> information
                                             will take effect starting with
@@ -280,7 +280,7 @@
                                                 <h6 class="text-[#515365] font-bold dark:text-white-dark text-[15px]">
                                                     Mastercard
                                                     <span
-                                                        class="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX
+                                                        class="block text-white-dark dark:text-white-light font-normal b-text-xs mt-1">XXXX
                                                         XXXX XXXX 9704</span>
                                                 </h6>
                                                 <div class="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
@@ -295,7 +295,7 @@
                                                 </div>
                                                 <h6 class="text-[#515365] font-bold dark:text-white-dark text-[15px]">
                                                     American Express<span
-                                                        class="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX
+                                                        class="block text-white-dark dark:text-white-light font-normal b-text-xs mt-1">XXXX
                                                         XXXX XXXX 310</span>
                                                 </h6>
                                                 <div class="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
@@ -310,7 +310,7 @@
                                                 </div>
                                                 <h6 class="text-[#515365] font-bold dark:text-white-dark text-[15px]">
                                                     Visa<span
-                                                        class="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX
+                                                        class="block text-white-dark dark:text-white-light font-normal b-text-xs mt-1">XXXX
                                                         XXXX XXXX 5264</span>
                                                 </h6>
                                                 <div class="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
@@ -325,7 +325,7 @@
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                 <div class="panel">
                                     <div class="mb-5">
-                                        <h5 class="font-semibold text-lg mb-4">Add Billing Address</h5>
+                                        <h5 class="font-semibold b-text-lg mb-4">Add Billing Address</h5>
                                         <p>Changes your New <span class="text-primary">Billing</span> Information.</p>
                                     </div>
                                     <div class="mb-5">
@@ -372,7 +372,7 @@
                                 </div>
                                 <div class="panel">
                                     <div class="mb-5">
-                                        <h5 class="font-semibold text-lg mb-4">Add Payment Method</h5>
+                                        <h5 class="font-semibold b-text-lg mb-4">Add Payment Method</h5>
                                         <p>Changes your New <span class="text-primary">Payment Method</span> Information.
                                         </p>
                                     </div>
@@ -423,7 +423,7 @@
                         <div class="switch">
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Choose Theme</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Choose Theme</h5>
                                     <div class="flex justify-around">
                                         <label class="inline-flex cursor-pointer">
                                             <input class="form-radio ltr:mr-4 rtl:ml-4 cursor-pointer" type="radio"
@@ -445,14 +445,14 @@
                                     </div>
                                 </div>
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Activity data</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Activity data</h5>
                                     <p>Download your Summary, Task and Payment History Data</p>
                                     <button type="button" class="btn btn-primary">Download Data</button>
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Public Profile</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Public Profile</h5>
                                     <p>Your <span class="text-primary">Profile</span> will be visible to anyone on the
                                         network.</p>
                                     <label class="w-12 h-6 relative">
@@ -464,7 +464,7 @@
                                     </label>
                                 </div>
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Show my email</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Show my email</h5>
                                     <p>Your <span class="text-primary">Email</span> will be visible to anyone on the
                                         network.</p>
                                     <label class="w-12 h-6 relative">
@@ -476,7 +476,7 @@
                                     </label>
                                 </div>
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Enable keyboard shortcuts</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Enable keyboard shortcuts</h5>
                                     <p>When enabled, press <span class="text-primary">ctrl</span> for help</p>
                                     <label class="w-12 h-6 relative">
                                         <input type="checkbox"
@@ -487,7 +487,7 @@
                                     </label>
                                 </div>
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Hide left navigation</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Hide left navigation</h5>
                                     <p>Sidebar will be <span class="text-primary">hidden</span> by default</p>
                                     <label class="w-12 h-6 relative">
                                         <input type="checkbox"
@@ -498,7 +498,7 @@
                                     </label>
                                 </div>
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Advertisements</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Advertisements</h5>
                                     <p>Display <span class="text-primary">Ads</span> on your dashboard</p>
                                     <label class="w-12 h-6 relative">
                                         <input type="checkbox"
@@ -509,7 +509,7 @@
                                     </label>
                                 </div>
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Social Profile</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Social Profile</h5>
                                     <p>Enable your <span class="text-primary">social</span> profiles on this network</p>
                                     <label class="w-12 h-6 relative">
                                         <input type="checkbox"
@@ -526,13 +526,13 @@
                         <div class="switch">
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Purge Cache</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Purge Cache</h5>
                                     <p>Remove the active resource from the cache without waiting for the predetermined cache
                                         expiry time.</p>
                                     <button class="btn btn-secondary">Clear</button>
                                 </div>
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Deactivate Account</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Deactivate Account</h5>
                                     <p>You will not be able to receive messages, notifications for up to 24 hours.</p>
                                     <label class="w-12 h-6 relative">
                                         <input type="checkbox"
@@ -543,7 +543,7 @@
                                     </label>
                                 </div>
                                 <div class="panel space-y-5">
-                                    <h5 class="font-semibold text-lg mb-4">Delete Account</h5>
+                                    <h5 class="font-semibold b-text-lg mb-4">Delete Account</h5>
                                     <p>Once you delete the account, there is no going back. Please be certain.</p>
                                     <button class="btn btn-danger btn-delete-account">Delete my account</button>
                                 </div>

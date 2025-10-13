@@ -20,10 +20,10 @@
                                 stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <h2 class="font-bold text-2xl lg:text-4xl text-[#344055] dark:text-gray-200">
+                    <h2 class="font-bold b-text-2xl lg:b-text-4xl text-[#344055] dark:text-gray-200">
                         {{ $t('auth.sign_in') }}
                     </h2>
-                    <p class="mb-1 text-lg lg:text-xl max-w-md text-gray-400 dark:text-gray-500">
+                    <p class="mb-1 b-text-lg lg:b-text-xl max-w-md text-gray-400 dark:text-gray-500">
                         {{ $t('auth.detail_sign_in') }}
                     </p>
                     <div class="w-full h-2 border-t-2 border-dashed border-gray-100 dark:border-gray-800"></div>
@@ -33,26 +33,26 @@
                             class="max-w-max flex flex-wrap justify-start rtl:space-x-reverse bg-gray-100/90 dark:bg-gray-800 rounded-full">
                             <Tab as="template" v-slot="{ selected }">
                                 <button type="button"
-                                    class="px-7 py-2 rtl:pb-2.5 lg:px-10 lg:py-2 rtl:lg:pb-2.5 text-gray-400 dark:text-gray-500 text-base lg:text-lg block rounded-full !outline-none transition duration-300"
+                                    class="px-7 py-2 rtl:pb-2.5 lg:px-10 lg:py-2 rtl:lg:pb-2.5 text-gray-400 dark:text-gray-500 b-text-base lg:b-text-lg block rounded-full !outline-none transition duration-300"
                                     :class="{ 'bg-[#DFE9FA] dark:bg-primary text-primary dark:!text-[#DFE9FA] font-bold': selected }">
                                     {{ $t('auth.employee') }}
                                 </button>
                             </Tab>
                             <Tab as="template" v-slot="{ selected }">
                                 <button type="button"
-                                    class="px-7 py-2 rtl:pb-2.5 lg:px-10 lg:py-2 rtl:lg:pb-2.5 text-gray-400 dark:text-gray-500 text-base lg:text-lg block rounded-full !outline-none transition duration-300"
+                                    class="px-7 py-2 rtl:pb-2.5 lg:px-10 lg:py-2 rtl:lg:pb-2.5 text-gray-400 dark:text-gray-500 b-text-base lg:b-text-lg block rounded-full !outline-none transition duration-300"
                                     :class="{ 'bg-[#DFE9FA] dark:bg-primary text-primary dark:!text-[#DFE9FA] font-bold': selected }">
                                     {{ $t('auth.manager') }}
                                 </button>
                             </Tab>
                         </TabList>
-                        <TabPanels class="pt-10 flex-1 text-sm">
+                        <TabPanels class="pt-10 flex-1 b-text-sm">
                             <TabPanel>
                                 <form class="space-y-7" @submit.prevent="login">
                                     <!-- Email -->
                                     <div class="relative">
                                         <input type="email" v-model="form.email"
-                                            class="peer py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 ps-14 block w-full border-2 border-gray-200 rounded-xl lg:rounded-2xl text-base lg:text-lg focus:ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500"
+                                            class="peer py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 ps-14 block w-full border-2 border-gray-200 rounded-xl lg:rounded-2xl b-text-base lg:b-text-lg focus:ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500"
                                             :placeholder="$t('auth.phone_number')">
                                         <div
                                             class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-6 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
@@ -70,7 +70,7 @@
                                     <!-- Password -->
                                     <div class="relative">
                                         <input :type="passwordView" v-model="form.password"
-                                            class="relative z-0 peer py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 ps-14 block w-full border-2 border-gray-200 rounded-xl lg:rounded-2xl text-base lg:text-lg focus:ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500"
+                                            class="relative z-0 peer py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 ps-14 block w-full border-2 border-gray-200 rounded-xl lg:rounded-2xl b-text-base lg:b-text-lg focus:ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500"
                                             :placeholder="$t('auth.password')">
                                         <div
                                             class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-5 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
@@ -127,7 +127,7 @@
                                         </button>
                                     </div>
                                     <button type="submit" :disabled="form.processing"
-                                        class="btn btn-primary duration-300 hover:bg-primary/90 shadow-none !mt-8 lg:!mt-10 py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 rounded-full text-base lg:text-lg font-normal max-w-max min-w-44 lg:min-w-72">
+                                        class="btn btn-primary duration-300 hover:bg-primary/90 shadow-none !mt-8 lg:!mt-10 py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 rounded-full b-text-base lg:b-text-lg font-normal max-w-max min-w-44 lg:min-w-72">
                                         {{ $t('auth.login') }}
                                     </button>
                                 </form>
@@ -137,7 +137,7 @@
                                     <!-- Email -->
                                     <div class="relative">
                                         <input type="email"
-                                            class="peer py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 ps-14 block w-full border-2 border-gray-200 rounded-xl lg:rounded-2xl text-base lg:text-lg focus:ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500"
+                                            class="peer py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 ps-14 block w-full border-2 border-gray-200 rounded-xl lg:rounded-2xl b-text-base lg:b-text-lg focus:ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500"
                                             :placeholder="$t('auth.phone_number')">
                                         <div
                                             class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-6 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
@@ -155,7 +155,7 @@
                                     <!-- Password -->
                                     <div class="relative">
                                         <input :type="passwordView"
-                                            class="relative z-0 peer py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 ps-14 block w-full border-2 border-gray-200 rounded-xl lg:rounded-2xl text-base lg:text-lg focus:ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500"
+                                            class="relative z-0 peer py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 ps-14 block w-full border-2 border-gray-200 rounded-xl lg:rounded-2xl b-text-base lg:b-text-lg focus:ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500"
                                             :placeholder="$t('auth.password')">
                                         <div
                                             class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-5 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
@@ -212,7 +212,7 @@
                                         </button>
                                     </div>
                                     <button type="submit" :disabled="form.processing"
-                                        class="btn btn-primary duration-300 hover:bg-primary/90 shadow-none !mt-8 lg:!mt-10 py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 rounded-full text-base lg:text-lg font-normal max-w-max min-w-44 lg:min-w-72">
+                                        class="btn btn-primary duration-300 hover:bg-primary/90 shadow-none !mt-8 lg:!mt-10 py-2.5 rtl:pb-3 lg:py-3.5 rtl:lg:pb-4 px-5 rounded-full b-text-base lg:b-text-lg font-normal max-w-max min-w-44 lg:min-w-72">
                                         {{ $t('auth.login') }}
                                     </button>
                                 </form>
@@ -229,7 +229,7 @@
                             <Menu as="div" class="relative inline-block text-left">
                                 <div>
                                     <MenuButton v-slot="{ open }"
-                                        class="flex items-center gap-4 w-full text-dark-blue/80 bg-white dark:bg-gray-800 font-bold text-sm p-2.5 px-3.5 rounded-xl">
+                                        class="flex items-center gap-4 w-full text-dark-blue/80 bg-white dark:bg-gray-800 font-bold b-text-sm p-2.5 px-3.5 rounded-xl">
                                         <template v-for="language in languages" :key="language.code">
                                             <div v-if="language.code == lang" class="flex items-center gap-2.5">
                                                 <img :src="`/assets/images/langs/${lang}.png`" alt="lang"
@@ -259,7 +259,7 @@
                                         <MenuItem v-slot="{ close }">
                                         <div class="px-1 py-1">
                                             <button @click="close, toggleDirection('ltr', 'en')" :class="[
-                                                'group flex w-full items-center rounded-md py-1 text-sm font-bold',
+                                                'group flex w-full items-center rounded-md py-1 b-text-sm font-bold',
                                             ]">
                                                 <div class="flex items-center gap-2.5">
                                                     <img :src="'/assets/images/langs/en.png'" alt="lang" class="size-4">
@@ -273,7 +273,7 @@
                                         <MenuItem v-slot="{ close }">
                                         <div class="px-1 py-1">
                                             <button @click="close, toggleDirection('rtl', 'ar')" :class="[
-                                                'group flex w-full items-center rounded-md py-1 text-sm font-bold',
+                                                'group flex w-full items-center rounded-md py-1 b-text-sm font-bold',
                                             ]">
                                                 <div class="flex items-center gap-2.5">
                                                     <img :src="'/assets/images/langs/ar.png'" alt="lang" class="size-4">
@@ -287,7 +287,7 @@
                                         <MenuItem v-slot="{ close }">
                                         <div class="px-1 py-1">
                                             <button @click="close, toggleDirection('rtl', 'ckb')" :class="[
-                                                'group flex w-full items-center rounded-md py-1 text-sm font-bold',
+                                                'group flex w-full items-center rounded-md py-1 b-text-sm font-bold',
                                             ]">
                                                 <div class="flex items-center gap-2.5">
                                                     <img :src="'/assets/images/langs/ckb.png'" alt="lang"
@@ -326,10 +326,10 @@
                             <Slide v-for="(item, i) in items" :key="i">
                                 <div class="carousel__item">
                                     <div class="flex flex-col gap-5 max-h-80 cursor-grab">
-                                        <h2 class="relative z-20 font-bold text-3xl text-white">
+                                        <h2 class="relative z-20 font-bold b-text-3xl text-white">
                                             {{ item.title }}
                                         </h2>
-                                        <p class="relative z-20 mb-1 text-xl max-w-lg text-gray-300">
+                                        <p class="relative z-20 mb-1 b-text-xl max-w-lg text-gray-300">
                                             {{ item.description }}
                                         </p>
                                     </div>
