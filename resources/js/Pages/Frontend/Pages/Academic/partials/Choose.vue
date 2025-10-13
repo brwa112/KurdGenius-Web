@@ -1,0 +1,82 @@
+<template>
+  <section class="relative overflow-hidden mb-20">
+    <div class="w-full sm:container 3xl:max-w-[67%] mx-auto px-4">
+      <div class="relative flex flex-col items-center justify-between gap-y-7 lg:gap-y-14 gap-x-8 xl:gap-x-10 py-16">
+        <!-- Content -->
+        <div class="relative z-5 flex-1 text-center space-y-1.5 max-w-xl xl:max-w-2xl">
+          <h2 class="text-2xl lg:text-3xl xl:text-[32px] font-semibold text-black leading-tight">
+            {{ $t('academic.chooseTitle') }}
+          </h2>
+          <p class="leading-6 text-base lg:text-base xl:text-xl font-normal text-pretty">
+            {{ $t('academic.chooseDescription') }}
+          </p>
+        </div>
+        <div class="w-full flex flex-col gap-5">
+          <div v-for="choose in chooses" :key="choose.id"
+            class="group relative z-10 w-full flex items-center gap-4 sm:gap-9 lg:gap-13">
+            <img :src="choose.icon" alt="mission" class="size-10 sm:size-auto object-contain" />
+            <div
+              :class="`relative z-5 w-full flex-1 text-center bg-white ${choose.borderColor} border-e-2 rounded-2xl px-3 sm:px-7 lg:px-8 py-4 sm:py-6.5 overflow-hidden`">
+              <div class="relative z-5 space-y-0.5 group-hover:text-white duration-400">
+                <h2 class="text-base lg:text-lg xl:text-xl ltr:font-medium rtl:font-semibold leading-tight">
+                  {{ $t(`academic.choose.item${choose.id}.title`) }}
+                </h2>
+                <p class="leading-6 text-base lg:text-lg xl:text-xl font-normal text-pretty">
+                  {{ $t(`academic.choose.item${choose.id}.description`) }}
+                </p>
+              </div>
+              <div
+                :class="`absolute inset-y-0 end-0 z-0 start-full group-hover:start-0 opacity-0 group-hover:opacity-100 duration-500 rounded-2xl ${choose.bgColor}`">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background Lines -->
+    <div class="absolute inset-0 z-0 flex bg-gray-50/50">
+      <div v-for="i in 150" :key="i" class="divide-x-3 divide-y-3 divide-gray-100/50">
+        <div v-for="i in 150" :key="i" class="size-8"></div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { trans } from 'laravel-vue-i18n';
+import { ref } from 'vue';
+
+const chooses = ref([
+  {
+    id: 1,
+    icon: '/img/academic/1.svg',
+    bgColor: 'bg-[#F0457D]/100',
+    borderColor: 'border-[#F0457D]',
+  },
+  {
+    id: 2,
+    icon: '/img/academic/2.svg',
+    bgColor: 'bg-[#FFD44D]/100',
+    borderColor: 'border-[#FFD44D]',
+  },
+  {
+    id: 3,
+    icon: '/img/academic/3.svg',
+    bgColor: 'bg-[#0099F5]/100',
+    borderColor: 'border-[#0099F5]',
+  },
+  {
+    id: 4,
+    icon: '/img/academic/4.svg',
+    bgColor: 'bg-[#F0457D]/100',
+    borderColor: 'border-[#F0457D]',
+  },
+  {
+    id: 5,
+    icon: '/img/academic/5.svg',
+    bgColor: 'bg-[#FFD44D]/100',
+    borderColor: 'border-[#FFD44D]',
+  }
+]);
+</script>
+

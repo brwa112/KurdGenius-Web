@@ -11,8 +11,15 @@ export default {
       center: true,
     },
     extend: {
+      // add custom responsive breakpoints and root CSS variables
+      screens: {
+        '2xs': '26rem', // 416px
+        'xs': '30rem',  // 480px
+        '3xl': '120rem', // 1920px
+        '4xl': '160rem', // 2560px
+      },
       colors: {
-        'f-primary': '#0E0E0E',
+        'f-primary': '#0028DF',
         'f-secondary': '#CE8440',
         primary: {
           DEFAULT: '#4361ee',
@@ -62,9 +69,9 @@ export default {
       },
       fontFamily: {
         nunito: ['Jost', 'Rabar', 'sans-serif'],
-        'mont': ['Montserrat'],
-        'audi': ['Audiowide'],
-        'allerta': ['Allerta Stencil'],
+        mont: ['Montserrat', 'Rabar', 'sans-serif'],
+        audi: ['Audiowide'],
+        allerta: ['Allerta Stencil'],
       },
       spacing: {
         4.5: '18px',
@@ -92,6 +99,17 @@ export default {
     },
   },
   plugins: [
+    // plugin to inject CSS custom properties into :root
+    // function ({ addBase }) {
+    //   addBase({
+    //     ':root': {
+    //       '--breakpoint-2xs': '26rem', /* 416px */
+    //       '--breakpoint-xs': '30rem',  /* 480px */
+    //       '--breakpoint-3xl': '120rem', /* 1920px */
+    //       '--breakpoint-4xl': '160rem', /* 2560px */
+    //     },
+    //   })
+    // },
     require('@tailwindcss/forms')({
       strategy: 'class',
     }),

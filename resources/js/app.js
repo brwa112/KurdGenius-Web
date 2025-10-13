@@ -1,4 +1,5 @@
 import '../css/app.css';
+import 'swiper/css';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -23,6 +24,7 @@ import { MotionPlugin } from '@vueuse/motion'
 import Spinner from '@/Components/Spinner.vue';
 import { vTooltip, vClosePopper, Dropdown, Tooltip, Menu } from 'floating-vue'
 import 'floating-vue/dist/style.css'
+import { Swiper, SwiperSlide } from 'swiper/vue';
 
 
 const app = createApp({});
@@ -55,6 +57,8 @@ const { el, App, props, plugin } = createInertiaApp({
       .component('Svg', Svg)
       .component('Spinner', Spinner)
       .component('VDropdown', Dropdown)
+      .component('Swiper', Swiper)
+      .component('SwiperSlide', SwiperSlide)
       .use(Vue3Shortkey)
       .use(ImageUploadVue)
       .use(Particles, {

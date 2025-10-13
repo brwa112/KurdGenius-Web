@@ -70,16 +70,16 @@
                                 <div class="flex items-center px-1 py-1">
                                     <div class="flex-none">
                                         <img class="rounded-full size-9 object-cover" alt="avatar"
-                                            :src="$page.props.auth.user.avatar || '/assets/images/avatar.png'" />
+                                            :src="$page.props.auth?.user?.avatar || '/assets/images/avatar.png'" />
                                     </div>
                                     <div
                                         class="ps-7 pe-2 py-0.5 -ms-5 hidden md:flex items-center gap-5 text-start bg-gray-50 bg-opacity-5 rounded-e-full">
                                         <div class="block -space-y-0.5">
                                             <h4 class="text-xs font-bold">
-                                                {{ $page.props.auth.user.name }}
+                                                {{ $page.props.auth?.user?.name }}
                                             </h4>
                                             <p class="text-black/60 dark:text-dark-light/60" style="font-size: 10px;">
-                                                {{ $page.props.auth.user.email }}
+                                                {{ $page.props.auth?.user?.email }}
                                             </p>
                                         </div>
                                         <Svg name="arrow_left" class="size-5 duration-200 -rotate-90"
@@ -94,15 +94,15 @@
                                         <div class="flex items-center px-4 py-4">
                                             <div class="flex-none">
                                                 <img class="rounded-md w-10 h-10 object-cover"
-                                                    :src="$page.props.auth.user.avatar || '/assets/images/avatar.png'"
+                                                    :src="$page.props.auth.user?.avatar || '/assets/images/avatar.png'"
                                                     alt="avatar" />
                                             </div>
                                             <div class="ltr:pl-4 rtl:pr-4 truncate">
                                                 <h4 class="text-base">
-                                                    {{ $page.props.auth.user.name }}
+                                                    {{ $page.props.auth.user?.name }}
                                                 </h4>
                                                 <p class="text-black/60 dark:text-dark-light/60" style="font-size: 14px;">
-                                                    {{ $page.props.auth.user.email }}
+                                                    {{ $page.props.auth.user?.email }}
                                                 </p>
                                             </div>
                                         </div>
