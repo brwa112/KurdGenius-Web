@@ -4,13 +4,14 @@ namespace App\Models\System\Settings\System;
 
 
 use App\Models\System\Users\Permission;
+use App\Models\Traits\RangeScopes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GroupPermission extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, RangeScopes;
 
     protected $fillable = ['name', 'slug', 'description', 'user_id'];
 

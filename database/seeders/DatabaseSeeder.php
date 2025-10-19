@@ -160,6 +160,11 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Manage translations for the application',
             ],
             [
+                'name' => 'themes',
+                'slug' => 'themes',
+                'description' => 'Manage themes for the application',
+            ],
+            [
                 'name' => 'logs',
                 'slug' => 'logs',
                 'description' => 'Manage client status history',

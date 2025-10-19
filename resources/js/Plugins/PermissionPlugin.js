@@ -9,7 +9,7 @@ const PermissionPlugin = {
       const { props } = usePage();
 
       /* helper: return every name we should recognise
-         - user / reseller:         p.name
+         - user :         p.name
          - client package:          p.group_name.name
          - strings:                 leave as‑is                                   */
       const extractNames = (list) =>
@@ -26,20 +26,8 @@ const PermissionPlugin = {
       /* 1. user.permissions */
       const userPerms = extractNames(props.auth?.user?.permissions || []);
 
-      /* 2. reseller.package.permissions */
-      const resellerPerms = extractNames(
-        props.auth?.user?.reseller?.reseller_packages?.permissions || []
-      );
-
-      /* 3. client.package.permissions */
-      const clientPerms = extractNames(
-        props.auth?.user?.client?.package?.permissions || []
-      );
-
-      // console.log(userPerms,resellerPerms, clientPerms);
-
       /* combine + dedupe */
-      const permissions = Array.from(new Set([...userPerms, ...resellerPerms, ...clientPerms]));
+      const permissions = Array.from(new Set([...userPerms]));
 
       /* evaluation */
       const test = perm => permissions.includes(perm.trim());

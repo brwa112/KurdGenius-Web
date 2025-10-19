@@ -1,72 +1,104 @@
 <template>
     <div class="dropdown !static sm:!relative flex">
         <template v-if="!disabled">
+            <VDropdown :placement="placement" @apply-hide="handleDropdownHide">
+                <button ref="buttonRef" type="button"
+                    class="w-full flex items-center gap-1.5 rounded-md leading-3 border cursor-pointer font-semibold bg-white border-[#e0e6ed] dark:border-transparent dark:bg-[#121e32] text-gray-500 dark:text-white-dark">
+                    <div class="flex items-center gap-2 px-2.5 py-2 rounded-md font-bold"
+                        :class="{ 'text-primary': count.length > 0, style }">
+                        <button v-if="multiple == true" type="button" @click="countFocus"
+                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-1">
+                            <span v-if="count.length > 0" :class="buttonStyle">
+                                ({{ count.length }}) {{count.map(item => item[label] || item.name).join(', ')}}
+                            </span>
+                            <span v-else class="text-sm">
+                                {{ placeholder ? $t(`${parentKey}.${placeholder}`) : $t('common.please_select') }}
+                            </span>
+                            <Svg name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
+                        </button>
+                        <button v-if="multiple == false" type="button" @click="countFocus"
+                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-4">
+                            <span v-if="Object.keys(count)?.length > 0" :class="buttonStyle">
+                                <span v-if="props.parentKey">
+                                    {{ $t(`${parentKey}.${checkObject(count[props.label])}`) ||
+                                        checkObject(count[props.label] || count.name) }}
+                                </span>
+                                <span v-else>
+                                    {{ checkObject(count[props.label] || count.name) }}
+                                </span>
+                            </span>
+                            <span v-else class="text-sm">
+                                {{ placeholder ? $t(`${placeholderParentKey}.${placeholder}`) :
+                                $t('common.please_select') }}
+                            </span>
+                            <Svg v-if="!checkObject(count[props.label] || count.name) || count.length < 0"
+                                name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
+                        </button>
+                        <button v-if="checkObject(count[props.label] || count.name) || count.length > 0" type="button"
+                            @click="clearCount" class="whitespace-nowrap flex justify-between items-center gap-1">
+                            <Svg name="close" class="size-4 text-gray-500"></Svg>
+                        </button>
+                    </div>
+                </button>
 
-            <Menu v-slot="{ open,close }" as="div" class="inline-block text-left">
-                <div>
-                    <MenuButton>
-                        <div class="flex items-center gap-2 px-2 py-1.5 rounded-md font-bold" :class="{ 'text-primary': count.length > 0, [style]: true }">
-                            <button v-if="multiple == true" type="button" @click="countFocus" class="whitespace-nowrap flex justify-center items-center gap-1">
-                                <span v-if="count.length > 0"> ({{ count.length }}) </span>
-                                <span> {{ label }} </span>
-                                <Svg name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
-                            </button>
-                            <button v-if="multiple == false" type="button" @click="countFocus" class="whitespace-nowrap flex justify-center items-center gap-1">
-                                <span v-if="Object.keys(count)?.length > 0"> {{ checkObject(count.name) }} </span>
-                                <span v-else> {{ label }} </span>
-                                <Svg name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
-                            </button>
-                            <button v-if="count.length > 0" type="button" @click="clearCount" class="whitespace-nowrap flex justify-center items-center gap-1">
-                                <Svg name="close" class="size-4 text-gray-500"></Svg>
-                            </button>
-                        </div>
-                    </MenuButton>
-                </div>
-
-                <div v-show="open">
-                    <transition enter-active-class="transition duration-100 ease-out" enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100" leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
-                        <MenuItems static class="absolute inset-x-3 sm:start-0 z-50 mt-1 min-w-80 !rounded-xl">
-                            <ul class="relative whitespace-nowrap bg-white dark:bg-[#1b2e4b] border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden !my-0">
-                                <li v-if="searchable" class="relative">
-                                    <div class="bg-white dark:bg-[#1b2e4b] p-1.5 absolute -top-2 left-0 right-0 z-10">
-                                        <div class="relative w-full">
-                                            <input ref="focusInput" type="text" placeholder="Search..." v-model="countFilter" class="form-input rounded-none focus:border-gray-200 py-1.5 px-3" />
-                                            <button v-if="countFilter.length > 0" type="button" @click="clearFilter" class="absolute end-0 top-2 z-20 mx-2">
-                                                <Svg name="close" class="size-5 text-gray-500"></Svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li :class="{ 'mt-10': searchable }" class="max-h-52 min-w-72 overflow-auto">
-                                    <button type="button" v-for="(countOption, i) in countOptions" @click="selectOption(countOption,close)" class="flex items-center justify-between gap-10 p-1" :class="{ '!bg-primary/10 !text-primary': checkSelect(countOption.id) }" :key="i">
-                                        <div class="flex items-center gap-2">
-                                            <img v-if="countOption.image || has_image" class="inline-block size-8 rounded-full" :src="countOption?.image || `/assets/images/avatar.png`" alt="Image Description" />
-                                            <slot name="prefix" :data="countOption"></slot>
-
-                                            <div class="flex flex-col items-start">
-                                                <h1>{{ countOption.label }}</h1>
-                                                <p class="b-text-xs text-gray-500">{{ countOption.description }}</p>
-                                                <p class="b-text-xs text-gray-500">{{ countOption?.email }}</p>
-                                            </div>
-                                        </div>
-                                        <Svg name="check" class="size-5" :class="{ 'hidden': !checkSelect(countOption.id) }"></Svg>
+                <template #popper="{ hide }">
+                    <ul :class="{ 'pt-2': searchable }"
+                        class="relative py-1 w-full whitespace-nowrap text-sm dark:text-gray-200 dark:bg-[#1b2e4b] border !border-gray-200 dark:!border-gray-800 rounded-md overflow-hidden !my-0">
+                        <li v-if="searchable" class="relative">
+                            <div class="bg-white dark:bg-[#1b2e4b] p-1.5 absolute -top-2 left-0 right-0 z-10">
+                                <div class="relative w-full">
+                                    <input ref="focusInput" type="text" :placeholder="$t('common.search')"
+                                        v-model="countFilter"
+                                        class="form-input shadow-none focus:border-gray-200 dark:focus:border-gray-800" />
+                                    <button v-if="countFilter.length > 0" type="button" @click="clearFilter"
+                                        class="absolute end-0 top-2 z-20 mx-2">
+                                        <Svg name="close" class="size-5 text-gray-500"></Svg>
                                     </button>
-                                </li>
-                                <li v-if="countOptions.length == 0" class="my-2">
-                                    <div class="px-4 min-w-56">
-                                        {{ $t('crm.no_results_found') }}
-                                    </div>
-                                </li>
-                            </ul>
-                        </MenuItems>
-                    </transition>
-                </div>
-            </Menu>
+                                </div>
+                            </div>
+                        </li>
+                        <li :class="{ 'mt-10': searchable }">
+                            <perfect-scrollbar class="relative max-h-52 min-w-56 overflow-auto" :class="style">
+                                <button type="button" v-for="(countOption, i) in countOptions" :key="i"
+                                    @click="() => { selectOption(countOption, hide); buttonRef?.focus(); }"
+                                    class="w-full flex items-center justify-between gap-10 px-3.5 py-2 duration-150 hover:text-primary hover:bg-primary/10"
+                                    :class="[{ '!bg-primary/10 !text-primary': checkSelect(countOption.id) }, buttonStyle]">
+                                    <div class="flex items-center gap-2">
+                                        <img v-if="countOption.image || has_image"
+                                            class="inline-block size-8 rounded-full"
+                                            :src="countOption?.image || `/assets/images/avatar.png`"
+                                            alt="Image Description" />
+                                        <slot name="prefix" :data="countOption"></slot>
 
-            <input :disabled="disabled" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" class="form-input hidden" />
+                                        <div class="flex flex-col items-start">
+                                            <h1 v-if="!countOption.slug" v-html="renderMarkdown(countOption.label)">
+                                            </h1>
+                                            <h1 v-if="countOption.slug">
+                                                {{ $t(`${parentKey}.${countOption.slug}`) }}
+                                            </h1>
+                                            <p v-if="isInfo" class="text-xs text-gray-500">{{ countOption.description }}</p>
+                                            <p v-if="isInfo" class="text-xs text-gray-500">{{ countOption?.email }}</p>
+                                        </div>
+                                    </div>
+                                    <Svg name="check" class="size-5"
+                                        :class="{ 'hidden': !checkSelect(countOption.id) }"></Svg>
+                                </button>
+                            </perfect-scrollbar>
+                        </li>
+                        <li v-if="countOptions.length == 0" class="my-2">
+                            <div class="px-4 min-w-56">
+                                {{ $t('common.no_results_found') }}
+                            </div>
+                        </li>
+                    </ul>
+                </template>
+            </VDropdown>
+
+            <input :disabled="disabled" type="text" :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)" class="form-input hidden" />
         </template>
         <template v-else>
-            <div class="flex items-center gap-2 px-2 py-1.5 rounded-md font-bold " :class="{ [style]: true }">
+            <div class="flex items-center gap-2 px-2 py-1.5 rounded-md font-bold " :class="style">
                 <span> {{ count.name }} </span>
             </div>
         </template>
@@ -74,8 +106,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, inject } from 'vue';
-import { Menu, MenuButton, MenuItems } from '@headlessui/vue';
+import { ref, computed, onMounted, inject, watch } from 'vue';
 import Svg from '@/Components/Svg.vue';
 
 const props = defineProps({
@@ -95,6 +126,10 @@ const props = defineProps({
         type: String,
         default: 'name',
     },
+    displayField: {
+        type: String,
+        default: 'name',
+    },
     style: {
         type: String,
         default: '',
@@ -111,13 +146,44 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    placement: {
+        type: String,
+        default: 'bottom-start',
+    },
+    buttonStyle: {
+        type: String,
+        default: '',
+    },
+    listStyle: {
+        type: String,
+        default: '',
+    },
+    parentKey: {
+        type: String,
+        default: '',
+    },
+    placeholder: {
+        type: String,
+        default: '',
+    },
+    placeholderParentKey: {
+        type: String,
+        default: 'system',
+    },
+    isInfo: {
+        type: Boolean,
+        default: false,
+    },
 });
 
+const rtlClass = inject('rtlClass');
 const language = inject('language');
 
 const emit = defineEmits(['update:modelValue', 'change']);
 
 const count = ref([]);
+const focusInput = ref(null);
+const buttonRef = ref(null);
 
 onMounted(() => {
     if (props.multiple) {
@@ -127,35 +193,50 @@ onMounted(() => {
     }
 });
 
+// Handle dropdown hide to ensure focus returns properly
+const handleDropdownHide = () => {
+    // Return focus to the button when dropdown closes
+    setTimeout(() => {
+        buttonRef.value?.focus();
+    }, 50);
+};
+
 const countFilter = ref('');
 
 const countOptions = computed(() => {
     return props.list
         .filter((item) => {
             const searchString = countFilter.value.toLowerCase();
+
+            // Use the label prop to determine which field to search
+            const labelField = props.label || 'name';
+            const itemValue = typeof item[labelField] === 'string' ? item[labelField].toLowerCase().includes(searchString) : false;
+
+            // Fallback to original fields for backward compatibility
             const itemName = typeof item.name === 'string' ? item.name.toLowerCase().includes(searchString) : false;
             const itemTitle = typeof item.title === 'string' ? item.title.toLowerCase().includes(searchString) : false;
             const itemDisplayName = typeof item.display_name === 'string' ? item.display_name.toLowerCase().includes(searchString) : false;
-            return itemName || itemTitle || itemDisplayName;
+
+            return itemValue || itemName || itemTitle || itemDisplayName;
         })
         .map((item) => ({
             ...item,
-            label: item.name || item.title,
+            label: item[props.label] || item.name || item.title,
             description: item.description,
             email: item.email,
             filter: item.filter,
         }));
 });
 
-const focusInput = ref(null);
+
+// Already declared above, reusing here
 const countFocus = () => {
     setTimeout(() => {
         focusInput?.value?.focus();
     }, 100);
 };
 
-const selectOption = (option, close) => {
-
+const selectOption = (option, hide) => {
     if (props.multiple) {
         const index = count.value.findIndex((item) => item.id === option.id);
         if (index !== -1) {
@@ -171,9 +252,12 @@ const selectOption = (option, close) => {
     emit('change', count.value);
 
     if (!props.multiple) {
-        close();
+        // Return focus to button after selecting in single-select mode
+        hide();
+        setTimeout(() => {
+            buttonRef.value?.focus();
+        }, 50);
     }
-
 };
 
 const checkSelect = (id) => {
@@ -183,7 +267,7 @@ const checkSelect = (id) => {
     if (!props.multiple) {
         return count.value.id === id;
     } else {
-        return count.value.some((item) => item.id === id);
+        return count.value?.length && count.value.some((item) => item.id === id);
     }
 };
 
@@ -206,4 +290,32 @@ const checkObject = (value) => {
 
     return value;
 };
+
+watch(() => props.modelValue, (newValue) => {
+    if (props.multiple) {
+        count.value = newValue ? newValue : [];
+    } else {
+        count.value = newValue ? newValue : {};
+    }
+}, { deep: true });
+
+
+import { marked } from 'marked';
+
+const renderMarkdown = (body) => {
+    if (!body) return '';
+
+    if (!body.includes('*')) return body;
+
+    let content = body
+
+        .replace(/\n/g, '  \n')
+        .replace(/\*\*/g, '___DOUBLE_ASTERISK___')
+        .replace(/\*([^*]+)\*/g, '**$1**')
+        .replace(/___DOUBLE_ASTERISK___/g, '**');
+
+    const renderer = new marked.Renderer();
+    return marked.parseInline(content, { renderer });
+};
+
 </script>

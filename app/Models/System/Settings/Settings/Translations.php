@@ -2,6 +2,7 @@
 
 namespace App\Models\System\Settings\Settings;
 
+use App\Models\Traits\RangeScopes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\System\Settings\Settings\Key;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Translations extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes, RangeScopes;
+
     protected $fillable = ['key_id', 'value', 'language_id'];
 
     public function keys()
@@ -22,10 +24,12 @@ class Translations extends Model
     {
         return $this->belongsTo(Language::class, 'language_id');
     }
+
     public function scopeSearch($query, $search)
     {
         return $query->where('value', 'like', "%$search%");
     }
+    
     public function scopeSearchByLanguage($query, $languageId)
     {
         if($languageId === null || $languageId === []){

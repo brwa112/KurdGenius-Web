@@ -2,6 +2,7 @@
 
 namespace App\Models\System\Settings\Settings;
 
+use App\Models\Traits\RangeScopes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\System\Users\UserSettings;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Language extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, RangeScopes;
 
     protected $fillable = ['name','slug', 'direction'];
 
@@ -40,8 +41,6 @@ class Language extends Model
     {
         return $this->hasMany(Translations::class);
     }
-
-
 
     public function scopeSearch($query, $search)
     {

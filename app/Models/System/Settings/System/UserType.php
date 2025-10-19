@@ -3,15 +3,16 @@
 namespace App\Models\System\Settings\System;
 
 use App\Models\System\Users\User;
+use App\Models\Traits\RangeScopes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserType extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes, RangeScopes;
+    
     protected $guarded = [];
-
 
     protected $appends = ['users_count'];
     
@@ -19,7 +20,6 @@ class UserType extends Model
     {
         return $this->users()->count();
     }
-
     
     public function users()
     {

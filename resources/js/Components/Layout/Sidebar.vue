@@ -104,6 +104,19 @@
                                 </div>
                                 </Link>
                             </li>
+                            <li v-if="$can('permissions|view_permissions|view_usertypes|view_group_permissions|view_permissions|view_logs|view_font_size|view_theme|view_languages|view_keys|view_translations')"
+                                class="nav-item">
+                                <Link :href="route('control.system.settings')" class="nav-link group w-full"
+                                    :class="{ active: $page.component.startsWith('System/Settings') }">
+                                <div class="flex items-center">
+                                    <Svg name="setup" class="size-5"></Svg>
+                                    <span
+                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">
+                                        {{ $t('nav.settings') }}
+                                    </span>
+                                </div>
+                                </Link>
+                            </li>
                         </ul>
 
                         <h2
