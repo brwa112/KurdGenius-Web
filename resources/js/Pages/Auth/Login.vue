@@ -26,7 +26,7 @@
                             <div class="main-logo flex items-center whitespace-nowrap">
                                 <img class="w-8 ml-[5px] flex-none" :src="'/img/logo/full_logo.png'" alt="" />
                                 <h1
-                                    class="text-xl ms-2 font-bold align-middle uppercase inline text-gray-600 dark:text-white-light">
+                                    class="b-text-xl ms-2 font-bold align-middle uppercase inline text-gray-600 dark:text-white-light">
                                     {{ $t('common.logo') }}
                                 </h1>
                             </div>
@@ -62,15 +62,15 @@
                     </div>
                     <div class="w-full max-w-[440px]">
                         <div class="mb-10">
-                            <h1 class="text-xl md:text-2xl font-extrabold uppercase !leading-snug text-primary">
+                            <h1 class="b-text-xl md:b-text-2xl font-extrabold uppercase !leading-snug text-primary">
                                 {{ $t('auth.sign_in') }}
                             </h1>
-                            <p class="text-xs md:text-base font-bold leading-normal text-white-dark">
+                            <p class="b-text-xs md:b-text-base font-bold leading-normal text-white-dark">
                                 {{ $t('auth.detail_sign_in') }}
                             </p>
 
                             <!-- error -->
-                            <p v-if="errors.length" class="text-red-500 text-sm mt-2">
+                            <p v-if="errors.length" class="text-red-500 b-text-sm mt-2">
                                 {{ errors }}
                             </p>
 
@@ -85,7 +85,7 @@
                                         <Svg name="user" class="size-5"></Svg>
                                     </span>
                                 </div>
-                                <p class="text-sm text-red-500 m-1">{{ form.errors.login }}</p>
+                                <p class="b-text-sm text-red-500 m-1">{{ form.errors.login }}</p>
                             </div>
                             <div>
                                 <label for="Password">{{ $t('auth.password') }}</label>
@@ -106,7 +106,7 @@
                                         <Svg name="eye" class="size-5 "></Svg>
                                     </button>
                                 </div>
-                                <p class="text-sm text-red-500 m-1">{{ form.errors.password }}</p>
+                                <p class="b-text-sm text-red-500 m-1">{{ form.errors.password }}</p>
                             </div>
                             <button type="submit" :disabled="form.processing"
                                 class="btn btn-primary !mt-6 w-full border-0 uppercase">

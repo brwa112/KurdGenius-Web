@@ -35,7 +35,6 @@ class User extends Authenticatable implements HasMedia
         'password',
         'is_active',
         'user_type_id',
-        'reseller_id',
         'client_id',
         'font_size_id',
         'theme',

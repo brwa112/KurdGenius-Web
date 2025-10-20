@@ -11,5 +11,4 @@ class FontSize extends Model
     use HasFactory,SoftDeletes;
     
     protected $fillable = ['size', 'created_user_id'];
-    
 }

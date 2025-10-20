@@ -22,4 +22,5 @@ return [
     'hostings' => 'الاستضافات',
     'all_reserved' => 'جميع الحقوق محفوظة.',
     'others' => 'أخرى',
+    'settings' => 'Settings',
 ];

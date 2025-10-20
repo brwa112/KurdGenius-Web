@@ -22,4 +22,5 @@ return [
     'hostings' => 'Hostings',
     'all_reserved' => 'All rights reserved',
     'others' => 'Others',
+    'settings' => 'Settings',
 ];

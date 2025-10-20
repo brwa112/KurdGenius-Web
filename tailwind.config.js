@@ -11,8 +11,19 @@ export default {
       center: true,
     },
     extend: {
+      screens: {
+        '2xs': '26rem', // 416px
+        'xs': '30rem',  // 480px
+        'sm': '36rem',  // 576px
+        'md': '48rem',  // 768px
+        'lg': '62rem',  // 992px
+        'xl': '80rem',  // 1280px
+        '2xl': '96rem', // 1536px
+        '3xl': '120rem', // 1920px
+        '4xl': '160rem', // 2560px
+      },
       colors: {
-        'f-primary': '#0E0E0E',
+        'f-primary': '#0028DF',
         'f-secondary': '#CE8440',
         primary: {
           DEFAULT: '#4361ee',
@@ -62,9 +73,9 @@ export default {
       },
       fontFamily: {
         nunito: ['Jost', 'Rabar', 'sans-serif'],
-        'mont': ['Montserrat'],
-        'audi': ['Audiowide'],
-        'allerta': ['Allerta Stencil'],
+        mont: ['Montserrat', 'Rabar', 'sans-serif'],
+        audi: ['Audiowide'],
+        allerta: ['Allerta Stencil'],
       },
       spacing: {
         4.5: '18px',

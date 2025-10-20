@@ -5,7 +5,7 @@
 .custom-multiselect.multiselect,
 .custom-multiselect .multiselect__input,
 .custom-multiselect .multiselect__single {
-    @apply text-sm;
+    @apply b-text-sm;
 }
 
 .custom-multiselect.multiselect .multiselect__tags {

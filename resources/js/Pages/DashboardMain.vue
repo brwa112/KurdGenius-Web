@@ -10,7 +10,7 @@
             <div class="grid xl:grid-cols-3 gap-6 mb-6">
                 <div class="panel h-full xl:col-span-2">
                     <div class="flex items-center justify-between dark:text-white-light mb-5">
-                        <h5 class="font-semibold text-lg">Revenue</h5>
+                        <h5 class="font-semibold b-text-lg">Revenue</h5>
                         <div class="dropdown ltr:ml-auto rtl:mr-auto">
                             <Popper :placement="rtlClass === 'rtl' ? 'bottom-start' : 'bottom-end'" offsetDistance="0"
                                 class="align-middle">
@@ -39,7 +39,7 @@
                             </Popper>
                         </div>
                     </div>
-                    <p class="text-lg dark:text-white-light/90">Total Profit <span class="text-primary ml-2">$10,840</span>
+                    <p class="b-text-lg dark:text-white-light/90">Total Profit <span class="text-primary ml-2">$10,840</span>
                     </p>
                     <div class="relative">
                         <apexchart height="325" :options="revenueChart" :series="revenueSeries"
@@ -56,7 +56,7 @@
 
                 <div class="panel h-full">
                     <div class="flex items-center mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Sales By Category</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Sales By Category</h5>
                     </div>
                     <div>
                         <apexchart height="460" :options="salesByCategory" :series="salesByCategorySeries"
@@ -75,8 +75,8 @@
             <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
                 <div class="panel h-full sm:col-span-2 xl:col-span-1">
                     <div class="flex items-center mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">
-                            Daily Sales <span class="block text-white-dark text-sm font-normal">Go to columns for
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">
+                            Daily Sales <span class="block text-white-dark b-text-sm font-normal">Go to columns for
                                 details.</span>
                         </h5>
                         <div class="ltr:ml-auto rtl:mr-auto relative">
@@ -107,7 +107,7 @@
 
                 <div class="panel h-full">
                     <div class="flex items-center dark:text-white-light mb-5">
-                        <h5 class="font-semibold text-lg">Summary</h5>
+                        <h5 class="font-semibold b-text-lg">Summary</h5>
                         <div class="dropdown ltr:ml-auto rtl:mr-auto">
                             <Popper :placement="rtlClass === 'rtl' ? 'bottom-start' : 'bottom-end'" offsetDistance="0"
                                 class="align-middle">
@@ -247,9 +247,9 @@
                                 </svg>
                             </div>
                         </div>
-                        <h5 class="font-semibold text-2xl ltr:text-right rtl:text-left dark:text-white-light">
+                        <h5 class="font-semibold b-text-2xl ltr:text-right rtl:text-left dark:text-white-light">
                             3,192
-                            <span class="block text-sm font-normal">Total Orders</span>
+                            <span class="block b-text-sm font-normal">Total Orders</span>
                         </h5>
                     </div>
                     <apexchart height="290" :options="totalOrders" :series="totalOrdersSeries"
@@ -266,130 +266,130 @@
 
             <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
                 <div class="panel h-full sm:col-span-2 xl:col-span-1 pb-0">
-                    <h5 class="font-semibold text-lg dark:text-white-light mb-5">Recent Activities</h5>
+                    <h5 class="font-semibold b-text-lg dark:text-white-light mb-5">Recent Activities</h5>
 
                     <perfect-scrollbar :options="{
                         swipeEasing: true,
                         wheelPropagation: false,
                     }" class="relative mb-4 h-[290px] pr-3 -mr-3">
-                        <div class="text-sm cursor-pointer">
+                        <div class="b-text-sm cursor-pointer">
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-primary w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Updated Server Logs</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">Just Now
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">Just Now
                                 </div>
 
                                 <span
-                                    class="badge badge-outline-primary absolute ltr:right-0 rtl:left-0 text-xs bg-primary-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
+                                    class="badge badge-outline-primary absolute ltr:right-0 rtl:left-0 b-text-xs bg-primary-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-success w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Send Mail to HR and Admin</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">2 min ago
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">2 min ago
                                 </div>
 
                                 <span
-                                    class="badge badge-outline-success absolute ltr:right-0 rtl:left-0 text-xs bg-success-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
+                                    class="badge badge-outline-success absolute ltr:right-0 rtl:left-0 b-text-xs bg-success-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-danger w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Backup Files EOD</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">14:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">14:00</div>
 
                                 <span
-                                    class="badge badge-outline-danger absolute ltr:right-0 rtl:left-0 text-xs bg-danger-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
+                                    class="badge badge-outline-danger absolute ltr:right-0 rtl:left-0 b-text-xs bg-danger-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-black w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Collect documents from Sara</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">16:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">16:00</div>
 
                                 <span
-                                    class="badge badge-outline-dark absolute ltr:right-0 rtl:left-0 text-xs bg-dark-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
+                                    class="badge badge-outline-dark absolute ltr:right-0 rtl:left-0 b-text-xs bg-dark-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-warning w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Conference call with Marketing Manager.</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">17:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">17:00</div>
 
                                 <span
-                                    class="badge badge-outline-warning absolute ltr:right-0 rtl:left-0 text-xs bg-warning-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">In
+                                    class="badge badge-outline-warning absolute ltr:right-0 rtl:left-0 b-text-xs bg-warning-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">In
                                     progress</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-info w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Rebooted Server</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">17:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">17:00</div>
 
                                 <span
-                                    class="badge badge-outline-info absolute ltr:right-0 rtl:left-0 text-xs bg-info-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
+                                    class="badge badge-outline-info absolute ltr:right-0 rtl:left-0 b-text-xs bg-info-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-secondary w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Send contract details to Freelancer</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">18:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">18:00</div>
 
                                 <span
-                                    class="badge badge-outline-secondary absolute ltr:right-0 rtl:left-0 text-xs bg-secondary-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
+                                    class="badge badge-outline-secondary absolute ltr:right-0 rtl:left-0 b-text-xs bg-secondary-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-primary w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Updated Server Logs</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">Just Now
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">Just Now
                                 </div>
 
                                 <span
-                                    class="badge badge-outline-primary absolute ltr:right-0 rtl:left-0 text-xs bg-primary-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
+                                    class="badge badge-outline-primary absolute ltr:right-0 rtl:left-0 b-text-xs bg-primary-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-success w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Send Mail to HR and Admin</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">2 min ago
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">2 min ago
                                 </div>
 
                                 <span
-                                    class="badge badge-outline-success absolute ltr:right-0 rtl:left-0 text-xs bg-success-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
+                                    class="badge badge-outline-success absolute ltr:right-0 rtl:left-0 b-text-xs bg-success-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-danger w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Backup Files EOD</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">14:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">14:00</div>
 
                                 <span
-                                    class="badge badge-outline-danger absolute ltr:right-0 rtl:left-0 text-xs bg-danger-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
+                                    class="badge badge-outline-danger absolute ltr:right-0 rtl:left-0 b-text-xs bg-danger-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-black w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Collect documents from Sara</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">16:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">16:00</div>
 
                                 <span
-                                    class="badge badge-outline-dark absolute ltr:right-0 rtl:left-0 text-xs bg-dark-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
+                                    class="badge badge-outline-dark absolute ltr:right-0 rtl:left-0 b-text-xs bg-dark-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-warning w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Conference call with Marketing Manager.</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">17:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">17:00</div>
 
                                 <span
-                                    class="badge badge-outline-warning absolute ltr:right-0 rtl:left-0 text-xs bg-warning-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">In
+                                    class="badge badge-outline-warning absolute ltr:right-0 rtl:left-0 b-text-xs bg-warning-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">In
                                     progress</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-info w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Rebooted Server</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">17:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">17:00</div>
 
                                 <span
-                                    class="badge badge-outline-info absolute ltr:right-0 rtl:left-0 text-xs bg-info-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
+                                    class="badge badge-outline-info absolute ltr:right-0 rtl:left-0 b-text-xs bg-info-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Completed</span>
                             </div>
                             <div class="flex items-center py-1.5 relative group">
                                 <div class="bg-secondary w-1.5 h-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
                                 <div class="flex-1">Send contract details to Freelancer</div>
-                                <div class="ltr:ml-auto rtl:mr-auto text-xs text-white-dark dark:text-gray-500">18:00</div>
+                                <div class="ltr:ml-auto rtl:mr-auto b-text-xs text-white-dark dark:text-gray-500">18:00</div>
 
                                 <span
-                                    class="badge badge-outline-secondary absolute ltr:right-0 rtl:left-0 text-xs bg-secondary-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
+                                    class="badge badge-outline-secondary absolute ltr:right-0 rtl:left-0 b-text-xs bg-secondary-light dark:bg-[#0e1726] opacity-0 group-hover:opacity-100">Pending</span>
                             </div>
                         </div>
                     </perfect-scrollbar>
@@ -408,7 +408,7 @@
 
                 <div class="panel h-full">
                     <div class="flex items-center justify-between dark:text-white-light mb-5">
-                        <h5 class="font-semibold text-lg">Transactions</h5>
+                        <h5 class="font-semibold b-text-lg">Transactions</h5>
                         <div class="dropdown ltr:ml-auto rtl:mr-auto">
                             <Popper :placement="rtlClass === 'rtl' ? 'bottom-start' : 'bottom-end'" offsetDistance="0"
                                 class="align-middle">
@@ -441,13 +441,13 @@
                         <div class="space-y-6">
                             <div class="flex">
                                 <span
-                                    class="grid place-content-center text-base w-9 h-9 rounded-md bg-success-light dark:bg-success text-success dark:text-success-light">SP</span>
+                                    class="grid place-content-center b-text-base w-9 h-9 rounded-md bg-success-light dark:bg-success text-success dark:text-success-light">SP</span>
                                 <div class="px-3 flex-1">
                                     <div>Shaun Park</div>
-                                    <div class="text-xs text-white-dark dark:text-gray-500">10 Jan 1:00PM</div>
+                                    <div class="b-text-xs text-white-dark dark:text-gray-500">10 Jan 1:00PM</div>
                                 </div>
                                 <span
-                                    class="text-success text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">+$36.11</span>
+                                    class="text-success b-text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">+$36.11</span>
                             </div>
                             <div class="flex">
                                 <span
@@ -471,10 +471,10 @@
                                 </span>
                                 <div class="px-3 flex-1">
                                     <div>Cash withdrawal</div>
-                                    <div class="text-xs text-white-dark dark:text-gray-500">04 Jan 1:00PM</div>
+                                    <div class="b-text-xs text-white-dark dark:text-gray-500">04 Jan 1:00PM</div>
                                 </div>
                                 <span
-                                    class="text-danger text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">-$16.44</span>
+                                    class="text-danger b-text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">-$16.44</span>
                             </div>
                             <div class="flex">
                                 <span
@@ -489,10 +489,10 @@
                                 </span>
                                 <div class="px-3 flex-1">
                                     <div>Amy Diaz</div>
-                                    <div class="text-xs text-white-dark dark:text-gray-500">10 Jan 1:00PM</div>
+                                    <div class="b-text-xs text-white-dark dark:text-gray-500">10 Jan 1:00PM</div>
                                 </div>
                                 <span
-                                    class="text-success text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">+$66.44</span>
+                                    class="text-success b-text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">+$66.44</span>
                             </div>
                             <div class="flex">
                                 <span
@@ -505,20 +505,20 @@
                                 </span>
                                 <div class="px-3 flex-1">
                                     <div>Netflix</div>
-                                    <div class="text-xs text-white-dark dark:text-gray-500">04 Jan 1:00PM</div>
+                                    <div class="b-text-xs text-white-dark dark:text-gray-500">04 Jan 1:00PM</div>
                                 </div>
                                 <span
-                                    class="text-danger text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">-$32.00</span>
+                                    class="text-danger b-text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">-$32.00</span>
                             </div>
                             <div class="flex">
                                 <span
-                                    class="grid place-content-center text-base w-9 h-9 rounded-md bg-info-light dark:bg-info text-info dark:text-info-light">DA</span>
+                                    class="grid place-content-center b-text-base w-9 h-9 rounded-md bg-info-light dark:bg-info text-info dark:text-info-light">DA</span>
                                 <div class="px-3 flex-1">
                                     <div>Daisy Anderson</div>
-                                    <div class="text-xs text-white-dark dark:text-gray-500">10 Jan 1:00PM</div>
+                                    <div class="b-text-xs text-white-dark dark:text-gray-500">10 Jan 1:00PM</div>
                                 </div>
                                 <span
-                                    class="text-success text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">+$10.08</span>
+                                    class="text-success b-text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">+$10.08</span>
                             </div>
                             <div class="flex">
                                 <span
@@ -535,10 +535,10 @@
                                 </span>
                                 <div class="px-3 flex-1">
                                     <div>Electricity Bill</div>
-                                    <div class="text-xs text-white-dark dark:text-gray-500">04 Jan 1:00PM</div>
+                                    <div class="b-text-xs text-white-dark dark:text-gray-500">04 Jan 1:00PM</div>
                                 </div>
                                 <span
-                                    class="text-danger text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">-$22.00</span>
+                                    class="text-danger b-text-base px-1 ltr:ml-auto rtl:mr-auto whitespace-pre">-$22.00</span>
                             </div>
                         </div>
                     </div>
@@ -563,8 +563,8 @@
                             </button>
                         </div>
                         <div class="text-white flex justify-between items-center">
-                            <p class="text-xl">Wallet Balance</p>
-                            <h5 class="ltr:ml-auto rtl:mr-auto text-2xl"><span class="text-white-light">$</span>2953</h5>
+                            <p class="b-text-xl">Wallet Balance</p>
+                            <h5 class="ltr:ml-auto rtl:mr-auto b-text-2xl"><span class="text-white-light">$</span>2953</h5>
                         </div>
                     </div>
                     <div class="-mt-12 px-8 grid grid-cols-2 gap-2">
@@ -577,7 +577,7 @@
                                 </svg>
                             </span>
                             <div
-                                class="btn w-full py-1 text-base shadow-none border-0 bg-[#ebedf2] dark:bg-black text-[#515365] dark:text-[#bfc9d4]">
+                                class="btn w-full py-1 b-text-base shadow-none border-0 bg-[#ebedf2] dark:bg-black text-[#515365] dark:text-[#bfc9d4]">
                                 $97.99
                             </div>
                         </div>
@@ -590,7 +590,7 @@
                                 </svg>
                             </span>
                             <div
-                                class="btn w-full py-1 text-base shadow-none border-0 bg-[#ebedf2] dark:bg-black text-[#515365] dark:text-[#bfc9d4]">
+                                class="btn w-full py-1 b-text-base shadow-none border-0 bg-[#ebedf2] dark:bg-black text-[#515365] dark:text-[#bfc9d4]">
                                 $53.00
                             </div>
                         </div>
@@ -598,16 +598,16 @@
                     <div class="p-5">
                         <div class="mb-5">
                             <span
-                                class="bg-[#1b2e4b] text-white text-xs rounded-full px-4 py-1.5 before:bg-white before:w-1.5 before:h-1.5 before:rounded-full ltr:before:mr-2 rtl:before:ml-2 before:inline-block">Pending</span>
+                                class="bg-[#1b2e4b] text-white b-text-xs rounded-full px-4 py-1.5 before:bg-white before:w-1.5 before:h-1.5 before:rounded-full ltr:before:mr-2 rtl:before:ml-2 before:inline-block">Pending</span>
                         </div>
                         <div class="mb-5 space-y-1">
                             <div class="flex items-center justify-between">
                                 <p class="text-[#515365] font-semibold">Netflix</p>
-                                <p class="text-base"><span>$</span> <span class="font-semibold">13.85</span></p>
+                                <p class="b-text-base"><span>$</span> <span class="font-semibold">13.85</span></p>
                             </div>
                             <div class="flex items-center justify-between">
                                 <p class="text-[#515365] font-semibold">BlueHost VPN</p>
-                                <p class="text-base"><span>$</span> <span class="font-semibold">15.66</span></p>
+                                <p class="b-text-base"><span>$</span> <span class="font-semibold">15.66</span></p>
                             </div>
                         </div>
                         <div class="text-center px-2 flex justify-around">
@@ -621,7 +621,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="panel h-full w-full">
                     <div class="flex items-center justify-between mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Recent Orders</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Recent Orders</h5>
                     </div>
                     <div class="table-responsive">
                         <table>
@@ -724,7 +724,7 @@
 
                 <div class="panel h-full w-full">
                     <div class="flex items-center justify-between mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">Top Selling Product</h5>
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">Top Selling Product</h5>
                     </div>
                     <div class="table-responsive">
                         <table>
@@ -744,7 +744,7 @@
                                             <img class="w-8 h-8 rounded-md ltr:mr-3 rtl:ml-3 object-cover"
                                                 src="/public/assets/images/product-headphones.jpg" alt="avatar" />
                                             <p class="whitespace-nowrap">Headphone <span
-                                                    class="text-primary block text-xs">Digital</span></p>
+                                                    class="text-primary block b-text-xs">Digital</span></p>
                                         </div>
                                     </td>
                                     <td>$168.09</td>
@@ -773,7 +773,7 @@
                                             <img class="w-8 h-8 rounded-md ltr:mr-3 rtl:ml-3 object-cover"
                                                 src="/public/assets/images/product-shoes.jpg" alt="avatar" />
                                             <p class="whitespace-nowrap">Shoes <span
-                                                    class="text-warning block text-xs">Faishon</span></p>
+                                                    class="text-warning block b-text-xs">Faishon</span></p>
                                         </div>
                                     </td>
                                     <td>$126.04</td>
@@ -801,7 +801,7 @@
                                             <img class="w-8 h-8 rounded-md ltr:mr-3 rtl:ml-3 object-cover"
                                                 src="/public/assets/images/product-watch.jpg" alt="avatar" />
                                             <p class="whitespace-nowrap">Watch <span
-                                                    class="text-danger block text-xs">Accessories</span></p>
+                                                    class="text-danger block b-text-xs">Accessories</span></p>
                                         </div>
                                     </td>
                                     <td>$56.07</td>
@@ -829,7 +829,7 @@
                                             <img class="w-8 h-8 rounded-md ltr:mr-3 rtl:ml-3 object-cover"
                                                 src="/public/assets/images/product-laptop.jpg" alt="avatar" />
                                             <p class="whitespace-nowrap">Laptop <span
-                                                    class="text-primary block text-xs">Digital</span></p>
+                                                    class="text-primary block b-text-xs">Digital</span></p>
                                         </div>
                                     </td>
                                     <td>$110.00</td>
@@ -857,7 +857,7 @@
                                             <img class="w-8 h-8 rounded-md ltr:mr-3 rtl:ml-3 object-cover"
                                                 src="/public/assets/images/product-camera.jpg" alt="avatar" />
                                             <p class="whitespace-nowrap">Camera <span
-                                                    class="text-primary block text-xs">Digital</span></p>
+                                                    class="text-primary block b-text-xs">Digital</span></p>
                                         </div>
                                     </td>
                                     <td>$56.07</td>

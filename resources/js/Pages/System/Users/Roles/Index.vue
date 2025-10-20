@@ -42,14 +42,14 @@
                     :filter="props.filter" v-model:sortBy="filters.sort_by"
                     v-model:sortDirection="filters.sort_direction">
                     <template #updated_at="data">
-                        <span v-tippy dir="ltr" class="text-sm font-bold ltr">
+                        <span v-tippy dir="ltr" class="b-text-sm font-bold ltr">
                             {{ data.value.updated_at ? $helpers.formatCustomDate(data.value.updated_at) : '' }}
                         </span>
                         <tippy>{{ $helpers.formatCustomDate(data.value.updated_at, true) }}</tippy>
                     </template>
 
                     <template #created_at="data">
-                        <span v-tippy dir="ltr" class="text-sm font-bold ltr">
+                        <span v-tippy dir="ltr" class="b-text-sm font-bold ltr">
                             {{ data.value.created_at ? $helpers.formatCustomDate(data.value.created_at) : '' }}
                         </span>
                         <tippy>{{ $helpers.formatCustomDate(data.value.created_at, true) }}</tippy>

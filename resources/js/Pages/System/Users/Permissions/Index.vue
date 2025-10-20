@@ -54,7 +54,7 @@
                                             <Svg name="close" class="size-6"></Svg>
                                         </button>
                                         <div
-                                            class="text-lg font-bold rounded-lg bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">
+                                            class="b-text-lg font-bold rounded-lg bg-[#fbfbfb] dark:bg-[#121c2c] ltr:pl-5 rtl:pr-5 py-3 ltr:pr-[50px] rtl:pl-[50px]">
                                             <span v-if="form.id">
                                                 {{ $t('common.edit') }}
                                             </span>
@@ -118,14 +118,14 @@
                     </template>
 
                     <template #updated_at="data">
-                        <span v-tippy dir="ltr" class="text-sm font-bold ltr">
+                        <span v-tippy dir="ltr" class="b-text-sm font-bold ltr">
                             {{ data.value.updated_at ? $helpers.formatCustomDate(data.value.updated_at) : '' }}
                         </span>
                         <tippy>{{ $helpers.formatCustomDate(data.value.updated_at, true) }}</tippy>
                     </template>
 
                     <template #created_at="data">
-                        <span v-tippy dir="ltr" class="text-sm font-bold ltr">
+                        <span v-tippy dir="ltr" class="b-text-sm font-bold ltr">
                             {{ data.value.created_at ? $helpers.formatCustomDate(data.value.created_at) : '' }}
                         </span>
                         <tippy>{{ $helpers.formatCustomDate(data.value.created_at, true) }}</tippy>

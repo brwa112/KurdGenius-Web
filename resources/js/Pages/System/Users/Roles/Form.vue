@@ -46,7 +46,7 @@
             <div class="w-full lg:w-4/12 2xl:w-3/12">
                 <div class="panel sticky top-20">
                     <div class="mb-3">
-                        <h5 class="font-semibold text-lg dark:text-white-light">
+                        <h5 class="font-semibold b-text-lg dark:text-white-light">
                             {{ $t('system.information') }}
                         </h5>
                     </div>
@@ -69,10 +69,10 @@
                 <div class="panel">
                     <form @submit.prevent="submit">
                         <div class="mb-3">
-                            <h5 class="font-semibold text-lg dark:text-white-light">
+                            <h5 class="font-semibold b-text-lg dark:text-white-light">
                                 {{ $t('system.permissions') }}
                             </h5>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <p class="b-text-sm text-gray-600 dark:text-gray-400">
                                 {{ $t('system.fine_tune_role_permissions') }}
                             </p>
                         </div>
@@ -88,7 +88,7 @@
                                         <span class="capitalize cursor-pointer leading-3">{{
                                             permissions[0].group_permissions.name }}</span>
                                     </label>
-                                    <div class="flex gap-1 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                    <div class="flex gap-1 b-text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
                                         <p class="font-medium text-primary">
                                             {{permissions.filter(gp => form.permissions?.some(fp => fp.name ===
                                                 gp.name)).length}}
@@ -102,12 +102,12 @@
                                         <button v-for="(permission, i) in permissions" :key="i" type="button"
                                             @click="togglePermission(!form.permissions?.filter(x => x.name == permission.name)?.length, permission, permissions)"
                                             :class="[
-                                                'px-4 capitalize py-2 rounded-full text-sm font-medium transition',
+                                                'px-4 capitalize py-2 rounded-full b-text-sm font-medium transition',
                                                 form.permissions?.filter(x => x.name == permission.name)?.length
                                                     ? 'bg-primary text-white shadow'
                                                     : 'bg-gray-200 dark:bg-[#1b2e4b] hover:bg-primary hover:text-white'
                                             ]">
-                                            <span class="text-xs cursor-pointer">
+                                            <span class="b-text-xs cursor-pointer">
                                                 {{ $t('common.' + (permission?.name || '')
                                                     .replace('_' + permissions[0].group_permissions.name, '')) ||
                                                     (permission?.name || '')
@@ -127,12 +127,12 @@
         <div
             class="sticky bottom-0 bg-white dark:bg-gray-900 border-t border-[#d3d3d3] dark:border-[#1b2e4b] p-3 -mx-6">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div class="text-sm text-gray-600 dark:text-gray-400">
+                <div class="b-text-sm text-gray-600 dark:text-gray-400">
                     <span v-if="form.id">
                         {{ $t('system.last_updated') }}: {{ $helpers.formatCustomDate(role?.updated_at, true) }}
                     </span>
                     <span v-else>{{ $t('system.creating_new_user_account') }}</span>
-                    <p class="text-danger text-xs" v-if="form.errors.permissions" v-html="form.errors.permissions">
+                    <p class="text-danger b-text-xs" v-if="form.errors.permissions" v-html="form.errors.permissions">
                     </p>
                 </div>
                 <div class="flex items-center gap-3">

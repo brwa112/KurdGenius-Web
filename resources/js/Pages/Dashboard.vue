@@ -13,7 +13,7 @@
 
         <div class="pt-5">
             <div class="panel h-full">
-                <h1 class="text-xl">
+                <h1 class="b-text-xl">
                     {{ $t('dashboard.welcome') }} - <span class="font-semibold">{{ $page.props.auth.user.name }}</span>
                 </h1>
             </div>

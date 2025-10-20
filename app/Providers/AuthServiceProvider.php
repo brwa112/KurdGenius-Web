@@ -8,23 +8,22 @@ use App\Models\Pages\Client;
 use App\Models\Pages\Hosting;
 use App\Models\Pages\Product;
 use App\Models\Pages\Service;
+use App\Models\System\Settings\Reasons\Log;
+use App\Models\System\Settings\Settings\Theme;
 use App\Models\System\Users\Permission;
 use App\Models\System\Users\User;
 use App\Policies\ClientPolicy;
 use App\Policies\HostingPolicy;
+use App\Policies\LogsPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\ServicePolicy;
+use App\Policies\ThemesPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    /**
-     * The model to policy mappings for the application.
-     *
-     * @var array<class-string, class-string>
-     */
     protected $policies = [
         User::class => UserPolicy::class,
         Service::class => ServicePolicy::class,
@@ -32,11 +31,10 @@ class AuthServiceProvider extends ServiceProvider
         Hosting::class => HostingPolicy::class,
         Client::class => ClientPolicy::class,
         Permission::class => PermissionPolicy::class,
+        Log::class => LogsPolicy::class,
+        Theme::class => ThemesPolicy::class,
     ];
 
-    /**
-     * Register any authentication / authorization services.
-     */
     public function boot(): void
     {
         //

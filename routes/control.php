@@ -8,10 +8,17 @@ use App\Http\Controllers\Pages\ServiceController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\System\Users\PermissionController;
 use App\Http\Controllers\System\Users\RoleController;
-use App\Http\Controllers\System\Users\UserSettingsController;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\System\Settings\Settings\UserTypeController;
+use App\Http\Controllers\System\Settings\Settings\LogController;
+use App\Http\Controllers\System\Settings\Settings\TranslationsController;
+use App\Http\Controllers\System\Settings\Settings\KeyLanguageController;
+use App\Http\Controllers\System\Settings\Settings\LanguageController;
+use App\Http\Controllers\System\Settings\Settings\ThemeController;
+use App\Http\Controllers\System\Settings\Settings\ImportExportController;
+use App\Http\Controllers\System\Settings\Settings\SyncTranslationController;
+use App\Http\Controllers\System\Settings\Settings\GroupPermissionController;
 
 // if (app()->isProduction()) {
 //     URL::forceScheme('https');
@@ -39,14 +46,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('system')->as('system.')->group(function () {
-        // Route::prefix('users')->as('users.')->group(function () {
-        //     Route::get('/', [UserController::class, 'index'])->name('index');
-        //     Route::get('/create', [UserController::class, 'create'])->name('create');
-        //     Route::post('/', [UserController::class, 'store'])->name('store');
-        //     Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
-        //     Route::put('/{user}', [UserController::class, 'update'])->name('update');
-        //     Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
-        // });
 
         // User resource
         Route::prefix('users')->as('users.')->group(function () {
@@ -59,7 +58,7 @@ Route::middleware('auth')->group(function () {
 
             // Update user settings
             Route::post('/user-setting', [ProfileController::class, 'update'])->name('setting');
-            
+
             // Update profile avatar
             Route::post('/update-avatar', [UserController::class, 'updateAvatar'])->name('update-avatar');
 
@@ -67,18 +66,36 @@ Route::middleware('auth')->group(function () {
             Route::resource('permissions', PermissionController::class)->only(['index', 'store', 'update', 'destroy'])->names('permissions');
         });
 
-        // Route::prefix('roles')->as('roles.')->group(function () {
-        //     Route::get('/', [RoleController::class, 'index'])->name('index');
-        //     Route::post('/', [RoleController::class, 'store'])->name('store');
-        //     Route::put('/{role}', [RoleController::class, 'update'])->name('update');
-        //     Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroy');
-        // });
+        // Settings
+        Route::prefix('settings')->group(function () {
 
-        // Route::prefix('permissions')->as('permissions.')->group(function () {
-        //     Route::get('/', [PermissionController::class, 'index'])->name('index');
-        //     Route::post('/', [PermissionController::class, 'store'])->name('store');
-        //     Route::put('/{permission}', [PermissionController::class, 'update'])->name('update');
-        //     Route::delete('/{permission}', [PermissionController::class, 'destroy'])->name('destroy');
-        // });
+            Route::get('/', fn() => Inertia::render('System/Settings/Index'))->name('settings');
+
+            // System controllers
+            // Route::prefix('systems')->group(function () {
+            //     Route::resource('/group-permission', GroupPermissionController::class)->only(['index', 'store', 'update', 'destroy'])->names('layer_one_group_name_permissions');
+            //     Route::resource('/user-types', UserTypeController::class)->names('usertype');
+            //     Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+            // });
+
+
+            // Route::prefix('/reasons')->as('reasons.')->group(function () {});
+
+            // Settings controller
+            Route::as('settings.')->group(function () {
+                Route::resource('/group-permission', GroupPermissionController::class)->only(['index', 'store', 'update', 'destroy'])->names('group_permissions');
+                Route::resource('/user-types', UserTypeController::class)->names('usertype');
+                Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+                Route::resource('translations', TranslationsController::class)->only(['index', 'store', 'update', 'destroy'])->names('translations');
+                Route::resource('keys', KeyLanguageController::class)->only(['index', 'store', 'update', 'destroy'])->names('keys');
+                Route::resource('languages', LanguageController::class)->only(['index', 'store', 'update', 'destroy'])->names('languages');
+                Route::resource('theme', ThemeController::class)->only(['index', 'store', 'update', 'destroy'])->names('theme');
+                // Import/Export translation
+                Route::get('/export', [ImportExportController::class, 'exportTranslations'])->name('export.translations');
+                Route::get('/export', [ImportExportController::class, 'exportTranslations'])->name('export.translations');
+                Route::get('/translations/export', [ImportExportController::class, 'export'])->name('translations.export');
+                Route::get('sync-translations', [SyncTranslationController::class, 'syncTranslations'])->name('translations.sync');
+            });
+        });
     });
 });

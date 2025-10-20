@@ -9,7 +9,7 @@
                 <Popper :placement="rtlClass === 'rtl' ? 'bottom-start' : 'bottom-end'" offsetDistance="0"
                     class="align-middle">
                     <button type="button"
-                        class="btn !bg-white dark:!bg-gray-700 rounded-none outline-none border-none overflow-hidden rounded-e shadow-none text-xs px-2">
+                        class="btn !bg-white dark:!bg-gray-700 rounded-none outline-none border-none overflow-hidden rounded-e shadow-none b-text-xs px-2">
                         <span>{{ selected.name }}</span>
                         <Svg name="arrow_left" class="size-4.5 -rotate-90 -me-1"></Svg>
                     </button>

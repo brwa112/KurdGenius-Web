@@ -2,7 +2,7 @@
     <div
         class="flex justify-center items-center min-h-screen bg-[url('/public/assets/images/map.svg')] dark:bg-[url('/public/assets/images/map-dark.svg')] bg-cover bg-center">
         <div class="panel sm:w-[480px] m-6 max-w-lg w-full">
-            <h2 class="font-bold text-2xl mb-3">Sign Up</h2>
+            <h2 class="font-bold b-text-2xl mb-3">Sign Up</h2>
             <p class="mb-7">Enter your email and password to register</p>
             <form class="space-y-5" @submit.prevent="router.push('/')">
                 <div>
