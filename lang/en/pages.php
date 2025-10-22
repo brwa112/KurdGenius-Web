@@ -15,4 +15,9 @@ return [
     'logo' => 'Logo',
     'icon' => 'Icon',
     'popular' => 'Popular',
+
+    'title.en' => 'english title',
+    'content.en' => 'english content',
+    'title.ckb' => 'kurdish title',
+    'content.ckb' => 'kurdish content',
 ];

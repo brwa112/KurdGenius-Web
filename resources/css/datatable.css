@@ -81,7 +81,7 @@
 
 .datatable .bh-table-responsive table th.bh-sticky,
 .datatable .bh-table-responsive table td.bh-sticky {
-  @apply bg-[#f6f8fa]  dark:bg-[#1a2941];
+  @apply bg-[#f6f8fa]  dark:bg-[#1a2941] !z-10;
 }
 
 .datatable .bh-filter-menu {

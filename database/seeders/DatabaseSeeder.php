@@ -116,6 +116,21 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Manage hostings and their data',
             ],
             [
+                'name' => 'news',
+                'slug' => 'news',
+                'description' => 'Manage news articles and their data',
+            ],
+            [
+                'name' => 'campus',
+                'slug' => 'campus',
+                'description' => 'Manage campus and their data',
+            ],
+            [
+                'name' => 'classrooms',
+                'slug' => 'classrooms',
+                'description' => 'Manage classrooms and their data',
+            ],
+            [
                 'name' => 'users',
                 'slug' => 'users',
                 'description' => 'Manage users and their permissions',

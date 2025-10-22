@@ -132,8 +132,6 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-    'attributes' => [
-    ],
     'ascii' => 'The :attribute field must only contain single-byte alphanumeric characters and symbols.',
     'can' => 'The :attribute field contains an unauthorized value.',
     'decimal' => 'The :attribute field must have :decimal decimal places.',

@@ -7,17 +7,16 @@
                     <div class="flex items-center gap-2 px-2.5 py-2 rounded-md font-bold"
                         :class="{ 'text-primary': count.length > 0, style }">
                         <button v-if="multiple == true" type="button" @click="countFocus"
-                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-1">
+                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-1 text-sm">
                             <span v-if="count.length > 0" :class="buttonStyle">
                                 ({{ count.length }}) {{count.map(item => item[label] || item.name).join(', ')}}
                             </span>
                             <span v-else class="text-sm">
                                 {{ placeholder ? $t(`${parentKey}.${placeholder}`) : $t('common.please_select') }}
                             </span>
-                            <Svg name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
                         </button>
                         <button v-if="multiple == false" type="button" @click="countFocus"
-                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-4">
+                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-4 text-sm">
                             <span v-if="Object.keys(count)?.length > 0" :class="buttonStyle">
                                 <span v-if="props.parentKey">
                                     {{ $t(`${parentKey}.${checkObject(count[props.label])}`) ||
@@ -29,15 +28,14 @@
                             </span>
                             <span v-else class="text-sm">
                                 {{ placeholder ? $t(`${placeholderParentKey}.${placeholder}`) :
-                                $t('common.please_select') }}
+                                    $t('common.please_select') }}
                             </span>
-                            <Svg v-if="!checkObject(count[props.label] || count.name) || count.length < 0"
-                                name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
                         </button>
                         <button v-if="checkObject(count[props.label] || count.name) || count.length > 0" type="button"
                             @click="clearCount" class="whitespace-nowrap flex justify-between items-center gap-1">
                             <Svg name="close" class="size-4 text-gray-500"></Svg>
                         </button>
+                        <Svg name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
                     </div>
                 </button>
 
@@ -49,7 +47,7 @@
                                 <div class="relative w-full">
                                     <input ref="focusInput" type="text" :placeholder="$t('common.search')"
                                         v-model="countFilter"
-                                        class="form-input shadow-none focus:border-gray-200 dark:focus:border-gray-800" />
+                                        class="form-input !py-1 shadow-none focus:border-gray-200 dark:focus:border-gray-800" />
                                     <button v-if="countFilter.length > 0" type="button" @click="clearFilter"
                                         class="absolute end-0 top-2 z-20 mx-2">
                                         <Svg name="close" class="size-5 text-gray-500"></Svg>
@@ -57,11 +55,11 @@
                                 </div>
                             </div>
                         </li>
-                        <li :class="{ 'mt-10': searchable }">
-                            <perfect-scrollbar class="relative max-h-52 min-w-56 overflow-auto" :class="style">
+                        <li :class="{ 'mt-9': searchable }">
+                            <perfect-scrollbar class="relative max-h-52 min-w-52 overflow-auto" :class="style">
                                 <button type="button" v-for="(countOption, i) in countOptions" :key="i"
                                     @click="() => { selectOption(countOption, hide); buttonRef?.focus(); }"
-                                    class="w-full flex items-center justify-between gap-10 px-3.5 py-2 duration-150 hover:text-primary hover:bg-primary/10"
+                                    class="w-full flex items-center justify-between gap-10 text-sm px-3.5 py-2 duration-150 hover:text-primary hover:bg-primary/10"
                                     :class="[{ '!bg-primary/10 !text-primary': checkSelect(countOption.id) }, buttonStyle]">
                                     <div class="flex items-center gap-2">
                                         <img v-if="countOption.image || has_image"
@@ -76,7 +74,8 @@
                                             <h1 v-if="countOption.slug">
                                                 {{ $t(`${parentKey}.${countOption.slug}`) }}
                                             </h1>
-                                            <p v-if="isInfo" class="text-xs text-gray-500">{{ countOption.description }}</p>
+                                            <p v-if="isInfo" class="text-xs text-gray-500">{{ countOption.description }}
+                                            </p>
                                             <p v-if="isInfo" class="text-xs text-gray-500">{{ countOption?.email }}</p>
                                         </div>
                                     </div>

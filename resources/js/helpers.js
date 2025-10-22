@@ -218,6 +218,33 @@ export default {
         const exampleType = data?.[0]?.id;
         const id = typeof exampleType === 'number' ? Number(rawId) : String(rawId);
         return data.find(opt => opt.id === id) || null;
+    },
+
+    /**
+     * Get translated value from multilingual object
+     * Useful for Spatie Translatable models that return: {"en": "...", "ckb": "...", "ar": "..."}
+     * 
+     * @param {Object|String} obj - Translation object or plain string
+     * @param {String} locale - Specific locale to use (optional, defaults to browser/page locale)
+     * @returns {String} Translated text with fallback chain: requested locale → 'en' → first available
+     * 
+     * @example
+     * getTranslation({en: 'Hello', ckb: 'سڵاو', ar: 'مرحبا'}, 'ckb') // Returns: 'سڵاو'
+     * getTranslation('Plain text') // Returns: 'Plain text'
+     * getTranslation(null) // Returns: ''
+     */
+    getTranslation(obj, locale = null) {
+        // Handle null/undefined
+        if (!obj) return '';
+        
+        // If already a string, return as is
+        if (typeof obj === 'string') return obj;
+        
+        // Determine which locale to use
+        const targetLocale = locale || document.documentElement.lang || 'en';
+        
+        // Return translation with fallback chain
+        return obj[targetLocale] || obj['en'] || obj[Object.keys(obj)[0]] || '';
     }
 
 }

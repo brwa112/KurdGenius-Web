@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\System\Users\UserController;
 use App\Http\Controllers\Pages\ClientController;
+use App\Http\Controllers\Pages\NewsController;
+use App\Http\Controllers\Pages\CampusController;
+use App\Http\Controllers\Pages\ClassroomController;
 use App\Http\Controllers\Pages\HostingController;
 use App\Http\Controllers\Pages\ProductController;
 use App\Http\Controllers\Pages\ServiceController;
@@ -37,11 +40,33 @@ Route::middleware('auth')->group(function () {
         Route::resource('services', ServiceController::class);
         Route::resource('products', ProductController::class);
         Route::resource('hostings', HostingController::class);
+
         Route::prefix('clients')->as('clients.')->group(function () {
             Route::get('/', [ClientController::class, 'index'])->name('index');
             Route::post('/', [ClientController::class, 'store'])->name('store');
             Route::post('/{client}', [ClientController::class, 'update'])->name('update');
             Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('news')->as('news.')->group(function () {
+            Route::get('/', [NewsController::class, 'index'])->name('index');
+            Route::post('/', [NewsController::class, 'store'])->name('store');
+            Route::post('/{news}', [NewsController::class, 'update'])->name('update');
+            Route::delete('/{news}', [NewsController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('campus')->as('campus.')->group(function () {
+            Route::get('/', [CampusController::class, 'index'])->name('index');
+            Route::post('/', [CampusController::class, 'store'])->name('store');
+            Route::post('/{campus}', [CampusController::class, 'update'])->name('update');
+            Route::delete('/{campus}', [CampusController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('classrooms')->as('classrooms.')->group(function () {
+            Route::get('/', [ClassroomController::class, 'index'])->name('index');
+            Route::post('/', [ClassroomController::class, 'store'])->name('store');
+            Route::post('/{classroom}', [ClassroomController::class, 'update'])->name('update');
+            Route::delete('/{classroom}', [ClassroomController::class, 'destroy'])->name('destroy');
         });
     });
 

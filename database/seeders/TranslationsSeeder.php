@@ -45,6 +45,9 @@ class TranslationsSeeder extends Seeder
             return;
         }
 
+        // Sort languages: English first, then alphabetically
+        $languageDirs = $this->sortLanguagesWithEnglishFirst($languageDirs);
+
         // Define language directions (RTL vs LTR)
         $languageDirections = $this->getLanguageDirections();
 
@@ -303,6 +306,32 @@ class TranslationsSeeder extends Seeder
             'sr' => 'ltr',     // Serbian
             'uk' => 'ltr',     // Ukrainian
         ];
+    }
+
+    /**
+     * Sort languages array with English first, then others alphabetically.
+     *
+     * @param array $languages
+     * @return array
+     */
+    private function sortLanguagesWithEnglishFirst(array $languages): array
+    {
+        $english = [];
+        $others = [];
+
+        foreach ($languages as $lang) {
+            if (strtolower($lang) === 'en') {
+                $english[] = $lang;
+            } else {
+                $others[] = $lang;
+            }
+        }
+
+        // Sort other languages alphabetically
+        sort($others);
+
+        // Merge with English first
+        return array_merge($english, $others);
     }
 
     /**
