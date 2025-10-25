@@ -13,3 +13,4 @@ class SyncTranslationController extends Controller
         Artisan::call('translations:cache');
     }
 }
+

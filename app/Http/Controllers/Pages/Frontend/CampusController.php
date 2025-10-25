@@ -15,11 +15,6 @@ class CampusController extends Controller
 {
     public function index(Request $request)
     {
-        $services = Service::query()->get();
-        $clients = Client::query()->get();
-        $products = Product::query()->get();
-        $hosting = Hosting::query()->get();
-
         // Get selected branch from request/session
         $selectedBranchId = $request->input('branch_id') ?? session('selected_branch_id');
 
@@ -40,10 +35,6 @@ class CampusController extends Controller
             ->get();
 
         return inertia('Frontend/Pages/Campus/Index', [
-            'clients' => $clients,
-            'services' => $services,
-            'products' => $products,
-            'hosting' => $hosting,
             'campuses' => $campuses,
             'classrooms' => $classrooms,
         ]);
@@ -75,3 +66,4 @@ class CampusController extends Controller
         ]);
     }
 }
+

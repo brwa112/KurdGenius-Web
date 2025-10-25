@@ -4,6 +4,7 @@ namespace App\Models\Pages;
 
 use App\Models\System\Users\User;
 use App\Models\Traits\ClassroomScopes;
+use App\Traits\LogsMediaActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,10 +13,12 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Classroom extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, ClassroomScopes;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, ClassroomScopes, LogsActivity, LogsMediaActivity;
 
     public $translatable = ['name', 'description', 'full_description', 'location'];
 
@@ -205,5 +208,13 @@ class Classroom extends Model implements HasMedia
     public function getFloorPlanUrlAttribute()
     {
         return $this->getFirstMediaUrl('floor_plan');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'description', 'full_description', 'location', 'building', 'floor', 'room_number', 'capacity', 'classroom_type', 'is_featured', 'is_active', 'user_id', 'branch_id'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

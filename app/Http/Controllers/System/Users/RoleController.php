@@ -9,11 +9,10 @@ use App\Models\System\Users\Role;
 use App\Http\Controllers\Controller;
 use App\Models\System\Users\Permission;
 use App\Traits\HandlesSorting;
-use App\Traits\LogsActivity;
 
 class RoleController extends Controller
 {
-    use LogsActivity, HandlesSorting;
+    use HandlesSorting;
     public function index(Request $request)
     {
         $filters = $this->getFilters($request);
@@ -36,7 +35,7 @@ class RoleController extends Controller
     private function getSortableFields(): array
     {
         return [
-            // Simple column sorting (clients table)
+            // Simple column sorting
             'id' => $this->simpleSort('roles.id'),
             'name' => $this->simpleSort('roles.name'),
 
@@ -64,8 +63,6 @@ class RoleController extends Controller
         ]);
 
         $role = Role::create(['name' => strtolower($request->name)]);
-
-        $this->logCreated('Role ' . $role->name, $role->id);
 
         $role->syncPermissions(collect($request->permissions ?? [])->pluck('id'));
 
@@ -107,8 +104,6 @@ class RoleController extends Controller
 
         $role->update(['name' => strtolower($request->name)]);
 
-        $this->logUpdated('Role ' . $role->name, $role->id);
-
         // Fix: Use permission names directly (not pluck('id') from strings)
         $role->syncPermissions($request->permissions ?? []);
 
@@ -132,8 +127,6 @@ class RoleController extends Controller
     {
         $this->authorize('delete', $role);
 
-        $this->logDeleted('Role ' . $role->name, $role->id);
-
         $role->delete();
 
         return redirect()->back();
@@ -151,3 +144,4 @@ class RoleController extends Controller
         ]);
     }
 }
+

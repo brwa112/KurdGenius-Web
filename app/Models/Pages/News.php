@@ -4,6 +4,7 @@ namespace App\Models\Pages;
 
 use App\Models\System\Users\User;
 use App\Models\Traits\NewsScopes;
+use App\Traits\LogsMediaActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,10 +14,12 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class News extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, NewsScopes;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, NewsScopes, LogsActivity, LogsMediaActivity;
 
     protected $table = 'news';
 
@@ -95,6 +98,18 @@ class News extends Model implements HasMedia
                 'slug' => $hashtag->slug,
             ];
         });
+    }
+
+    /**
+     * Get the options for activity logging.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['title', 'content', 'branch_id', 'category_id', 'is_active', 'order', 'views'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => "News article {$eventName}");
     }
 
     /**

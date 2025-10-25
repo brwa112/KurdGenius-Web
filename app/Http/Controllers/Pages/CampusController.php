@@ -87,3 +87,4 @@ class CampusController extends Controller
         $campus->delete();
     }
 }
+

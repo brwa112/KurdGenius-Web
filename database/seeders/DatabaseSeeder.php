@@ -96,26 +96,6 @@ class DatabaseSeeder extends Seeder
     {
         $permissionsData = [
             [
-                'name' => 'clients',
-                'slug' => 'clients',
-                'description' => 'Manage clients and their data',
-            ],
-            [
-                'name' => 'services',
-                'slug' => 'services',
-                'description' => 'Manage services and their data',
-            ],
-            [
-                'name' => 'products',
-                'slug' => 'products',
-                'description' => 'Manage products and their data',
-            ],
-            [
-                'name' => 'hostings',
-                'slug' => 'hostings',
-                'description' => 'Manage hostings and their data',
-            ],
-            [
                 'name' => 'news',
                 'slug' => 'news',
                 'description' => 'Manage news articles and their data',
@@ -182,12 +162,12 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'logs',
                 'slug' => 'logs',
-                'description' => 'Manage client status history',
+                'description' => 'View system logs and activities',
             ],
             [
                 'name' => 'roles',
                 'slug' => 'roles',
-                'description' => 'Manage client status history',
+                'description' => 'Manage roles and their permissions',
             ],
         ];
 

@@ -23,4 +23,7 @@ return [
     'all_reserved' => 'هەموو مافەکان پارێزراوە.',
     'others' => 'ئەوانی تر',
     'settings' => 'ڕێکخستنەکان',
+    'news' => 'News',
+    'classrooms' => 'Classrooms',
+    'campus' => 'Campus',
 ];

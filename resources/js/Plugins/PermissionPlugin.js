@@ -10,7 +10,6 @@ const PermissionPlugin = {
 
       /* helper: return every name we should recognise
          - user :         p.name
-         - client package:          p.group_name.name
          - strings:                 leave as‑is                                   */
       const extractNames = (list) =>
         list

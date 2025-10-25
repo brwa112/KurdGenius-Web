@@ -150,4 +150,6 @@ return [
     'required_if_accepted' => 'The :attribute field is required when :other is accepted.',
     'uppercase' => 'The :attribute field must be uppercase.',
     'ulid' => 'The :attribute field must be a valid ULID.',
+    'attributes' => [
+    ],
 ];

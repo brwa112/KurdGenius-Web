@@ -146,4 +146,6 @@ return [
     'logged_out' => 'Logged Out',
     'restore_record_confirmation' => 'You are about to restore this record.',
     'trashed' => 'Trashed',
+    'event' => 'Event',
+    'model' => 'Model',
 ];

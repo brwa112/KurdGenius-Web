@@ -54,7 +54,7 @@ return [
 
     'password' => 'Password',
     'password_confirmation' => 'Password Confirmation',
-    'email' => 'email',
+    'email' => 'Email',
 
     'details' => 'Details',
     'close' => 'Close',
@@ -161,4 +161,7 @@ return [
     'logged_out'=>'Logged Out',
     'restore_record_confirmation'=>'You are about to restore this record.',
     'trashed'=>'Trashed',
+
+    'event' => 'Event',
+    'model' => 'Model',
 ];

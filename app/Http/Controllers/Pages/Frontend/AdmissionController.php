@@ -12,18 +12,9 @@ class AdmissionController extends Controller
 {
     public function index()
     {
-        $services = Service::query()->get();
-        $clients = Client::query()->get();
-        $products = Product::query()->get();
-        $hosting = Hosting::query()->get();
-
-        // dd($services, $clients, $products, $hosting);
-
         return inertia('Frontend/Pages/Admission/Index', [
-            'clients' => $clients,
-            'services' => $services,
-            'products' => $products,
-            'hosting' => $hosting,
+            
         ]);
     }
 }
+

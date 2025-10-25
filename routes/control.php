@@ -1,13 +1,9 @@
 <?php
 
 use App\Http\Controllers\System\Users\UserController;
-use App\Http\Controllers\Pages\ClientController;
 use App\Http\Controllers\Pages\NewsController;
 use App\Http\Controllers\Pages\CampusController;
 use App\Http\Controllers\Pages\ClassroomController;
-use App\Http\Controllers\Pages\HostingController;
-use App\Http\Controllers\Pages\ProductController;
-use App\Http\Controllers\Pages\ServiceController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\System\Users\PermissionController;
 use App\Http\Controllers\System\Users\RoleController;
@@ -37,22 +33,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'Index'])->name('profile');
 
     Route::prefix('pages')->as('pages.')->group(function () {
-        Route::resource('services', ServiceController::class);
-        Route::resource('products', ProductController::class);
-        Route::resource('hostings', HostingController::class);
-
-        Route::prefix('clients')->as('clients.')->group(function () {
-            Route::get('/', [ClientController::class, 'index'])->name('index');
-            Route::post('/', [ClientController::class, 'store'])->name('store');
-            Route::post('/{client}', [ClientController::class, 'update'])->name('update');
-            Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
-        });
 
         Route::prefix('news')->as('news.')->group(function () {
             Route::get('/', [NewsController::class, 'index'])->name('index');
             Route::post('/', [NewsController::class, 'store'])->name('store');
             Route::post('/{news}', [NewsController::class, 'update'])->name('update');
             Route::delete('/{news}', [NewsController::class, 'destroy'])->name('destroy');
+            Route::delete('/{news}/force', [NewsController::class, 'forceDelete'])->name('force_delete');
+            Route::post('/{news}/restore', [NewsController::class, 'restore'])->name('restore');
         });
 
         Route::prefix('campus')->as('campus.')->group(function () {

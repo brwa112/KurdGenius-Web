@@ -90,9 +90,9 @@
             :stickyFirstColumn="stickyFirstColumn" :totalRows="totalRows" @change="changeSort($event)"
             class="alt-pagination whitespace-nowrap">
             <template v-for="column in columns" v-slot:[column.field]="data">
-                <slot class="capitalize" v-if="hasSlot(column.field)" :name="column.field" v-bind="data"></slot>
+                <slot class="capitalizee" v-if="hasSlot(column.field)" :name="column.field" v-bind="data"></slot>
                 <template v-else>
-                    <span class="capitalize">
+                    <span class="capitalizee">
                         {{typeof column?.format == 'function' ? column.format(get_property(rows.find(x => x.id
                             ==
                             data.value.id), column.field), rows.find(x => x.id == data.value.id)) :

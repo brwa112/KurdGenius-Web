@@ -4,6 +4,7 @@ namespace App\Models\Pages;
 
 use App\Models\System\Users\User;
 use App\Models\Traits\CampusScopes;
+use App\Traits\LogsMediaActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,10 +13,12 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Campus extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, CampusScopes;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, CampusScopes, LogsActivity, LogsMediaActivity;
 
     public $translatable = ['name', 'description', 'full_description', 'location', 'address'];
 
@@ -185,5 +188,13 @@ class Campus extends Model implements HasMedia
                 'thumb' => $media->getUrl('thumb'),
             ];
         });
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'description', 'full_description', 'location', 'address', 'latitude', 'longitude', 'area', 'capacity', 'facilities', 'is_featured', 'is_active', 'user_id', 'branch_id'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

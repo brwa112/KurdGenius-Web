@@ -28,10 +28,20 @@
                 <perfect-scrollbar class="relative max-w-max">
                     <div class="flex items-center gap-2 w-full mb-2 whitespace-nowrap">
 
-                        <!--Filtered by Safe ERP User Names -->
+                        <!--Filtered by User -->
                         <CustomMultiSelect v-model="filters.user_id" @change="apply_filter" :list="props.users"
                             value="id" :multiple="false" placeholder-parent-key="system" placeholder="email"
                             label="email" />
+
+                        <!--Filtered by Event Type -->
+                        <CustomMultiSelect v-model="filters.event" @change="apply_filter" :list="props.events"
+                            value="value" :multiple="false" placeholder-parent-key="system" placeholder="event_type"
+                            label="label" />
+
+                        <!--Filtered by Subject Type -->
+                        <CustomMultiSelect v-model="filters.subject_type" @change="apply_filter" :list="props.subjectTypes"
+                            value="value" :multiple="false" placeholder-parent-key="system" placeholder="model"
+                            label="label" />
 
                         <!-- Date Range Picker -->
                         <CustomDatePicker v-model="dateRangeModel" filter-key="created_at" parent-key="system"
@@ -76,8 +86,12 @@ import CustomMultiSelect from '@/Components/Inputs/CustomMultiSelect.vue';
 const props = defineProps([
     'users',
     'logs',
+    'events',
+    'subjectTypes',
     'filter',
 ]);
+
+console.log(props.events);
 
 const $helpers = inject('helpers');
 
@@ -88,9 +102,17 @@ const filters = initializeFilters({
     sort_direction: 'desc',
     start_date: props.filter.start_date || '',
     end_date: props.filter.end_date || '',
+    event: props.filter.event || '',
+    subject_type: props.filter.subject_type || '',
 }, {
     user_id: (id) => {
         return props.users.find(u => u.id == id) || null;
+    },
+    event: (event) => {
+        return props.events.find(e => e.value == event) || null;
+    },
+    subject_type: (type) => {
+        return props.subjectTypes.find(t => t.value == type) || null;
     },
 });
 
@@ -100,6 +122,8 @@ const apply_filter = () => {
     updateFilters({
         ...filters,
         user_id: filters.user_id || props.users.find(u => u.id == props.filter.user_id) || '',
+        event: filters.event ? filters.event.value : '',
+        subject_type: filters.subject_type ? filters.subject_type.value : '',
         start_date: filters.start_date || '',
         end_date: filters.end_date || '',
     });
@@ -118,34 +142,27 @@ const columns =
         },
         {
             field: 'users.name',
-            title: wTrans('common.name')
+            title: wTrans('common.user')
         },
         {
             field: 'users.email',
             title: wTrans('common.email')
         },
         {
-            field: 'owner_name',
-            title: wTrans('system.owner_name'),
-        },
-        {
-            field: 'owner_email',
-            title: wTrans('system.owner_email'),
-        },
-        {
             field: 'action',
             title: wTrans('common.action')
         },
         {
+            field: 'event',
+            title: wTrans('common.event')
+        },
+        {
+            field: 'subject_type',
+            title: wTrans('common.model')
+        },
+        {
             field: 'row_id',
             title: wTrans('common.row_id')
-        },
-
-        {
-            field: 'updated_at',
-            title: wTrans('common.updated_at'),
-            type: 'date',
-            hide: true,
         },
         {
             field: 'created_at',

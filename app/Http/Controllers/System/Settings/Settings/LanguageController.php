@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\System\Settings\Settings;
 
-use App\Traits\LogsActivity;
-
 use Illuminate\Http\Request;
 use App\Traits\HandlesSorting;
 use App\Traits\GenerateSlugKey;
@@ -17,7 +15,7 @@ use App\Models\System\Settings\Settings\Language;
 
 class LanguageController extends Controller
 {
-    use LogsActivity, HandlesSorting,GenerateSlugKey;
+    use HandlesSorting, GenerateSlugKey;
     public function index(Request $request)
     {
         $this->authorize('viewAny', Language::class);
@@ -78,8 +76,6 @@ class LanguageController extends Controller
         // Call the function to generate or update the key and translations
         $this->GenerateSlugKey($validated);
 
-        $this->logCreated('Language ' . $language->name, $language->id);
-
         // Import translations from the uploaded file
         Excel::import(new TranslationsImport($language->id), $request->file('file'));
 
@@ -135,8 +131,6 @@ class LanguageController extends Controller
             'direction' => $validated['direction']['value'],
         ]);
 
-        $this->logUpdated('Language ' . $language->name, $language->id);
-
         if ($request->hasFile('file')) {
             Excel::import(new TranslationsImport($language->id), $request->file('file'));
         }
@@ -150,8 +144,6 @@ class LanguageController extends Controller
 
         $this->authorize('delete', $language);
 
-        $this->logDeleted('Language ' . $language->name, $language->id);
-
         $languageFilePath = resource_path('lang/' . $language->name . '.json');
 
         if (file_exists($languageFilePath)) {
@@ -163,3 +155,4 @@ class LanguageController extends Controller
         return redirect()->back();
     }
 }
+

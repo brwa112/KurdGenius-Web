@@ -15,7 +15,6 @@ return [
     'logo' => 'الشعار',
     'icon' => 'الرمز',
     'popular' => 'شائع',
-
     'news' => 'الأخبار',
     'news_item' => 'بند الأخبار',
     'title' => 'العنوان',
@@ -26,4 +25,10 @@ return [
     'images' => 'الصور',
     'first_image_featured' => 'ستكون الصورة الأولى هي الصورة المميزة',
     'featured' => 'مميز',
+    'no_images' => 'No images available',
+    'title.en' => 'english title',
+    'content.en' => 'english content',
+    'title.ckb' => 'kurdish title',
+    'content.ckb' => 'kurdish content',
+    'order' => 'Order',
 ];

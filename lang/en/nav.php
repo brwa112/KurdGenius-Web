@@ -23,4 +23,7 @@ return [
     'all_reserved' => 'All rights reserved',
     'others' => 'Others',
     'settings' => 'Settings',
+    'news' => 'News',
+    'classrooms' => 'Classrooms',
+    'campus' => 'Campus',
 ];

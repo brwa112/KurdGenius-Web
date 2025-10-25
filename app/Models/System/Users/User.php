@@ -14,6 +14,7 @@ use App\Models\System\Settings\System\GroupPermission;
 use App\Models\System\Settings\System\UserType;
 use App\Models\System\Users\UserSettings;
 use App\Models\Traits\UserScopes;
+use App\Traits\LogsMediaActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,11 +23,13 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
-    use InteractsWithMedia, UserScopes;
+    use InteractsWithMedia, UserScopes, LogsActivity, LogsMediaActivity;
 
     protected $fillable = [
         'name',
@@ -35,7 +38,6 @@ class User extends Authenticatable implements HasMedia
         'password',
         'is_active',
         'user_type_id',
-        'client_id',
         'font_size_id',
         'theme',
     ];
@@ -90,5 +92,17 @@ class User extends Authenticatable implements HasMedia
     public function typeuser()
     {
         return $this->hasOne(UserType::class, 'id', 'user_type_id');
+    }
+
+    /**
+     * Get the options for activity logging.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email', 'phone', 'is_active', 'user_type_id'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => "User {$eventName}");
     }
 }

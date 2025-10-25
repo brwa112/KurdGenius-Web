@@ -22,7 +22,7 @@
                             </Link>
                         </li>
 
-                        <h2 v-if="$can('view_services|view_products|view_hostings|view_clients|view_news|view_campus|view_classrooms')"
+                        <h2 v-if="$can('view_news|view_campus|view_classrooms')"
                             class="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1">
                             <Svg name="line" class="w-4 h-5 flex-none hidden"></Svg>
                             <span>{{ $t('nav.pages') }}</span>
@@ -30,63 +30,11 @@
 
                         <li class="nav-item">
                             <ul>
-                                <li v-if="$can('view_services')" class="nav-item">
-                                    <Link :href="route('control.pages.services.index')" class="nav-link group w-full"
-                                        :class="{ active: $page.component === 'Pages/Services' }">
-                                    <div class="flex items-center">
-                                        <Svg name="service" class="size-5"></Svg>
-
-                                        <span
-                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">
-                                            {{ $t('nav.services') }}
-                                        </span>
-                                    </div>
-                                    </Link>
-                                </li>
-                                <li v-if="$can('view_products')" class="nav-item">
-                                    <Link :href="route('control.pages.products.index')" class="nav-link group w-full"
-                                        :class="{ active: $page.component === 'Pages/Products' }">
-                                    <div class="flex items-center">
-                                        <Svg name="box" class="size-5"></Svg>
-
-                                        <span
-                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">
-                                            {{ $t('nav.products') }}
-                                        </span>
-                                    </div>
-                                    </Link>
-                                </li>
-                                <li v-if="$can('view_hostings')" class="nav-item">
-                                    <Link :href="route('control.pages.hostings.index')" class="nav-link group w-full"
-                                        :class="{ active: $page.component === 'Pages/Hostings' }">
-                                    <div class="flex items-center">
-                                        <Svg name="cloud" class="size-5"></Svg>
-
-                                        <span
-                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">
-                                            {{ $t('nav.hostings') }}
-                                        </span>
-                                    </div>
-                                    </Link>
-                                </li>
-                                <li v-if="$can('view_clients')" class="nav-item">
-                                    <Link :href="route('control.pages.clients.index')" class="nav-link group w-full"
-                                        :class="{ active: $page.component === 'Pages/Clients' }">
-                                    <div class="flex items-center">
-                                        <Svg name="users" class="size-5"></Svg>
-
-                                        <span
-                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">
-                                            {{ $t('nav.clients') }}
-                                        </span>
-                                    </div>
-                                    </Link>
-                                </li>
                                 <li v-if="$can('view_news')" class="nav-item">
                                     <Link :href="route('control.pages.news.index')" class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Pages/News/Index' }">
                                     <div class="flex items-center">
-                                        <Svg name="newspaper" class="size-5"></Svg>
+                                        <Svg name="news" class="size-5"></Svg>
 
                                         <span
                                             class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">
@@ -112,7 +60,7 @@
                                     <Link :href="route('control.pages.classrooms.index')" class="nav-link group w-full"
                                         :class="{ active: $page.component === 'Pages/Classrooms/Index' }">
                                     <div class="flex items-center">
-                                        <Svg name="desk" class="size-5"></Svg>
+                                        <Svg name="persons" class="size-5"></Svg>
 
                                         <span
                                             class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">

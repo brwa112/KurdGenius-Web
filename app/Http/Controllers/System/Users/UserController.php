@@ -10,11 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Models\System\Users\Permission;
 use App\Models\System\Users\User;
 use App\Traits\HandlesSorting;
-use App\Traits\LogsActivity;
 
 class UserController extends Controller
 {
-    use LogsActivity, HandlesSorting;
+    use HandlesSorting;
     public function index(Request $request)
     {
         $this->authorize('viewAny', User::class);
@@ -37,12 +36,12 @@ class UserController extends Controller
     private function getSortableFields(): array
     {
         return [
-            // Simple column sorting (clients table)
+            // Simple column sorting
             'id' => $this->simpleSort('users.id'),
             'name' => $this->simpleSort('users.name'),
             'email' => $this->simpleSort('users.email'),
 
-            // Related model sorting (package belongsTo)
+            // Related model sorting
             'roles.name' => $this->relatedSort(
                 Role::class,
                 'name',
@@ -80,7 +79,7 @@ class UserController extends Controller
         $data['password'] = bcrypt($data['password']);
 
         $user = User::create($data);
-        $this->LogCreated("User " . $user->name, $user->id);
+
         $user->syncRoles(collect($data['roles'])->pluck('id'));
         $user->syncPermissions(collect($data['permissions'])->pluck('id'));
 
@@ -112,7 +111,7 @@ class UserController extends Controller
         }
 
         $user->update($data);
-        $this->LogUpdated("User " . $user->name, $user->id);
+
         // Avatar handling
         if ($request->hasFile('avatar')) {
             $user->clearMediaCollection('avatar');
@@ -165,7 +164,6 @@ class UserController extends Controller
         $this->authorize('delete', User::class);
 
         $user = User::findOrFail($user);
-        $this->LogDeleted("User " . $user->name, $user->id);
 
         $user->delete();
 
@@ -195,3 +193,4 @@ class UserController extends Controller
         ];
     }
 }
+

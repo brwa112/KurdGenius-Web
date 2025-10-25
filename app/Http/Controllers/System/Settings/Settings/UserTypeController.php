@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\System\Settings\Settings;
 
-use App\Traits\LogsActivity;
 use Illuminate\Http\Request;
 use App\Traits\HandlesSorting;
 use App\Traits\GenerateSlugKey;
@@ -11,7 +10,7 @@ use App\Models\System\Settings\System\UserType;
 
 class UserTypeController extends Controller
 {
-    use LogsActivity, HandlesSorting, GenerateSlugKey;
+    use HandlesSorting, GenerateSlugKey;
 
     public function index(Request $request)
     {
@@ -58,8 +57,6 @@ class UserTypeController extends Controller
         // Call the function to generate or update the key and translations
         $this->GenerateSlugKey($validated);
 
-        $this->logCreated('User Type' . $user_type->name, $user_type->id);
-
         return redirect()->back();
     }
 
@@ -82,8 +79,6 @@ class UserTypeController extends Controller
 
         $this->authorize('update', $user_type);
 
-        $this->logUpdated('User Type' . $user_type->name, $user_type->id);
-
         // Call the function to generate or update the key and translations
         $this->GenerateSlugKey($validated);
 
@@ -101,10 +96,9 @@ class UserTypeController extends Controller
 
         $this->authorize('delete', $user_type);
 
-        $this->logDeleted('User Type' . $user_type->name, $user_type->id);
-
         $user_type->delete();
 
         return redirect()->back();
     }
 }
+

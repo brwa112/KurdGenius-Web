@@ -196,4 +196,6 @@ return [
     'active_or_inactive_user_access' => 'Active or Inactive User Access',
     'owner_name' => 'Owner Name',
     'group_permissions' => 'Group Permissions',
+    'event_type' => 'Event Type',
+    'model' => 'Model',
 ];

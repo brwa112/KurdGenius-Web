@@ -93,3 +93,4 @@ class AuthController extends Controller
         return ltrim($plain, '0');
     }
 }
+

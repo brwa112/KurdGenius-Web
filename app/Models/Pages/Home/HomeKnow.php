@@ -3,6 +3,7 @@
 namespace App\Models\Pages\Home;
 
 use App\Models\System\Users\User;
+use App\Traits\LogsMediaActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,10 +11,12 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class HomeKnow extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, LogsActivity, LogsMediaActivity;
 
     public $translatable = ['title', 'subtitle', 'description'];
 
@@ -62,5 +65,13 @@ class HomeKnow extends Model implements HasMedia
     public function scopeOrdered($query)
     {
         return $query->orderBy('order');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['title', 'subtitle', 'description', 'features', 'is_active', 'user_id'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

@@ -17,7 +17,7 @@ class RolePermissionSeeder extends Seeder
         $allPermissionNames = [];
         $userPermissionNames = [];
         foreach ($groupPermissions as $group) {
-            foreach (['view', 'create', 'edit', 'delete'] as $action) {
+            foreach (['view', 'create', 'edit', 'delete', 'restore'] as $action) {
                 $permName = $action . '_' . $group->name;
                 Permission::firstOrCreate([
                     'name' => $permName,
@@ -55,7 +55,7 @@ class RolePermissionSeeder extends Seeder
         $allPermissionNames = [];
 
         foreach ($groupPermissions as $group) {
-            foreach (['view', 'create', 'edit', 'delete'] as $action) {
+            foreach (['view', 'create', 'edit', 'delete', 'restore'] as $action) {
                 $permName = $action . '_' . $group->name;
                 Permission::firstOrCreate([
                     'name' => $permName,
@@ -89,7 +89,7 @@ class RolePermissionSeeder extends Seeder
         $allPermissionNames = [];
 
         foreach ($groupPermissions as $group) {
-            foreach (['view', 'create', 'edit', 'delete'] as $action) {
+            foreach (['view', 'create', 'edit', 'delete', 'restore'] as $action) {
                 $permName = $action . '_' . $group->name;
                 Permission::firstOrCreate([
                     'name' => $permName,

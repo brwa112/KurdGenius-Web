@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\System\Settings\Settings\Key;
 use App\Traits\HandlesSorting;
-use App\Traits\LogsActivity;
 use App\Models\System\Settings\Settings\Translations;
 
 class TranslationsController extends Controller
 {
-    use LogsActivity, HandlesSorting;
+    use HandlesSorting;
     public function index(Request $request)
     {
         $this->authorize('viewAny', Translations::class);
@@ -88,8 +87,6 @@ class TranslationsController extends Controller
             'language_id' => $validated['languages']['id'], // Assuming languages is an ID
         ]);
 
-        $this->logCreated('Translation ' . $translation->value, $translation->id);
-
         return redirect()->back();
     }
 
@@ -103,8 +100,6 @@ class TranslationsController extends Controller
             'value' => 'required',
         ]);
 
-        $this->logUpdated('Translation ' . $translation->value, $translation->id);
-
         $translation->update($validated);
 
         return redirect()->back();
@@ -116,10 +111,9 @@ class TranslationsController extends Controller
 
         $this->authorize('delete', $translation);
 
-        $this->logDeleted('Translation ' . $translation->value, $translation->id);
-
         $translation->delete();
 
         return redirect()->back();
     }
 }
+

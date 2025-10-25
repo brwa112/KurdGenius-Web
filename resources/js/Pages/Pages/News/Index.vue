@@ -30,25 +30,22 @@
                 <!-- Filters -->
                 <perfect-scrollbar class="relative max-w-max">
                     <div class="flex items-center gap-2 w-full mb-2 whitespace-nowrap">
-                        <!-- Date Range Filter -->
-                        <CustomDatePicker v-model="dateRangeModel" filter-key="created_at" parent-key="system"
-                            placeholder="select_created_at_range" @apply-filter="handleApplyFilter"
-                            @clear-filter="handleClearFilter" />
-
                         <!-- Branch Filter -->
                         <CustomMultiSelect v-model="selectedBranchFilter" :list="branchFilterList" label="label"
                             placeholder="branch" placeholder-parent-key="pages"
                             @update:modelValue="applyBranchFilter" />
-
                         <!-- Category Filter -->
                         <CustomMultiSelect v-model="selectedCategoryFilter" :list="categoryFilterList" label="label"
                             placeholder="category" placeholder-parent-key="pages"
                             @update:modelValue="applyCategoryFilter" />
-
                         <!-- Hashtag Filter -->
                         <CustomMultiSelect v-model="selectedHashtagFilter" :list="hashtagFilterList" :multiple="true"
                             label="label" placeholder="hashtag" parent-key="pages"
                             @update:modelValue="applyHashtagFilter" />
+                        <!-- Date Range Filter -->
+                        <CustomDatePicker v-model="dateRangeModel" filter-key="created_at" parent-key="system"
+                            placeholder="select_created_at_range" @apply-filter="handleApplyFilter"
+                            @clear-filter="handleClearFilter" />
                     </div>
                 </perfect-scrollbar>
 
@@ -116,19 +113,38 @@
                         <tippy>{{ $helpers.formatCustomDate(data.value.created_at, true) }}</tippy>
                     </template>
 
-                    <template v-if="$can('edit_news') || $can('delete_news')" #actions="data">
-                        <div class="flex gap-2">
+                    <template v-if="$can('edit_news') || $can('delete_news') || $can('restore_news')" #actions="data">
+
+                        <!-- Active Record Actions -->
+                        <div v-if="data.value.deleted_at == null" class="flex items-center justify-end gap-2">
                             <div v-if="$can('edit_news')" class="text-center">
                                 <button type="button" v-tippy @click="toggleModal(data.value)">
                                     <Svg name="pencil" class="size-5"></Svg>
                                 </button>
-                                <tippy>{{ $t('common.edit') }}</tippy>
+                                <tippy>{{ $t("common.edit") }}</tippy>
                             </div>
+
                             <div v-if="$can('delete_news')" class="text-center">
                                 <button type="button" v-tippy @click="callDelete(data.value.id)">
                                     <Svg name="trash" class="size-5"></Svg>
                                 </button>
+                                <tippy>{{ $t("common.delete") }}</tippy>
+                            </div>
+                        </div>
+
+                        <!-- Deleted Record Actions -->
+                        <div v-else class="flex gap-2">
+                            <div v-if="$can('delete_news')" class="text-center">
+                                <button type="button" v-tippy @click="callForceDelete(data.value)">
+                                    <Svg name="trash" class="size-5"></Svg>
+                                </button>
                                 <tippy>{{ $t('common.delete') }}</tippy>
+                            </div>
+                            <div v-if="$can('restore_news')" class="text-center">
+                                <button type="button" v-tippy @click="callRestore(data.value)">
+                                    <Svg name="restore" class="size-5 opacity-65"></Svg>
+                                </button>
+                                <tippy>{{ $t('common.restore') }}</tippy>
                             </div>
                         </div>
                     </template>
@@ -371,9 +387,9 @@ const toggleModal = (row = null) => {
 const columns = ref([
     { field: 'id', title: 'ID', width: '25px', type: 'number' },
     { field: 'title', title: wTrans('pages.title') },
-    { field: 'branch', title: wTrans('pages.branch'), sort: false },
-    { field: 'category', title: wTrans('pages.category'), sort: false },
-    { field: 'hashtags', title: wTrans('pages.hashtag'), sort: false },
+    { field: 'branch', title: wTrans('pages.branch'), sort: true },
+    { field: 'category', title: wTrans('pages.category'), sort: true },
+    { field: 'hashtags', title: wTrans('pages.hashtag'), sort: true },
     { field: 'images', title: wTrans('pages.images'), sort: false },
     { field: 'updated_at', title: wTrans('common.updated_at'), type: 'date', hide: true },
     { field: 'created_at', title: wTrans('common.created_at'), type: 'date' },
@@ -395,6 +411,46 @@ const callDelete = (id) => {
         if (result.value) {
             form.delete(route('control.pages.news.destroy', id), {
                 onSuccess: () => $helpers.toast(trans('common.record') + ' ' + trans('common.deleted')),
+            });
+        }
+    });
+};
+
+// Force delete news with confirmation
+const callForceDelete = (row) => {
+    Swal.fire({
+        icon: 'warning',
+        title: trans('common.are_you_sure'),
+        text: trans('common.force_delete_this'),
+        showCancelButton: true,
+        confirmButtonText: trans('common.confirm'),
+        cancelButtonText: trans('common.cancel'),
+        padding: '2em',
+        customClass: 'sweet-alerts',
+    }).then((result) => {
+        if (result.value) {
+            form.delete(route('control.pages.news.force_delete', row.id), {
+                onSuccess: () => $helpers.toast(trans('common.record') + ' ' + trans('common.deleted')),
+            });
+        }
+    });
+};
+
+// Restore news with confirmation
+const callRestore = (row) => {
+    Swal.fire({
+        icon: 'warning',
+        title: trans('common.are_you_sure'),
+        text: trans('common.restore_this'),
+        showCancelButton: true,
+        confirmButtonText: trans('common.confirm'),
+        cancelButtonText: trans('common.cancel'),
+        padding: '2em',
+        customClass: 'sweet-alerts',
+    }).then((result) => {
+        if (result.value) {
+            form.post(route('control.pages.news.restore', row.id), {
+                onSuccess: () => $helpers.toast(trans('common.record') + ' ' + trans('common.restored')),
             });
         }
     });

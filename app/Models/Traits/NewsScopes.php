@@ -26,6 +26,44 @@ trait NewsScopes
         });
     }
 
+    // Filter by branch
+    public function scopeFilterByBranch($query, $branchId = null)
+    {
+        if (empty($branchId)) {
+            return $query;
+        }
+
+        return $query->where('branch_id', $branchId);
+    }
+
+    // Filter by category
+    public function scopeFilterByCategory($query, $categoryId = null)
+    {
+        if (empty($categoryId)) {
+            return $query;
+        }
+
+        return $query->where('category_id', $categoryId);
+    }
+
+    // Filter by hashtags (multiple)
+    public function scopeFilterByHashtags($query, $hashtagIds = null)
+    {
+        if (empty($hashtagIds)) {
+            return $query;
+        }
+
+        $ids = is_array($hashtagIds) ? $hashtagIds : array_filter(explode(',', $hashtagIds));
+        
+        if (empty($ids)) {
+            return $query;
+        }
+
+        return $query->whereHas('hashtags', function ($q) use ($ids) {
+            $q->whereIn('hashtags.id', $ids);
+        });
+    }
+
     // Filter by creation date range
     public function scopeFilterByDateRange($query, $startDate = null, $endDate = null)
     {
