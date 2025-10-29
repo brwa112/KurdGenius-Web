@@ -69,6 +69,12 @@
                         </span>
                     </template>
 
+                    <template #content="data">
+                        <div class="b-text-sm text-gray-600">
+                            {{ excerpt($helpers.getTranslation(data.value.content || {}, selectLanguage.slug)) }}
+                        </div>
+                    </template>
+
                     <template #images="data">
                         <button type="button" @click="showImage(data.value.images, 0)"
                             v-if="data.value.images?.length > 0" class="flex items-center gap-2 text-center">
@@ -340,6 +346,7 @@ const toggleModal = (row = null) => {
 const columns = ref([
     { field: 'id', title: 'ID', width: '25px', type: 'number' },
     { field: 'title', title: wTrans('pages.title') },
+    { field: 'content', title: wTrans('pages.content'), hide: true },
     { field: 'branch', title: wTrans('pages.branch'), sort: true },
     { field: 'images', title: wTrans('pages.images'), sort: false },
     { field: 'views', title: wTrans('pages.views'), sort: true },
@@ -348,6 +355,12 @@ const columns = ref([
     { field: 'created_at', title: wTrans('common.created_at'), type: 'date' },
     { field: 'actions', title: wTrans('common.actions'), width: '50px', sort: false },
 ]);
+
+const excerpt = (html, length = 75) => {
+    if (!html) return '';
+    const stripped = String(html).replace(/<[^>]*>?/gm, '');
+    return stripped.length > length ? stripped.slice(0, length) + '...' : stripped;
+};
 
 // View campus on frontend
 const viewCampus = (row) => {

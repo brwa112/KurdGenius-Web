@@ -69,6 +69,19 @@
                                     </div>
                                     </Link>
                                 </li>
+                                <li v-if="$can('view_gallery')" class="nav-item">
+                                    <Link :href="route('control.pages.gallery.index')" class="nav-link group w-full"
+                                        :class="{ active: $page.component === 'Pages/Gallery/Index' }">
+                                    <div class="flex items-center">
+                                        <Svg name="album" class="size-5"></Svg>
+
+                                        <span
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">
+                                            {{ $t('nav.gallery') }}
+                                        </span>
+                                    </div>
+                                    </Link>
+                                </li>
                             </ul>
                         </li>
 

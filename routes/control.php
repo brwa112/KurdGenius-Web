@@ -61,6 +61,16 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{classroom}/force', [ClassroomController::class, 'forceDelete'])->name('force_delete');
             Route::post('/{classroom}/restore', [ClassroomController::class, 'restore'])->name('restore');
         });
+
+        // Gallery admin (separate page similar to News)
+        Route::prefix('gallery')->as('gallery.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Pages\GalleryController::class, 'index'])->name('index');
+            Route::post('/', [\App\Http\Controllers\Pages\GalleryController::class, 'store'])->name('store');
+            Route::post('/{gallery}', [\App\Http\Controllers\Pages\GalleryController::class, 'update'])->name('update');
+            Route::delete('/{gallery}', [\App\Http\Controllers\Pages\GalleryController::class, 'destroy'])->name('destroy');
+            Route::delete('/{gallery}/force', [\App\Http\Controllers\Pages\GalleryController::class, 'forceDelete'])->name('force_delete');
+            Route::post('/{gallery}/restore', [\App\Http\Controllers\Pages\GalleryController::class, 'restore'])->name('restore');
+        });
     });
 
     Route::prefix('system')->as('system.')->group(function () {
@@ -114,6 +124,16 @@ Route::middleware('auth')->group(function () {
                     Route::post('/message', [HomeController::class, 'updateMessage'])->name('message.update');
                     Route::post('/mission', [HomeController::class, 'updateMission'])->name('mission.update');
                     Route::post('/social', [HomeController::class, 'updateSocial'])->name('social.update');
+                });
+
+                // About page settings (mirror Home settings)
+                Route::prefix('about')->as('about.')->group(function () {
+                    Route::get('/', [\App\Http\Controllers\System\Settings\Pages\AboutController::class, 'index'])->name('index');
+                    Route::post('/about', [\App\Http\Controllers\System\Settings\Pages\AboutController::class, 'updateAbout'])->name('about.update');
+                    Route::post('/media', [\App\Http\Controllers\System\Settings\Pages\AboutController::class, 'updateMedia'])->name('media.update');
+                    Route::post('/message', [\App\Http\Controllers\System\Settings\Pages\AboutController::class, 'updateMessage'])->name('message.update');
+                    Route::post('/mission', [\App\Http\Controllers\System\Settings\Pages\AboutController::class, 'updateMission'])->name('mission.update');
+                    Route::post('/touch', [\App\Http\Controllers\System\Settings\Pages\AboutController::class, 'updateTouch'])->name('touch.update');
                 });
             });
         });

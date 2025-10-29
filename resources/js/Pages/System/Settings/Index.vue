@@ -90,6 +90,8 @@
 
                                 <SettingMenu link="control.system.pages.home.index" label="home" icon="home_angle"
                                     can="view_home" />
+                                <SettingMenu link="control.system.pages.about.index" label="about" icon="user_id"
+                                    can="view_about" />
 
                             </div>
                         </div>

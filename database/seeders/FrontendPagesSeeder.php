@@ -10,7 +10,6 @@ use App\Models\Pages\Home\HomeKnow;
 use App\Models\Pages\About\AboutAbout;
 use App\Models\Pages\About\AboutMessage;
 use App\Models\Pages\About\AboutMission;
-use App\Models\Pages\About\AboutMedia;
 use App\Models\Pages\About\AboutTouch;
 use App\Models\Pages\Academic\AcademicApproach;
 use App\Models\Pages\Academic\AcademicChoose;
@@ -20,6 +19,7 @@ use App\Models\Pages\CalendarEvent;
 use App\Models\Pages\Campus;
 use App\Models\Pages\Classroom;
 use App\Models\Pages\News;
+use App\Models\Pages\Gallery;
 use App\Models\System\Users\User;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
@@ -47,7 +47,6 @@ class FrontendPagesSeeder extends Seeder
         $this->seedAboutAbout($user);
         $this->seedAboutMessage($user);
         $this->seedAboutMission($user);
-        $this->seedAboutMedia($user);
         $this->seedAboutTouch($user);
         
         $this->seedAcademicApproach($user);
@@ -60,6 +59,7 @@ class FrontendPagesSeeder extends Seeder
         $this->seedCampuses($user);
         $this->seedClassrooms($user);
         $this->seedNews($user);
+        $this->seedGallery($user);
 
         $this->command->info('Frontend pages seeded successfully!');
     }
@@ -167,35 +167,15 @@ class FrontendPagesSeeder extends Seeder
     {
         $defaultBranch = \App\Models\Pages\Branch::first();
 
+        // about_abouts table currently stores description only (plus user/branch/is_active)
         AboutAbout::create([
             'user_id' => $user->id,
-            'title' => [
-                'en' => 'About Kurd Genius School',
-                'ckb' => 'دەربارەی قوتابخانەی کوردجینیس',
-                'ar' => 'حول مدرسة كورد جينيوس',
-            ],
-            'subtitle' => [
-                'en' => 'Excellence in Education Since 2013',
-                'ckb' => 'باشی لە پەروەردەدا لە ساڵی ٢٠١٣ەوە',
-                'ar' => 'التميز في التعليم منذ عام 2013',
-            ],
+            'branch_id' => $defaultBranch?->id,
             'description' => [
                 'en' => 'Kurd Genius School was established in 2013 by Maya Company, a proud member of the Qaiwan Group of Companies, and is led by Mrs. Sozan Abubakr Mawlud. Since its foundation, the school has consistently ranked among the top performing educational institutions in the Kurdistan Region.',
                 'ckb' => 'قوتابخانەی کوردجینیس لە ساڵی ٢٠١٣دا لەلایەن کۆمپانیای مایاوە دامەزراوە، ئەندامێکی شانازی دەرەوەی کۆمپانیاکانی قەیوانە، و لەلایەن خاتوو سۆزان ئەبووبەکر مەولوودەوە بەڕێوە دەبرێت.',
                 'ar' => 'تأسست مدرسة كورد جينيوس في عام 2013 من قبل شركة مايا، وهي عضو فخور في مجموعة قيوان للشركات، وتديرها السيدة سوزان أبوبكر مولود.',
             ],
-            'established_year' => 2013,
-            'founder' => [
-                'en' => 'Maya Company / Qaiwan Group',
-                'ckb' => 'کۆمپانیای مایا / گروپی قەیوان',
-                'ar' => 'شركة مايا / مجموعة قيوان',
-            ],
-            'achievements' => [
-                ['en' => 'Top ranking institution in Kurdistan Region', 'ckb' => 'دامەزراوەی پلەی یەکەم لە هەرێمی کوردستان', 'ar' => 'مؤسسة الترتيب الأول في إقليم كوردستان'],
-                ['en' => 'Annual recognition from Ministry of Education', 'ckb' => 'ناسینەوەی ساڵانە لە وەزارەتی پەروەردەوە', 'ar' => 'اعتراف سنوي من وزارة التربية'],
-                ['en' => '1000+ successful graduates', 'ckb' => '١٠٠٠+ دەرچووی سەرکەوتوو', 'ar' => '1000+ خريج ناجح'],
-            ],
-            'order' => 1,
             'is_active' => true,
         ]);
 
@@ -204,18 +184,12 @@ class FrontendPagesSeeder extends Seeder
 
     private function seedAboutMessage($user)
     {
+        $defaultBranch = \App\Models\Pages\Branch::first();
+
+        // about_messages table stores description, author, order, is_active
         AboutMessage::create([
             'user_id' => $user->id,
-            'title' => [
-                'en' => 'Our Message',
-                'ckb' => 'پەیامەکەمان',
-                'ar' => 'رسالتنا',
-            ],
-            'subtitle' => [
-                'en' => 'Building Tomorrow\'s Leaders',
-                'ckb' => 'بنیاتنانی سەرکردەکانی سبەی',
-                'ar' => 'بناء قادة الغد',
-            ],
+            'branch_id' => $defaultBranch?->id,
             'description' => [
                 'en' => 'We are committed to providing high-quality education that nurtures intellectual curiosity, critical thinking, and personal growth. Our message is to empower students to become confident, compassionate, and responsible global citizens.',
                 'ckb' => 'ئێمە پابەندین بە دابینکردنی پەروەردەیەکی باش کە کنجکاوی زیرەکانە، بیرکردنەوەی ڕەخنەگرانە و گەشەی کەسی پەروەردە دەکات.',
@@ -226,12 +200,6 @@ class FrontendPagesSeeder extends Seeder
                 'ckb' => 'خاتوو سۆزان ئەبووبەکر مەولوود',
                 'ar' => 'السيدة سوزان أبوبكر مولود',
             ],
-            'author_position' => [
-                'en' => 'Founder & Principal',
-                'ckb' => 'دامەزرێنەر و بەڕێوەبەر',
-                'ar' => 'المؤسس والمدير',
-            ],
-            'order' => 1,
             'is_active' => true,
         ]);
 
@@ -240,76 +208,30 @@ class FrontendPagesSeeder extends Seeder
 
     private function seedAboutMission($user)
     {
+        $defaultBranch = \App\Models\Pages\Branch::first();
+
+        // about_missions table stores description and is_active
         AboutMission::create([
             'user_id' => $user->id,
-            'title' => [
-                'en' => 'Our Mission',
-                'ckb' => 'ئامانجمان',
-                'ar' => 'مهمتنا',
-            ],
-            'subtitle' => [
-                'en' => 'Excellence Through Innovation',
-                'ckb' => 'باشی لە ڕێگەی داهێنانەوە',
-                'ar' => 'التميز من خلال الابتكار',
-            ],
+            'branch_id' => $defaultBranch?->id,
             'description' => [
                 'en' => 'To deliver excellence in education through innovative teaching methods, a supportive learning environment, and a curriculum that balances academic achievement with character development.',
                 'ckb' => 'گەیاندنی باشی لە پەروەردەدا لە ڕێگەی شێوازە نوێیەکانی وانەوتنەوە و ژینگەیەکی پشتیوانی فێربوون.',
                 'ar' => 'تقديم التميز في التعليم من خلال أساليب تدريس مبتكرة وبيئة تعليمية داعمة.',
             ],
-            'goals' => [
-                ['en' => 'Foster critical thinking and creativity', 'ckb' => 'پەروەردەکردنی بیرکردنەوەی ڕەخنەگرانە و داهێنان', 'ar' => 'تعزيز التفكير النقدي والإبداع'],
-                ['en' => 'Develop strong academic foundation', 'ckb' => 'گەشەپێدانی بنەمای ئەکادیمی بەهێز', 'ar' => 'تطوير أساس أكاديمي قوي'],
-                ['en' => 'Build character and values', 'ckb' => 'بنیاتنانی کەسایەتی و بەهاکان', 'ar' => 'بناء الشخصية والقيم'],
-                ['en' => 'Prepare for global citizenship', 'ckb' => 'ئامادەکاری بۆ هاووڵاتیبوونی جیهانی', 'ar' => 'الاستعداد للمواطنة العالمية'],
-            ],
-            'order' => 1,
             'is_active' => true,
         ]);
 
         $this->command->info('About mission seeded.');
     }
 
-    private function seedAboutMedia($user)
-    {
-        AboutMedia::create([
-            'user_id' => $user->id,
-            'title' => [
-                'en' => 'Our Campus',
-                'ckb' => 'کامپەسەکەمان',
-                'ar' => 'حرمنا الجامعي',
-            ],
-            'description' => [
-                'en' => 'Take a virtual tour of our state-of-the-art facilities and vibrant learning environment.',
-                'ckb' => 'گەشتێکی مەجازی بکە بۆ کەرەستە سەردەمەکانمان و ژینگەی فێربوونی چالاک.',
-                'ar' => 'قم بجولة افتراضية في مرافقنا الحديثة وبيئة التعلم النابضة بالحياة.',
-            ],
-            'order' => 1,
-            'is_active' => true,
-        ]);
-
-        $this->command->info('About media seeded.');
-    }
-
     private function seedAboutTouch($user)
     {
+        $defaultBranch = \App\Models\Pages\Branch::first();
+
         AboutTouch::create([
             'user_id' => $user->id,
-            'title' => [
-                'en' => 'Get in Touch',
-                'ckb' => 'پەیوەندیمان پێوە بکە',
-                'ar' => 'تواصل معنا',
-            ],
-            'subtitle' => [
-                'en' => 'We\'d Love to Hear From You',
-                'ckb' => 'خۆشحاڵ دەبین لە بیستنی دەنگت',
-                'ar' => 'نحن نحب أن نسمع منك',
-            ],
-            'description' => [
-                'en' => 'Contact us for admissions, inquiries, or to schedule a campus visit.',
-                'ckb' => 'پەیوەندیمان پێوە بکە بۆ وەرگرتن، پرسیار یان دیاریکردنی کاتی سەردانی کامپەس.',
-                'ar' => 'اتصل بنا للقبول أو الاستفسارات أو لجدولة زيارة للحرم الجامعي.',
-            ],
+            'branch_id' => $defaultBranch?->id,
             'contact_email' => 'kurdgeniusschool@gmail.com',
             'contact_phone' => '+964 770 342 0606',
             'contact_address' => [
@@ -317,12 +239,6 @@ class FrontendPagesSeeder extends Seeder
                 'ckb' => 'شەقامی سەرەکی، دەڤەری پەروەردە، هەولێر، هەرێمی کوردستان',
                 'ar' => 'الشارع الرئيسي، المنطقة التعليمية، أربيل، إقليم كوردستان',
             ],
-            'social_links' => [
-                'facebook' => 'https://facebook.com/kurdgenius',
-                'instagram' => 'https://instagram.com/kurdgenius',
-                'twitter' => 'https://twitter.com/kurdgenius',
-            ],
-            'order' => 1,
             'is_active' => true,
         ]);
 
@@ -768,5 +684,51 @@ class FrontendPagesSeeder extends Seeder
         }
 
         $this->command->info('News articles seeded.');
+    }
+
+    private function seedGallery($user)
+    {
+        $defaultBranch = \App\Models\Pages\Branch::first();
+
+        if (! $defaultBranch) {
+            $this->command->warn('No branch found. Skipping gallery seeding.');
+            return;
+        }
+
+        // Prefer an existing category if available
+        $category = \App\Models\Pages\Category::first();
+
+        $galleries = [
+            [
+                'title' => ['en' => 'Campus Tour', 'ckb' => 'گەشتی کامپەس', 'ar' => 'جولة في الحرم'],
+                'description' => ['en' => 'Photos from our main campus and facilities.', 'ckb' => 'وێنەkan لە کامپەس و ئامێرەکان.', 'ar' => 'صور من الحرم والمرافق.'],
+                'category_id' => $category?->id,
+                'order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'STEM Lab Highlights', 'ckb' => 'هەڵسەنگاندنەکانی تاقیگەی STEM', 'ar' => 'معالم مختبر STEM'],
+                'description' => ['en' => 'Snapshots of our STEM activities and student projects.', 'ckb' => 'وێنەکانی چالاکی STEM و پرۆژەی خوێندکاران.', 'ar' => 'لقطات من أنشطة STEM ومشاريع الطلاب.'],
+                'category_id' => $category?->id,
+                'order' => 2,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Cultural Events', 'ckb' => 'ڕووداوە کەلتوورییەکان', 'ar' => 'الفعاليات الثقافية'],
+                'description' => ['en' => 'Gallery from our cultural festival and student performances.', 'ckb' => 'گالەریی فێستیڤاڵە کەلتوورییەکان و پێشکەشکردنی خوێندکاران.', 'ar' => 'معرض من مهرجاننا الثقافي وعروض الطلاب.'],
+                'category_id' => $category?->id,
+                'order' => 3,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($galleries as $g) {
+            Gallery::create(array_merge($g, [
+                'user_id' => $user->id,
+                'branch_id' => $defaultBranch->id,
+            ]));
+        }
+
+        $this->command->info('Gallery items seeded.');
     }
 }

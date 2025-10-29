@@ -111,6 +111,11 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Manage classroom and their data',
             ],
             [
+                'name' => 'gallery',
+                'slug' => 'gallery',
+                'description' => 'Manage gallery and their data',
+            ],
+            [
                 'name' => 'users',
                 'slug' => 'users',
                 'description' => 'Manage users and their permissions',
@@ -173,6 +178,11 @@ class DatabaseSeeder extends Seeder
                 'name' => 'home',
                 'slug' => 'home',
                 'description' => 'Manage home page settings and content',
+            ],
+            [
+                'name' => 'about',
+                'slug' => 'about',
+                'description' => 'Manage about page settings and content',
             ],
         ];
 

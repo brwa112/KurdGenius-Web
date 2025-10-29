@@ -3,6 +3,7 @@
 namespace App\Models\Pages\About;
 
 use App\Models\System\Users\User;
+use App\Models\Pages\Branch;
 use App\Traits\LogsMediaActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,24 +19,17 @@ class AboutAbout extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, LogsActivity, LogsMediaActivity;
 
-    public $translatable = ['title', 'subtitle', 'description', 'founder'];
+    // Only description is stored in the about_abouts table in current migrations
+    public $translatable = ['description'];
 
     protected $fillable = [
         'user_id',
-        'title',
-        'subtitle',
+        'branch_id',
         'description',
-        'established_year',
-        'founder',
-        'achievements',
-        'metadata',
-        'order',
         'is_active',
     ];
 
     protected $casts = [
-        'achievements' => 'array',
-        'metadata' => 'array',
         'is_active' => 'boolean',
     ];
 
@@ -65,6 +59,11 @@ class AboutAbout extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
@@ -78,7 +77,7 @@ class AboutAbout extends Model implements HasMedia
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['title', 'subtitle', 'description', 'established_year', 'founder', 'achievements', 'is_active', 'user_id'])
+            ->logOnly(['description', 'is_active', 'user_id', 'branch_id'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }

@@ -3,6 +3,7 @@
 namespace App\Models\Pages\About;
 
 use App\Models\System\Users\User;
+use App\Models\Pages\Branch;
 use App\Traits\LogsMediaActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,22 +19,17 @@ class AboutMission extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, LogsActivity, LogsMediaActivity;
 
-    public $translatable = ['title', 'subtitle', 'description'];
+    // Current about_missions table stores description and is_active
+    public $translatable = ['description'];
 
     protected $fillable = [
         'user_id',
-        'title',
-        'subtitle',
+        'branch_id',
         'description',
-        'goals',
-        'metadata',
-        'order',
         'is_active',
     ];
 
     protected $casts = [
-        'goals' => 'array',
-        'metadata' => 'array',
         'is_active' => 'boolean',
     ];
 
@@ -57,6 +53,11 @@ class AboutMission extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
@@ -70,7 +71,7 @@ class AboutMission extends Model implements HasMedia
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['title', 'subtitle', 'description', 'goals', 'is_active', 'user_id'])
+            ->logOnly(['description', 'is_active', 'user_id', 'branch_id'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }

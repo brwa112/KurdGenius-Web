@@ -1,8 +1,8 @@
 <template>
-
     <Head>
-        <title>{{ $t('system.logs') }}</title>
+        <title>{{ $t('system.about') }}</title>
     </Head>
+
     <div class="mx-auto">
         <div class="w-full flex flex-wrap items-center justify-between gap-x-5 gap-y-2.5 -mt-1">
             <div class="flex whitespace-nowrap">
@@ -12,162 +12,242 @@
                     </li>
                     <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
                         <Link :href="route('control.system.settings')" class="duration-200 hover:text-primary">
-                        {{ $t("system.settings") }}
+                        {{ $t("system.pages") }}
                         </Link>
                     </li>
                     <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
-                        <span>{{ $t('system.logs') }}</span>
+                        <span>{{ $t('system.about') }}</span>
                     </li>
                 </ul>
             </div>
+            <div class="flex items-center gap-2">
+                <CustomMultiSelect v-model="selectBranch" :list="branchList" label="label" value="id" :showValue="false"
+                    :require-selection="true" :isTrans="false" />
+                <CustomMultiSelect v-model="selectLanguage" :list="Languages" label="name" value="value"
+                    :showValue="false" parent-key="system" placeholder="languages" :require-selection="true" />
+                <button @click="saveAllSections" type="button" class="btn btn-primary">
+                    <span>{{ $t('system.save_changes') }}</span>
+                </button>
+                <Link :href="route('control.pages.gallery.index')" class="btn btn-outline-secondary">
+                    <span>{{ $t('system.gallery') }}</span>
+                </Link>
+            </div>
         </div>
 
-        <div class="pt-4">
-            <div class="panel ">
-                <!-- Filters -->
-                <perfect-scrollbar class="relative max-w-max">
-                    <div class="flex items-center gap-2 w-full mb-2 whitespace-nowrap">
+        <div class="pt-4 space-y-4">
 
-                        <!--Filtered by User -->
-                        <CustomMultiSelect v-model="filters.user_id" @change="apply_filter" :list="props.users"
-                            value="id" :multiple="false" placeholder-parent-key="system" placeholder="email"
-                            label="email" />
+            <!-- About Section -->
+            <AboutSection :form="aboutForm" :selectLanguage="selectLanguage" />
 
-                        <!--Filtered by Event Type -->
-                        <CustomMultiSelect v-model="filters.event" @change="apply_filter" :list="props.events"
-                            value="value" :multiple="false" placeholder-parent-key="system" placeholder="event_type"
-                            label="label" />
+            <!-- Media Section -->
+            <MediaSection :form="mediaForm" :selectLanguage="selectLanguage" />
 
-                        <!--Filtered by Subject Type -->
-                        <CustomMultiSelect v-model="filters.subject_type" @change="apply_filter" :list="props.subjectTypes"
-                            value="value" :multiple="false" placeholder-parent-key="system" placeholder="model"
-                            label="label" />
+            <!-- Message Section -->
+            <MessageSection :form="messageForm" :selectLanguage="selectLanguage" />
 
-                        <!-- Date Range Picker -->
-                        <CustomDatePicker v-model="dateRangeModel" filter-key="created_at" parent-key="system"
-                            placeholder="select_created_at_range" @apply-filter="handleApplyFilter"
-                            @clear-filter="handleClearFilter" />
+            <!-- Mission Section -->
+            <MissionSection :form="missionForm" :selectLanguage="selectLanguage" />
+
+            <!-- Touch / Contact Section -->
+            <TouchSection :form="touchForm" :selectLanguage="selectLanguage" />
+
+            <div class="sticky bottom-0 bg-white dark:bg-gray-900 border-t border-[#d3d3d3] dark:border-[#1b2e4b] p-3 -mx-6">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-3">
+                        <span class="hidden md:block">{{ $t('system.select_language') }}</span>
+                        <CustomMultiSelect v-model="selectLanguage" :list="Languages" label="name" value="value"
+                            :showValue="false" parent-key="system" placeholder="languages" :require-selection="true" />
                     </div>
-                </perfect-scrollbar>
-
-                <!-- Datatable -->
-                <Datatable :rows="logs" :columns="columns" :totalRows="logs.data?.length" @change="apply_filter"
-                    v-model:search="filters.search" v-model:numberRows="filters.number_rows" :filter="props.filter"
-                    v-model:sortBy="filters.sort_by" v-model:sortDirection="filters.sort_direction">
-
-                    <template #updated_at="data">
-                        <span v-tippy dir="ltr" class="text-sm font-bold ltr">
-                            {{ data.value.updated_at ? $helpers.formatCustomDate(data.value.updated_at) : '' }}
-                        </span>
-                        <tippy>{{ $helpers.formatCustomDate(data.value.updated_at, true) }}</tippy>
-                    </template>
-
-                    <template #created_at="data">
-                        <span v-tippy dir="ltr" class="text-sm font-bold ltr">
-                            {{ data.value.created_at ? $helpers.formatCustomDate(data.value.created_at) : '' }}
-                        </span>
-                        <tippy>{{ $helpers.formatCustomDate(data.value.created_at, true) }}</tippy>
-                    </template>
-                </Datatable>
+                    <div class="flex items-center gap-3">
+                        <Link :href="route('control.system.settings')" class="btn btn-sm btn-outline-secondary">
+                        {{ $t('common.back') }}
+                        </Link>
+                        <button @click="saveAllSections" :disabled="aboutForm.processing" type="button"
+                            class="btn btn-sm btn-primary sm:min-w-[120px]">
+                            <Spinner v-if="aboutForm.processing" />
+                            {{ $t('system.save_changes') }}
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
+
 <script setup>
-import { inject, ref, computed } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
-import { wTrans } from 'laravel-vue-i18n';
-import Datatable from '@/Components/Datatable.vue';
-import { initializeFilters, updateFilters, } from '@/Plugins/FiltersPlugin';
-import CustomDatePicker from '@/Components/Inputs/CustomDatePicker.vue';
-import { useDateFilters } from '@/composables/useDateFilters.js';
+import { inject, ref, watch, computed } from 'vue';
+import { Head, Link, useForm, router, usePage } from '@inertiajs/vue3';
 import CustomMultiSelect from '@/Components/Inputs/CustomMultiSelect.vue';
+import Spinner from '@/Components/Spinner.vue';
+import { trans } from 'laravel-vue-i18n';
+
+// Import partial components (we'll add these next)
+import AboutSection from './Partials/AboutSection.vue';
+import MediaSection from './Partials/MediaSection.vue';
+import MessageSection from './Partials/MessageSection.vue';
+import MissionSection from './Partials/MissionSection.vue';
+import TouchSection from './Partials/TouchSection.vue';
 
 const props = defineProps([
-    'users',
-    'logs',
-    'events',
-    'subjectTypes',
-    'filter',
+    'about',
+    'media',
+    'message',
+    'mission',
+    'touch',
 ]);
 
-console.log(props.events);
-
 const $helpers = inject('helpers');
-
-const filters = initializeFilters({
-    search: '',
-    number_rows: 10,
-    sort_by: 'id',
-    sort_direction: 'desc',
-    start_date: props.filter.start_date || '',
-    end_date: props.filter.end_date || '',
-    event: props.filter.event || '',
-    subject_type: props.filter.subject_type || '',
-}, {
-    user_id: (id) => {
-        return props.users.find(u => u.id == id) || null;
-    },
-    event: (event) => {
-        return props.events.find(e => e.value == event) || null;
-    },
-    subject_type: (type) => {
-        return props.subjectTypes.find(t => t.value == type) || null;
-    },
+const page = usePage();
+const Languages = page.props.languages;
+const urlParams = new URLSearchParams(window.location.search || '');
+const initialLangParam = urlParams.get('lang') || page.props.ziggy.query.lang || (Languages[0] && Languages[0].slug) || null;
+const selectLanguage = ref(Languages.find(l => l.slug === initialLangParam) ?? Languages[0]);
+const branchList = computed(() => {
+    return page.props.branches.map(branch => ({
+        id: branch.id,
+        slug: branch.slug,
+        name: branch.name,
+        label: $helpers.getTranslation(branch.name, usePage().props.locale)
+    }));
 });
 
-// console.log(props.filter.user_id, props.users.find(u => u.id == props.filter.user_id).email);
+const selectBranch = ref(branchList.value.find(b => Number(b.id) === Number(page.props.ziggy.query.branch_id)) ?? branchList.value[0]);
 
-const apply_filter = () => {
-    updateFilters({
-        ...filters,
-        user_id: filters.user_id || props.users.find(u => u.id == props.filter.user_id) || '',
-        event: filters.event ? filters.event.value : '',
-        subject_type: filters.subject_type ? filters.subject_type.value : '',
-        start_date: filters.start_date || '',
-        end_date: filters.end_date || '',
+watch(() => selectBranch.value, () => {
+    const branchId = selectBranch.value?.id;
+    const lang = selectLanguage.value?.slug;
+    router.visit(route('control.system.pages.about.index'), {
+        method: 'get',
+        data: { branch_id: branchId, lang },
+        preserveState: false,
+        preserveScroll: true,
+    });
+}, { deep: true });
+
+watch(() => page.props.selectedBranch, (newSelected) => {
+    if (!newSelected) return;
+    const found = branchList.value.find(b => b.id === newSelected.id);
+    if (found) {
+        selectBranch.value = found;
+    } else if (branchList.value.length > 0) {
+        selectBranch.value = branchList.value[0];
+    }
+}, { immediate: true });
+
+
+const aboutForm = useForm({
+    // only description, images and is_active exist in the current schema
+    description: $helpers.parseTranslation(props.about?.description),
+    // single image: use first item from the images array if present
+    image: props.about?.image || null,
+    remove_image: false,
+    is_active: props.about?.is_active || false,
+});
+
+const mediaForm = useForm({
+    title: $helpers.parseTranslation(props.media?.title),
+    description: $helpers.parseTranslation(props.media?.description),
+    gallery: props.media?.gallery || null,
+    videos: props.media?.videos || null,
+    remove_gallery: false,
+    remove_videos: false,
+    is_active: props.media?.is_active || false,
+});
+
+const messageForm = useForm({
+    description: $helpers.parseTranslation(props.message?.description),
+    author: $helpers.parseTranslation(props.message?.author),
+    order: props.message?.order ?? 0,
+    image: props.message?.author_image || null,
+    remove_author_image: false,
+    is_active: props.message?.is_active || false,
+});
+
+const missionForm = useForm({
+    description: $helpers.parseTranslation(props.mission?.description),
+    is_active: props.mission?.is_active || false,
+});
+
+const touchForm = useForm({
+    contact_email: props.touch?.contact_email || '',
+    contact_phone: props.touch?.contact_phone || '',
+    contact_address: $helpers.parseTranslation(props.touch?.contact_address),
+    is_active: props.touch?.is_active || false,
+});
+
+const saveAllSections = () => {
+    aboutForm.transform((data) => ({
+        ...data,
+        description: $helpers.toPlain(data.description),
+        branch_id: selectBranch.value?.id,
+    })).post(route('control.system.pages.about.about.update'), {
+        preserveScroll: true,
+        preserveState: true,
+        onError: (errors) => {
+            $helpers.toast(trans('system.fix_errors_in_section', { section: trans('system.about') }), 'error');
+            console.error('About Errors:', errors);
+        },
+        onSuccess: () => {
+            // then save media
+            mediaForm.transform((data) => ({
+                ...data,
+                title: $helpers.toPlain(data.title),
+                description: $helpers.toPlain(data.description),
+                branch_id: selectBranch.value?.id,
+            })).post(route('control.system.pages.about.media.update'), {
+                preserveScroll: true,
+                preserveState: true,
+                onError: (errors) => {
+                    $helpers.toast(trans('system.fix_errors_in_section', { section: trans('system.media') }), 'error');
+                },
+                onSuccess: () => {
+                    messageForm.transform((data) => ({
+                        ...data,
+                        description: $helpers.toPlain(data.description),
+                        author: $helpers.toPlain(data.author),
+                        order: data.order,
+                        branch_id: selectBranch.value?.id,
+                    })).post(route('control.system.pages.about.message.update'), {
+                        preserveScroll: true,
+                        preserveState: true,
+                        onError: (errors) => {
+                            $helpers.toast(trans('system.fix_errors_in_section', { section: trans('system.message') }), 'error');
+                        },
+                        onSuccess: () => {
+                            missionForm.transform((data) => ({
+                                ...data,
+                                description: $helpers.toPlain(data.description),
+                                branch_id: selectBranch.value?.id,
+                            })).post(route('control.system.pages.about.mission.update'), {
+                                preserveScroll: true,
+                                preserveState: true,
+                                onError: (errors) => {
+                                    $helpers.toast(trans('system.fix_errors_in_section', { section: trans('system.mission') }), 'error');
+                                },
+                                onSuccess: () => {
+                                    touchForm.transform((data) => ({
+                                        ...data,
+                                        contact_address: $helpers.toPlain(data.contact_address),
+                                        branch_id: selectBranch.value?.id,
+                                    })).post(route('control.system.pages.about.touch.update'), {
+                                        preserveScroll: true,
+                                        preserveState: true,
+                                        onError: (errors) => {
+                                            $helpers.toast(trans('system.fix_errors_in_section', { section: trans('system.touch') }), 'error');
+                                        },
+                                        onSuccess: () => {
+                                            $helpers.toast(trans('system.about_section_updated'), 'success');
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     });
 };
 
-const { dateRangeModel, handleApplyFilter, handleClearFilter } = useDateFilters(filters, apply_filter);
-
-// Watch for changes in filters and apply them
-const columns =
-    ref([
-        {
-            field: 'id',
-            title: 'ID',
-            width: '25px',
-            type: 'number',
-        },
-        {
-            field: 'users.name',
-            title: wTrans('common.user')
-        },
-        {
-            field: 'users.email',
-            title: wTrans('common.email')
-        },
-        {
-            field: 'action',
-            title: wTrans('common.action')
-        },
-        {
-            field: 'event',
-            title: wTrans('common.event')
-        },
-        {
-            field: 'subject_type',
-            title: wTrans('common.model')
-        },
-        {
-            field: 'row_id',
-            title: wTrans('common.row_id')
-        },
-        {
-            field: 'created_at',
-            title: wTrans('common.created_at'),
-            type: 'date',
-        },
-    ]) || [];
+// (gallery navigation is handled via dedicated Gallery admin page)
 </script>
