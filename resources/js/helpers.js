@@ -165,16 +165,17 @@ export default {
                 field: col.field,
                 hide: col.hide
             }
-        })))
-
+        })));
     },
     getDatatableColumnVisibility(col) {
         const page_key = this.slugify(route().current());
         const columns = JSON.parse(localStorage.getItem(`${page_key}_columns`));
-        if (columns) {
-            const column = columns.find(column => column.field == col.field);
-            if (column) {
-                col.hide = column.hide;
+        if (typeof col.hide === 'undefined') {
+            if (columns) {
+                const column = columns.find(column => column.field == col.field);
+                if (column) {
+                    col.hide = column.hide;
+                }
             }
         }
 
@@ -250,13 +251,13 @@ export default {
     getTranslation(obj, locale = null) {
         // Handle null/undefined
         if (!obj) return '';
-        
+
         // If already a string, return as is
         if (typeof obj === 'string') return obj;
-        
+
         // Determine which locale to use
         const targetLocale = locale || document.documentElement.lang || 'en';
-        
+
         // Return translation with fallback chain
         return obj[targetLocale] || obj['en'] || obj[Object.keys(obj)[0]] || '';
     },
@@ -276,17 +277,17 @@ export default {
      */
     branchRoute(path, branchSlug = null) {
         // Try to get branch prefix from page props (Inertia)
-        const branchPrefix = branchSlug || 
+        const branchPrefix = branchSlug ||
             (typeof window !== 'undefined' && window.$page?.props?.branchPrefix) || '';
-        
+
         if (!branchPrefix) return path;
-        
+
         // Handle root path
         if (path === '/' || path === '') {
             return `/${branchPrefix}`;
         }
-        
-                // Ensure path starts with /
+
+        // Ensure path starts with /
         const cleanPath = path.startsWith('/') ? path : `/${path}`;
         return `/${branchPrefix}${cleanPath}`;
     },

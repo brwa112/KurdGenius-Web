@@ -92,6 +92,8 @@
                                     can="view_home" />
                                 <SettingMenu link="control.system.pages.about.index" label="about" icon="user_id"
                                     can="view_about" />
+                                <SettingMenu link="control.system.pages.calendar.index" label="calendar" icon="calender_date"
+                                    can="view_calendar" />
 
                             </div>
                         </div>

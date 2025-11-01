@@ -267,5 +267,18 @@ return [
     'author' => 'Author',
     'author_image' => 'Author Image',
 
+    // Calendar Page Management
+    'calendar' => 'Calendar Page',
+    'activities' => 'Activities',
+    'activity' => 'Activity',
+    'add_activity' => 'Add Activity',
+    'holidays' => 'Holidays',
+    'holiday' => 'Holiday',
+    'add_holiday' => 'Add Holiday',
+    'important_dates' => 'Important Dates',
+    'event_name' => 'Event Name',
+    'date' => 'Date',
+    'add_important_date' => 'Add Important Date',
+
     
 ];

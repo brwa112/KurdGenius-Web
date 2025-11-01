@@ -243,4 +243,17 @@ return [
     'author_image' => 'Author Image',
     'message' => 'Message Section',
     'mission' => 'Mission Section',
+
+    // Calendar Page Management
+    'calendar' => 'ڕۆژژمێر',
+    'activities' => 'چالاکییەکان',
+    'activity' => 'چالاکی',
+    'add_activity' => 'چالاکی زیادبکە',
+    'holidays' => 'پشووەکان',
+    'holiday' => 'پشوو',
+    'add_holiday' => 'پشوو زیادبکە',
+    'important_dates' => 'ڕێکەوتە گرنگەکان',
+    'event_name' => 'ناوی ڕووداو',
+    'date' => 'ڕێکەوت',
+    'add_important_date' => 'ڕێکەوتی گرنگ زیادبکە',
 ];
