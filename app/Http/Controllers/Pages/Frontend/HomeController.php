@@ -7,6 +7,7 @@ use App\Models\Pages\Home\HomeHistory;
 use App\Models\Pages\Home\HomeMessage;
 use App\Models\Pages\Home\HomeMission;
 use App\Models\Pages\Home\HomeKnow;
+use App\Models\Pages\News;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -58,6 +59,29 @@ class HomeController extends Controller
             })
             ->first();
 
+        // Fetch latest news for the home page (limit to 3)
+        $latestNews = News::query()
+            ->active()
+            ->ofBranch($branchId)
+            ->with(['category', 'hashtags', 'branch'])
+            ->latest()
+            ->take(3)
+            ->get()
+            ->map(function ($news) {
+                return [
+                    'id' => $news->id,
+                    'slug' => $news->slug,
+                    'title' => $news->getTranslations('title'),
+                    'content' => $news->getTranslations('content'),
+                    'image' => $news->getFirstMediaUrl('images', 'medium') ?: $news->getFirstMediaUrl('images'),
+                    'created_at' => $news->created_at?->format('Y-m-d'),
+                    'category' => $news->category ? [
+                        'name' => $news->category->getTranslations('name'),
+                        'slug' => $news->category->slug,
+                    ] : null,
+                ];
+            });
+
         return inertia('Frontend/Pages/Home/Index', [
             'hero' => $hero ? [
                 'title' => $hero->getTranslations('title'),
@@ -68,10 +92,9 @@ class HomeController extends Controller
             ] : null,
             'history' => $history ? [
                 'description' => $history->getTranslations('description'),
-                'images' => [
-                    $history->getFirstMediaUrl('image_1'),
-                    $history->getFirstMediaUrl('image_2'),
-                ],
+                'images' => $history->getMedia('images')->take(2)->map(function ($media) {
+                    return $media->getUrl();
+                })->toArray(),
             ] : null,
             'message' => $message ? [
                 'description' => $message->getTranslations('description'),
@@ -81,7 +104,11 @@ class HomeController extends Controller
                 'description' => $mission->getTranslations('description'),
                 'image' => $mission->getFirstMediaUrl('images'),
             ] : null,
-            'social' => $social,
+            'social' => $social ? [
+                'is_active' => $social->is_active,
+                'metadata' => $social->metadata,
+            ] : null,
+            'news' => $latestNews,
         ]);
     }
 }

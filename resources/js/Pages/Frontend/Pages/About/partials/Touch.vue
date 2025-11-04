@@ -19,12 +19,12 @@
                             <!-- Phone -->
                             <div class="flex items-center gap-4">
                                 <img :src="'/img/about/phone.svg'" alt="Phone Icon" />
-                                <span dir="ltr" class="text-base font-medium">{{ $t('frontend.contact.phone') }}</span>
+                                <span dir="ltr" class="text-base font-medium">{{ contactPhone }}</span>
                             </div>
                             <!-- Email -->
                             <div class="flex items-center gap-4">
                                 <img :src="'/img/about/monitor.svg'" alt="Email Icon" />
-                                <span class="text-base font-medium">{{ $t('frontend.contact.email') }}</span>
+                                <span class="text-base font-medium">{{ contactEmail }}</span>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <div class="flex items-start gap-4">
                             <img :src="'/img/about/map_location.svg'" alt="Location Icon" />
                             <p class="text-base font-medium leading-relaxed">
-                                Kurd Genius School - Qaiwan City, Raparin - Sulaymaniyah, Kurdistan Region, Iraq
+                                {{ contactAddress }}
                             </p>
                         </div>
                     </div>
@@ -45,7 +45,11 @@
                     <!-- Map -->
                     <div class="relative">
                         <div class="w-full h-48 bg-gray-200 rounded-3xl overflow-hidden">
-                            <iframe
+                            <iframe v-if="mapIframe" :src="mapIframe" width="100%" height="100%" style="border:0;"
+                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                class="rounded-xl">
+                            </iframe>
+                            <iframe v-else
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3217.5!2d45.4454!3d35.5606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDMzJzM4LjIiTiA0NcKwMjYnNDMuNCJF!5e0!3m2!1sen!2s!4v1234567890"
                                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade" class="rounded-xl">
@@ -118,7 +122,43 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import { usePage } from '@inertiajs/vue3';
+
+const props = defineProps({
+    data: {
+        type: Object,
+        default: () => ({})
+    }
+});
+
+console.log(props.data);
+
+const page = usePage();
+
+// Helper function to get translated text
+const getTranslatedText = (translations) => {
+    if (!translations) return '';
+    const currentLang = page.props.locale || 'en';
+    return translations[currentLang] || translations.en || '';
+};
+
+// Contact information computed properties
+const contactPhone = computed(() => {
+    return props.data.contact_phone || '+964 123 456 7890';
+});
+
+const contactEmail = computed(() => {
+    return props.data.contact_email || 'info@kurdgenius.com';
+});
+
+const contactAddress = computed(() => {
+    return getTranslatedText(props.data.contact_address) || 'Kurd Genius School - Qaiwan City, Raparin - Sulaymaniyah, Kurdistan Region, Iraq';
+});
+
+const mapIframe = computed(() => {
+    return props.data.map_iframe || '';
+});
 
 // Form data
 const form = reactive({

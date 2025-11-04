@@ -3,25 +3,37 @@
   <nav class="fixed top-0 inset-x-0 z-50 bg-white shadow-md">
 
     <!-- Top bar -->
-    <div class="bg-f-primary text-white py-4 px-4 hidden xl:block">
+    <div dir="ltr" class="bg-f-primary text-white py-4 px-4 hidden xl:block">
       <div class="max-w-[85%] 3xl:max-w-[70%] mx-auto flex justify-between items-center gap-2 text-sm">
-        <!-- Mobile: Show only phone number -->
+        <!-- Contact Info -->
         <div class="flex items-center gap-4 md:gap-6">
-          <div class="flex items-center gap-1">
+          <a v-if="contactInfo.phone" :href="`tel:${contactInfo.phone}`"
+            class="flex items-center gap-1 hover:text-f-primary-200 transition-colors">
             <Svg name="call_fill" class="size-5"></Svg>
-            <span dir="ltr" class="opacity-80 text-xs md:text-sm">{{ $t('frontend.contact.phone') }}</span>
-          </div>
-          <div class="flex items-center gap-1">
+            <span dir="ltr" class="opacity-80 text-xs md:text-sm">{{ contactInfo.phone }}</span>
+          </a>
+          <a v-if="contactInfo.email" :href="`mailto:${contactInfo.email}`"
+            class="flex items-center gap-1 hover:text-f-primary-200 transition-colors">
             <Svg name="email_fill" class="size-5"></Svg>
-            <span class="opacity-80">{{ $t('frontend.contact.email') }}</span>
-          </div>
+            <span class="opacity-80 text-xs md:text-sm">{{ contactInfo.email }}</span>
+          </a>
         </div>
         <div class="flex items-center gap-2">
-          <a href="#" class="hover:text-f-primary-200 transition-colors">
+          <a v-if="socialLinks.facebook" :href="socialLinks.facebook" target="_blank" rel="noopener noreferrer"
+            class="hover:text-f-primary-200 transition-colors" aria-label="Facebook">
             <Svg name="facebook_fill" class="size-5"></Svg>
           </a>
-          <a href="#" class="hover:text-f-primary-200 transition-colors">
+          <a v-if="socialLinks.instagram" :href="socialLinks.instagram" target="_blank" rel="noopener noreferrer"
+            class="hover:text-f-primary-200 transition-colors" aria-label="Instagram">
             <Svg name="instagram_fill" class="size-5"></Svg>
+          </a>
+          <a v-if="socialLinks.youtube" :href="socialLinks.youtube" target="_blank" rel="noopener noreferrer"
+            class="hover:text-f-primary-200 transition-colors" aria-label="YouTube">
+            <Svg name="youtube" class="h-6 opacity-85"></Svg>
+          </a>
+          <a v-if="socialLinks.twitter" :href="socialLinks.twitter" target="_blank" rel="noopener noreferrer"
+            class="hover:text-f-primary-200 transition-colors" aria-label="Twitter">
+            <Svg name="twitter" class="size-3.5"></Svg>
           </a>
         </div>
       </div>
@@ -44,27 +56,27 @@
         </Link>
         <Link :href="branchRoute('/about')" class="hover:text-f-primary font-medium transition-colors"
           :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/About') }">
-          {{ $t('frontend.nav.about') }}
+        {{ $t('frontend.nav.about') }}
         </Link>
         <Link :href="branchRoute('/campus')" class="hover:text-f-primary font-medium transition-colors"
           :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/Campus') }">
-          {{ $t('frontend.nav.campus') }}
+        {{ $t('frontend.nav.campus') }}
         </Link>
         <Link :href="branchRoute('/calendar')" class="hover:text-f-primary font-medium transition-colors"
           :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/Calendar') }">
-          {{ $t('frontend.nav.calendar') }}
+        {{ $t('frontend.nav.calendar') }}
         </Link>
         <Link :href="branchRoute('/academics')" class="hover:text-f-primary font-medium transition-colors"
           :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/Academic') }">
-          {{ $t('frontend.nav.academics') }}
+        {{ $t('frontend.nav.academics') }}
         </Link>
         <Link :href="branchRoute('/admission')" class="hover:text-f-primary font-medium transition-colors"
           :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/Admission') }">
-          {{ $t('frontend.nav.admission') }}
+        {{ $t('frontend.nav.admission') }}
         </Link>
         <Link :href="branchRoute('/news')" class="hover:text-f-primary font-medium transition-colors"
           :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/News') }">
-          {{ $t('frontend.nav.news') }}
+        {{ $t('frontend.nav.news') }}
         </Link>
       </div>
 
@@ -90,10 +102,10 @@
                   class="w-full text-left px-4 py-1.5 hover:bg-gray-100 transition-colors cursor-pointer">
                 <div class="flex items-center justify-between gap-2">
                   <div class="flex items-center gap-1.5 text-start">
-                    <img :src="branch.logo" :alt="branch.name" class="size-5 object-contain" />
+                    <img :src="branch.logo" :alt="getBranchName(branch)" class="size-5 object-contain" />
                     <span class="text-[10px] md:text-xs"
                       :class="{ 'font-semibold text-f-primary': selectedBranch.id === branch.id }">
-                      {{ branch.name }}
+                      {{ getBranchName(branch) }}
                     </span>
                   </div>
                   <span v-if="selectedBranch.id === branch.id" class="text-f-primary">
@@ -177,52 +189,64 @@
               <Link :href="branchRoute('/about')" @click="closeMobileMenu"
                 class="w-full flex items-center justify-center px-6 py-5 text-xl text-gray-800 transition-colors"
                 :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/About') }">
-                {{ $t('frontend.nav.about') }}
+              {{ $t('frontend.nav.about') }}
               </Link>
               <Link :href="branchRoute('/campus')" @click="closeMobileMenu"
                 class="w-full flex items-center justify-center px-6 py-5 text-xl text-gray-800 transition-colors"
                 :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/Campus') }">
-                {{ $t('frontend.nav.campus') }}
+              {{ $t('frontend.nav.campus') }}
               </Link>
               <Link :href="branchRoute('/calendar')" @click="closeMobileMenu"
                 class="w-full flex items-center justify-center px-6 py-5 text-xl text-gray-800 transition-colors"
                 :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/Calendar') }">
-                {{ $t('frontend.nav.calendar') }}
+              {{ $t('frontend.nav.calendar') }}
               </Link>
               <Link :href="branchRoute('/academics')" @click="closeMobileMenu"
                 class="w-full flex items-center justify-center px-6 py-5 text-xl text-gray-800 transition-colors"
                 :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/Academic') }">
-                {{ $t('frontend.nav.academics') }}
+              {{ $t('frontend.nav.academics') }}
               </Link>
               <Link :href="branchRoute('/admission')" @click="closeMobileMenu"
                 class="w-full flex items-center justify-center px-6 py-5 text-xl text-gray-800 transition-colors"
                 :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/Admission') }">
-                {{ $t('frontend.nav.admission') }}
+              {{ $t('frontend.nav.admission') }}
               </Link>
               <Link :href="branchRoute('/news')" @click="closeMobileMenu"
                 class="w-full flex items-center justify-center px-6 py-5 text-xl text-gray-800 transition-colors"
                 :class="{ 'font-semibold text-f-primary': $page.component.startsWith('Frontend/Pages/News') }">
-                {{ $t('frontend.nav.news') }}
+              {{ $t('frontend.nav.news') }}
               </Link>
             </div>
             <!-- Mobile Contact Info -->
             <div class="mt-auto">
               <div class="py-4">
                 <div class="space-y-3 px-6">
-                  <div class="flex items-center gap-3">
+                  <a v-if="contactInfo.phone" :href="`tel:${contactInfo.phone}`" class="flex items-center gap-3">
                     <Svg name="call_fill" class="size-5 text-f-primary"></Svg>
-                    <span dir="ltr" class="text-sm text-gray-700">{{ $t('frontend.contact.phone') }}</span>
-                  </div>
-                  <div class="flex items-center gap-3">
+                    <span dir="ltr" class="text-sm text-gray-700">{{ contactInfo.phone }}</span>
+                  </a>
+                  <a v-if="contactInfo.email" :href="`mailto:${contactInfo.email}`" class="flex items-center gap-3">
                     <Svg name="email_fill" class="size-5 text-f-primary"></Svg>
-                    <span class="text-sm text-gray-700">{{ $t('frontend.contact.email') }}</span>
-                  </div>
+                    <span class="text-sm text-gray-700">{{ contactInfo.email }}</span>
+                  </a>
                   <div class="flex items-center gap-4 pt-2">
-                    <a href="#" class="text-f-primary hover:text-f-primary-600 transition-colors">
+                    <a v-if="socialLinks.facebook" :href="socialLinks.facebook" target="_blank"
+                      rel="noopener noreferrer" class="text-f-primary hover:text-f-primary-600 transition-colors"
+                      aria-label="Facebook">
                       <Svg name="facebook_fill" class="size-6"></Svg>
                     </a>
-                    <a href="#" class="text-f-primary hover:text-f-primary-600 transition-colors">
+                    <a v-if="socialLinks.instagram" :href="socialLinks.instagram" target="_blank"
+                      rel="noopener noreferrer" class="text-f-primary hover:text-f-primary-600 transition-colors"
+                      aria-label="Instagram">
                       <Svg name="instagram_fill" class="size-6"></Svg>
+                    </a>
+                    <a v-if="socialLinks.youtube" :href="socialLinks.youtube" target="_blank" rel="noopener noreferrer"
+                      class="text-f-primary hover:text-f-primary-600 transition-colors" aria-label="YouTube">
+                      <Svg name="youtube" class="h-7 opacity-85"></Svg>
+                    </a>
+                    <a v-if="socialLinks.twitter" :href="socialLinks.twitter" target="_blank" rel="noopener noreferrer"
+                      class="text-f-primary hover:text-f-primary-600 transition-colors" aria-label="Twitter">
+                      <Svg name="twitter" class="size-4.5"></Svg>
                     </a>
                   </div>
                 </div>
@@ -236,7 +260,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { Link, usePage, router } from '@inertiajs/vue3';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
@@ -261,29 +285,76 @@ const currentLanguage = ref(
 const branches = ref(page.props.branches || []);
 const selectedBranch = ref(page.props.selectedBranch || branches.value[0]);
 
+// Helper to get translated text
+const getTranslatedText = (translations) => {
+  if (!translations) return '';
+  if (typeof translations === 'string') return translations;
+
+  const currentLang = document.documentElement.lang || 'en';
+  return translations[currentLang] || translations.en || translations.ckb || Object.values(translations)[0] || '';
+};
+
+// Contact info from AboutTouch model
+const contactInfo = computed(() => {
+  const info = page.props.info;
+  if (!info) return { phone: null, email: null, address: null };
+
+  return {
+    phone: info.contact_phone || null,
+    email: info.contact_email || null,
+    address: info.contact_address ? getTranslatedText(info.contact_address) : null,
+  };
+});
+
+// Social links from HomeKnow model
+const socialLinks = computed(() => {
+  const social = page.props.social;
+  if (!social || !social.metadata) {
+    return {
+      facebook: null,
+      instagram: null,
+      youtube: null,
+      twitter: null,
+    };
+  }
+
+  return {
+    facebook: social.metadata.facebook || null,
+    instagram: social.metadata.instagram || null,
+    youtube: social.metadata.youtube || null,
+    twitter: social.metadata.twitter || null,
+  };
+});
+
 // branchRoute is now available globally - no need to import or define
+
+// Helper function to get translated branch name
+const getBranchName = (branch) => {
+  if (!branch || !branch.name) return '';
+  return getTranslatedText(branch.name);
+};
 
 function selectBranch(b) {
   selectedBranch.value = b;
   // Set the f-primary color based on the selected branch
   document.documentElement.style.setProperty('--color-f-primary', b.color);
-  
+
   // Navigate to branch-specific URL
   // Get current path without branch prefix
   const currentPath = window.location.pathname;
   const segments = currentPath.split('/').filter(s => s);
-  
+
   // Remove old branch slug if present
   const branchSlugs = branches.value.map(br => br.slug);
   if (segments.length > 0 && branchSlugs.includes(segments[0])) {
     segments.shift(); // Remove first segment (old branch)
   }
-  
+
   // Build new URL with new branch slug
-  const newPath = segments.length > 0 
+  const newPath = segments.length > 0
     ? `/${b.slug}/${segments.join('/')}`
     : `/${b.slug}`;
-  
+
   router.visit(newPath, {
     preserveState: false,
     preserveScroll: false,

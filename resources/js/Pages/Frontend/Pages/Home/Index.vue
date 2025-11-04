@@ -4,7 +4,7 @@
     <History :data="history" />
     <Message :data="message" />
     <Mission :data="mission" />
-    <News />
+    <News :data="news" />
     <Know :data="social" />
   </div>
 </template>
@@ -23,7 +23,8 @@ const props = defineProps([
   'history',
   'message',
   'mission',
-  'social'
+  'social',
+  'news'
 ]);
 </script>
 

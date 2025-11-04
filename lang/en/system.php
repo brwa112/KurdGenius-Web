@@ -263,6 +263,7 @@ return [
     'about_section' => 'About Section',
     'message' => 'Message Section',
     'mission' => 'Mission Section',
+    'touch' => 'Contact Section',
     'contact' => 'Contact',
     'author' => 'Author',
     'author_image' => 'Author Image',
@@ -319,5 +320,6 @@ return [
     'enter_title' => 'Enter title',
     'requirements' => 'Requirements',
     'enter_document_title' => 'Enter document title',
+    'map_iframe' => 'Map Iframe',
     
 ];

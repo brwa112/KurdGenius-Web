@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full sm:container 3xl:max-w-[85%] mx-auto px-4">
+  <section v-if="hasNews || hasFallbackNews" class="w-full sm:container 3xl:max-w-[85%] mx-auto px-4">
     <div class="flex flex-col gap-10 xl:gap-16 py-3 md:py-8 lg:py-16">
       <!-- Top Content -->
       <div class="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-2">
@@ -13,49 +13,88 @@
           </p>
         </div>
         <div class="md:mx-4 mt-4">
-          <a href="#" class="font-normal">
-            <span>{{ $t('frontend.common.see_more') }}</span>
-            <div class="w-10 h-0.5 bg-yellow-400 rounded-full"></div>
-          </a>
+          <Link :href="route('news.index')" class="font-normal">
+          <span>{{ $t('frontend.common.see_more') }}</span>
+          <div class="w-10 h-0.5 bg-yellow-400 rounded-full"></div>
+          </Link>
         </div>
       </div>
 
-      <!-- Right Content - Images -->
+      <!-- News Grid -->
       <div class="flex-1 grid sm:grid-cols-3 gap-3 md:gap-6 lg:gap-8">
-        <div v-for="item in newsItems" :key="item.id"
-          class="relative h-[532px] sm:h-[332px] md:h-[412px] lg:h-[532px] xl:h-[652px] 2xl:h-[732px] overflow-hidden">
-          <img :src="item.imageUrl" alt="news" class="w-full h-full object-cover" />
+        <Link v-for="item in displayNews" :key="item.id" :href="item.slug ? route('news.show', item.slug) : '#'"
+          class="relative h-[532px] sm:h-[332px] md:h-[412px] lg:h-[532px] xl:h-[652px] 2xl:h-[732px] overflow-hidden group cursor-pointer">
+        <img :src="item.image" :alt="item.title"
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+        <div class="absolute inset-0 flex flex-col justify-end p-4">
+          <h3 v-if="item.title"
+            class="relative z-10 text-white text-base sm:text-xs lg:text-sm xl:text-base 2xl:text-lg lg:!leading-6 font-semibold mb-2">
+            {{ getTranslatedText(item.title) }}
+          </h3>
           <p
-            class="absolute bottom-3 lg:bottom-6 xl:bottom-11 z-10 text-white p-4 text-base sm:text-xs lg:text-sm xl:text-base 2xl:text-lg lg:!leading-6 font-light">
-            {{ item.description }}
+            class="relative z-10 text-white text-base sm:text-xs lg:text-sm xl:text-base 2xl:text-lg lg:!leading-6 font-light line-clamp-3">
+            {{ getTranslatedText(item.content) || item.description }}
           </p>
-          <div class="absolute inset-x-0 bottom-0 h-[200px] bg-gradient-to-t from-gray-950/70 to-transparent"></div>
         </div>
+        <div class="absolute inset-x-0 bottom-0 h-[200px] bg-gradient-to-t from-gray-950/70 to-transparent"></div>
+        </Link>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 
-const newsItems = ref([
+// Define props
+const props = defineProps({
+  data: {
+    type: Array,
+    default: () => []
+  }
+});
+
+// Fallback news data
+const fallbackNews = [
   {
-    id: 1,
-    imageUrl: '/img/news/1.jpg',
+    id: 'fallback-1',
+    image: '/img/news/1.jpg',
     description: 'We believe every student is unique. That\'s why our low student-to-teacher ratio allows for personalized attention and tailored learning paths — ensuring academic success and emotional growth.',
   },
   {
-    id: 2,
-    imageUrl: '/img/news/2.jpg',
+    id: 'fallback-2',
+    image: '/img/news/2.jpg',
     description: 'We believe every student is unique. That\'s why our low student-to-teacher ratio allows for personalized attention and tailored learning paths — ensuring academic success and emotional growth.',
   },
   {
-    id: 3,
-    imageUrl: '/img/news/3.jpg',
+    id: 'fallback-3',
+    image: '/img/news/3.jpg',
     description: 'We believe every student is unique. That\'s why our low student-to-teacher ratio allows for personalized attention and tailored learning paths — ensuring academic success and emotional growth.',
   },
-]);
+];
+
+// Helper function to get translated text
+const getTranslatedText = (translations) => {
+  if (!translations) return '';
+  if (typeof translations === 'string') return translations;
+
+  const currentLang = document.documentElement.lang || 'en';
+  return translations[currentLang] || translations.en || translations.ckb || Object.values(translations)[0] || '';
+};
+
+// Computed property for displaying news
+const displayNews = computed(() => {
+  return hasNews.value ? props.data : fallbackNews;
+});
+
+// Check if we have news from database
+const hasNews = computed(() => {
+  return props.data && Array.isArray(props.data) && props.data.length > 0;
+});
+
+// Check if we should show fallback
+const hasFallbackNews = computed(() => {
+  return !hasNews.value && fallbackNews.length > 0;
+});
 </script>
-
-

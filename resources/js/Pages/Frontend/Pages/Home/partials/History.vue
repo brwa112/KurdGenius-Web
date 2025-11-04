@@ -13,10 +13,10 @@
             {{ historyDescription || fallbackContent }}
           </p>
           <div class="!mt-4">
-            <a href="#" class="font-normal">
+            <Link :href="route('about.index')" class="font-normal">
               <span>{{ $t('frontend.common.see_more') }}</span>
               <div class="w-10 h-0.5 bg-yellow-400 rounded-full"></div>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -38,6 +38,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 
 // Define props
 const props = defineProps(['data']);

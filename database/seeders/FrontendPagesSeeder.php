@@ -732,6 +732,7 @@ class FrontendPagesSeeder extends Seeder
         $eventCategory = \App\Models\Pages\GalleryCategory::where('slug', 'cultural-events')->first();
 
         $galleries = [
+            // Campus Life Category (6 items)
             [
                 'title' => ['en' => "{$branchNames['en']} Campus Tour", 'ckb' => "گەشتی کامپەسی {$branchNames['ckb']}", 'ar' => "جولة في حرم {$branchNames['ar']}"],
                 'description' => ['en' => "Photos from our {$branchNames['en']} campus and facilities.", 'ckb' => "وێنەkan لە کامپەس و ئامێرەکانی {$branchNames['ckb']}.", 'ar' => "صور من حرم ومرافق {$branchNames['ar']}."],
@@ -740,26 +741,146 @@ class FrontendPagesSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'title' => ['en' => 'STEM Lab Highlights', 'ckb' => 'هەڵسەنگاندنەکانی تاقیگەی STEM', 'ar' => 'معالم مختبر STEM'],
-                'description' => ['en' => 'Snapshots of our STEM activities and student projects.', 'ckb' => 'وێنەکانی چالاکی STEM و پرۆژەی خوێندکاران.', 'ar' => 'لقطات من أنشطة STEM ومشاريع الطلاب.'],
-                'gallery_category_id' => $labCategory?->id,
+                'title' => ['en' => 'Library & Reading Spaces', 'ckb' => 'کتێبخانە و شوێنی خوێندنەوە', 'ar' => 'المكتبة ومساحات القراءة'],
+                'description' => ['en' => 'Our well-equipped library with thousands of books and quiet study areas.', 'ckb' => 'کتێبخانە باش چەکدار کراوەکەمان بە هەزاران کتێب و شوێنی خوێندنی بێدەنگ.', 'ar' => 'مكتبتنا المجهزة جيدًا بآلاف الكتب ومناطق الدراسة الهادئة.'],
+                'gallery_category_id' => $campusCategory?->id,
                 'order' => 2,
                 'is_active' => true,
             ],
             [
+                'title' => ['en' => 'Sports Facilities', 'ckb' => 'ئامێرەکانی وەرزش', 'ar' => 'المرافق الرياضية'],
+                'description' => ['en' => 'Modern sports complex including basketball courts, football field, and indoor gym.', 'ckb' => 'کۆمپڵێکسی وەرزشی مۆدێرن کە گۆڕەپانی باسکێتبۆڵ، گۆڕەپانی تۆپی پێ و زۆنی ناوەوە لەخۆدەگرێت.', 'ar' => 'مجمع رياضي حديث يشمل ملاعب كرة السلة وملعب كرة القدم وصالة داخلية.'],
+                'gallery_category_id' => $campusCategory?->id,
+                'order' => 3,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Cafeteria & Dining Hall', 'ckb' => 'کافتێریا و هۆڵی خواردن', 'ar' => 'الكافتيريا وقاعة الطعام'],
+                'description' => ['en' => 'Spacious dining area serving healthy and nutritious meals for students and staff.', 'ckb' => 'ناوچەی خواردنی فراوان کە خۆراکی تەندرووست و خۆراکبەخش بۆ خوێندکاران و کارمەندان دابین دەکات.', 'ar' => 'منطقة طعام واسعة تقدم وجبات صحية ومغذية للطلاب والموظفين.'],
+                'gallery_category_id' => $campusCategory?->id,
+                'order' => 4,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Student Common Areas', 'ckb' => 'شوێنە هاوبەشەکانی قوتابیان', 'ar' => 'المناطق المشتركة للطلاب'],
+                'description' => ['en' => 'Comfortable spaces for students to relax, socialize, and collaborate between classes.', 'ckb' => 'شوێنە ئاسوودەکان بۆ قوتابیان بۆ حەساندنەوە، کۆمەڵایەتی کردن و هاوکاری کردن لە نێوان وانەکاندا.', 'ar' => 'مساحات مريحة للطلاب للاسترخاء والتواصل الاجتماعي والتعاون بين الفصول.'],
+                'gallery_category_id' => $campusCategory?->id,
+                'order' => 5,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Outdoor Learning Spaces', 'ckb' => 'شوێنەکانی فێربوونی دەرەوە', 'ar' => 'مساحات التعلم الخارجية'],
+                'description' => ['en' => 'Beautiful outdoor areas designed for interactive learning and nature exploration.', 'ckb' => 'ناوچە جوانەکانی دەرەوە کە دیزاین کراون بۆ فێربوونی کارلێک و گەڕان بە سروشتدا.', 'ar' => 'مناطق خارجية جميلة مصممة للتعلم التفاعلي واستكشاف الطبيعة.'],
+                'gallery_category_id' => $campusCategory?->id,
+                'order' => 6,
+                'is_active' => true,
+            ],
+            
+            // Laboratories Category (6 items)
+            [
+                'title' => ['en' => 'STEM Lab Highlights', 'ckb' => 'هەڵسەنگاندنەکانی تاقیگەی STEM', 'ar' => 'معالم مختبر STEM'],
+                'description' => ['en' => 'Snapshots of our STEM activities and student projects.', 'ckb' => 'وێنەکانی چالاکی STEM و پرۆژەی خوێندکاران.', 'ar' => 'لقطات من أنشطة STEM ومشاريع الطلاب.'],
+                'gallery_category_id' => $labCategory?->id,
+                'order' => 7,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Science Laboratory', 'ckb' => 'تاقیگەی زانست', 'ar' => 'مختبر العلوم'],
+                'description' => ['en' => 'State-of-the-art science lab with modern equipment for physics, chemistry, and biology experiments.', 'ckb' => 'تاقیگەی زانستی مۆدێرن بە ئامێری مۆدێرن بۆ تاقیکردنەوەکانی فیزیک، کیمیا و بایۆلۆجی.', 'ar' => 'مختبر علوم حديث مزود بمعدات حديثة لتجارب الفيزياء والكيمياء والأحياء.'],
+                'gallery_category_id' => $labCategory?->id,
+                'order' => 8,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Computer Lab', 'ckb' => 'تاقیگەی کۆمپیوتەر', 'ar' => 'مختبر الحاسوب'],
+                'description' => ['en' => '40 high-performance computers with latest software for programming and digital design.', 'ckb' => '٤٠ کۆمپیوتەری بەرزکارایی بە دوایین نەرمەڕەقاڵە بۆ بەرنامەسازی و دیزاینی دیجیتاڵ.', 'ar' => '40 جهاز كمبيوتر عالي الأداء مع أحدث البرامج للبرمجة والتصميم الرقمي.'],
+                'gallery_category_id' => $labCategory?->id,
+                'order' => 9,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Robotics Workshop', 'ckb' => 'وۆرکشۆپی ڕۆبۆتیک', 'ar' => 'ورشة الروبوتات'],
+                'description' => ['en' => 'Dedicated space for robotics projects with 3D printers and electronic components.', 'ckb' => 'شوێنی تایبەتمەند بۆ پرۆژەی ڕۆبۆتیک بە چاپکەری ٣D و پێکهاتە ئەلیکترۆنییەکان.', 'ar' => 'مساحة مخصصة لمشاريع الروبوتات مع طابعات ثلاثية الأبعاد ومكونات إلكترونية.'],
+                'gallery_category_id' => $labCategory?->id,
+                'order' => 10,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Chemistry Lab', 'ckb' => 'تاقیگەی کیمیا', 'ar' => 'مختبر الكيمياء'],
+                'description' => ['en' => 'Fully equipped chemistry laboratory with safety equipment and modern instruments.', 'ckb' => 'تاقیگەی کیمیای تەواو چەکدار کراو بە ئامێری سەلامەتی و ئامێری مۆدێرن.', 'ar' => 'مختبر كيمياء مجهز بالكامل بمعدات السلامة والأدوات الحديثة.'],
+                'gallery_category_id' => $labCategory?->id,
+                'order' => 11,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Biology Lab', 'ckb' => 'تاقیگەی بایۆلۆجی', 'ar' => 'مختبر الأحياء'],
+                'description' => ['en' => 'Advanced biology lab with microscopes and specimens for hands-on learning.', 'ckb' => 'تاقیگەی بایۆلۆجی پێشکەوتوو بە میکرۆسکۆپ و نموونە بۆ فێربوونی دەستی.', 'ar' => 'مختبر أحياء متقدم مع مجاهر وعينات للتعلم العملي.'],
+                'gallery_category_id' => $labCategory?->id,
+                'order' => 12,
+                'is_active' => true,
+            ],
+            
+            // Cultural Events Category (6 items)
+            [
                 'title' => ['en' => 'Cultural Events', 'ckb' => 'ڕووداوە کەلتوورییەکان', 'ar' => 'الفعاليات الثقافية'],
                 'description' => ['en' => 'Gallery from our cultural festival and student performances.', 'ckb' => 'گالەریی فێستیڤاڵە کەلتوورییەکان و پێشکەشکردنی خوێندکاران.', 'ar' => 'معرض من مهرجاننا الثقافي وعروض الطلاب.'],
                 'gallery_category_id' => $eventCategory?->id,
-                'order' => 3,
+                'order' => 13,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Annual Sports Day', 'ckb' => 'ڕۆژی ساڵانەی وەرزش', 'ar' => 'اليوم الرياضي السنوي'],
+                'description' => ['en' => 'Highlights from our annual sports competition with track and field events.', 'ckb' => 'هەڵسەنگاندنەکانی ڕکابەریی وەرزشی ساڵانەمان بە ڕووداوەکانی ڕێگا و گۆڕەپان.', 'ar' => 'أبرز الأحداث من مسابقتنا الرياضية السنوية مع فعاليات ألعاب القوى.'],
+                'gallery_category_id' => $eventCategory?->id,
+                'order' => 14,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Graduation Ceremony', 'ckb' => 'بۆنەی دەرچوون', 'ar' => 'حفل التخرج'],
+                'description' => ['en' => 'Photos from our graduation ceremony celebrating student achievements.', 'ckb' => 'وێنەکان لە بۆنەی دەرچوونمان کە دەستکەوتەکانی خوێندکاران ئاهەنگ دەگرێت.', 'ar' => 'صور من حفل التخرج الخاص بنا احتفالاً بإنجازات الطلاب.'],
+                'gallery_category_id' => $eventCategory?->id,
+                'order' => 15,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Science Fair', 'ckb' => 'پانەی زانست', 'ar' => 'معرض العلوم'],
+                'description' => ['en' => 'Student projects and experiments showcased at our annual science fair.', 'ckb' => 'پرۆژە و تاقیکردنەوەکانی خوێندکاران لە پانەی زانستی ساڵانەمان نیشان دراون.', 'ar' => 'مشاريع وتجارب الطلاب المعروضة في معرض العلوم السنوي.'],
+                'gallery_category_id' => $eventCategory?->id,
+                'order' => 16,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Art Exhibition', 'ckb' => 'پێشانگای هونەری', 'ar' => 'معرض فني'],
+                'description' => ['en' => 'Student artwork displayed in our annual art exhibition showcasing creativity.', 'ckb' => 'کارە هونەرییەکانی خوێندکاران لە پێشانگای هونەری ساڵانەمان نیشان دراون کە داهێنان نیشان دەدەن.', 'ar' => 'أعمال الطلاب الفنية المعروضة في معرضنا الفني السنوي الذي يعرض الإبداع.'],
+                'gallery_category_id' => $eventCategory?->id,
+                'order' => 17,
+                'is_active' => true,
+            ],
+            [
+                'title' => ['en' => 'Music Concert', 'ckb' => 'کۆنسێرتی مۆسیقا', 'ar' => 'حفل موسيقي'],
+                'description' => ['en' => 'Memorable moments from our student orchestra and choir performances.', 'ckb' => 'ساتە یادەوەرییەکان لە پێشکەشکردنەکانی ئۆرکێسترا و کۆری خوێندکارانمان.', 'ar' => 'لحظات لا تُنسى من عروض أوركسترا الطلاب والجوقة.'],
+                'gallery_category_id' => $eventCategory?->id,
+                'order' => 18,
                 'is_active' => true,
             ],
         ];
 
-        foreach ($galleries as $g) {
-            Gallery::create(array_merge($g, [
+        foreach ($galleries as $index => $g) {
+            $gallery = Gallery::create(array_merge($g, [
                 'user_id' => $user->id,
                 'branch_id' => $branch->id,
             ]));
+            
+            // Add images to gallery items
+            // Using placeholder images (1-8 cycling through available media images)
+            $imageNumber = ($index % 8) + 1;
+            $imagePath = public_path("img/media/{$imageNumber}.jpg");
+            
+            if (file_exists($imagePath)) {
+                $gallery->addMedia($imagePath)
+                    ->preservingOriginal()
+                    ->toMediaCollection('images');
+            }
         }
 
         $this->command->info('  ✓ Gallery items seeded');

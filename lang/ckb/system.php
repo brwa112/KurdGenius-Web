@@ -237,6 +237,7 @@ return [
     'about_section' => 'بەشی دەربارە',
     'message_section' => 'بەشی پەیام',
     'mission_section' => 'بەشی ئامانج',
+    'touch' => 'بەشی پەیوەندی',
     'contact' => 'پەیوەندی',
     'author' => 'نووسەر',
     'author_image' => 'وێنەی نووسەر',
@@ -287,4 +288,5 @@ return [
     'enter_title' => 'ناونیشان بنووسە',
     'requirements' => 'پێداویستیەکان',
     'enter_document_title' => 'ناونیشانی بەڵگەنامە بنووسە',
+    'map_iframe' => 'گۆگڵ ماپ',
 ];

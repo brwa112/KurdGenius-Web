@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Pages\About\AboutTouch;
 use App\Models\Pages\Branch;
+use App\Models\Pages\Home\HomeKnow;
 use App\Models\System\Settings\Settings\Language;
 use App\Models\System\Users\User;
 use Illuminate\Http\Request;
@@ -51,8 +53,19 @@ class HandleInertiaRequests extends Middleware
                 ? ($request->user()->settings()->with('language')->first()?->language?->name ?? 'en')
                 : 'en',
 
-            'languages' => Language::query()->select('id', 'name', 'slug')->get(),
-            'branches' => Branch::query()->select('id', 'slug', 'name')->get(),
+            'languages' => Language::query()->select('id', 'name', 'slug', 'direction')->get(),
+            'branches' => Branch::query()
+                ->active()
+                ->select('id', 'slug', 'name', 'logo', 'color', 'phone', 'email', 'address', 'map_url')
+                ->ordered()
+                ->get(),
+
+            'info' => AboutTouch::where('is_active', true)
+                ->select('contact_phone', 'contact_email', 'contact_address', 'map_iframe')
+                ->first(),
+            'social' => HomeKnow::where('is_active', true)
+                ->select('metadata')
+                ->first(),
         ]);
     }
 }

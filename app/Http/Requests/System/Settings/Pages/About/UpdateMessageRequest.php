@@ -11,6 +11,14 @@ class UpdateMessageRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        // Remove image field if it's not a file upload (e.g., existing image URL string)
+        if ($this->has('image') && is_string($this->input('image')) && !$this->hasFile('image')) {
+            $this->getInputSource()->remove('image');
+        }
+    }
+
     public function rules(): array
     {
         return [

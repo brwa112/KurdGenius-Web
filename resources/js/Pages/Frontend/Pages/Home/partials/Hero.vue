@@ -4,17 +4,10 @@
     <div class="relative min-h-[100dvh] flex items-end">
       <!-- Background Image or Video -->
       <div class="absolute inset-0">
-        <video v-if="mediaType === 'video' && backgroundVideo" 
-               :src="backgroundVideo" 
-               autoplay 
-               muted 
-               loop 
-               class="w-full h-full object-cover object-center">
+        <video v-if="backgroundVideo" :src="backgroundVideo" autoplay muted loop
+          class="w-full h-full object-cover object-center">
         </video>
-        <img v-else 
-             :src="heroImage" 
-             alt="Hero Background" 
-             class="w-full h-full object-cover object-top" />
+        <img v-else :src="heroImage" alt="Hero Background" class="w-full h-full object-cover object-top" />
         <!-- Overlay -->
         <div class="absolute inset-0 bg-f-primary opacity-20"></div>
       </div>
@@ -33,7 +26,8 @@
               class="bg-f-primary p-5 text-white flex flex-col justify-between space-y-3 w-full lg:min-w-[520px] min-h-[160px]">
               <div class="bg-white w-[140px] h-[6px] rounded-full"></div>
               <div class="space-y-1">
-                <h2 class="text-xl sm:text-2xl font-semibold">{{ heroSubtitle || $t('frontend.hero.subtitle_one') }}</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold">{{ heroSubtitle || $t('frontend.hero.subtitle_one') }}
+                </h2>
                 <h2 class="text-xl sm:text-2xl font-semibold">{{ $t('frontend.hero.subtitle_two') }}</h2>
               </div>
             </div>
@@ -136,10 +130,10 @@ const mediaType = computed(() => {
 
 const startAnimation = () => {
   if (props.data?.metadata) {
-    expertTutors.value = props.data.metadata.expert_tutors || 23;
-    students.value = props.data.metadata.students || 352;
-    experience.value = props.data.metadata.experience || 6;
-    campuses.value = props.data.metadata.campuses || 3;
+    expertTutors.value = parseInt(props.data.metadata.expert_tutors) || 23;
+    students.value = parseInt(props.data.metadata.students) || 352;
+    experience.value = parseInt(props.data.metadata.experience) || 6;
+    campuses.value = parseInt(props.data.metadata.campuses) || 3;
   } else {
     // Fallback to default values
     expertTutors.value = 23;

@@ -32,7 +32,8 @@ class AboutController extends Controller
                 'id' => $about->id,
                 'description' => $about->getTranslations('description'),
                 'is_active' => $about->is_active,
-                'images' => $about->getMedia('images')->map->getFullUrl(),
+                // Return single image URL (first one) instead of array
+                'image' => $about->getFirstMediaUrl('images'),
             ] : null,
             'message' => $message ? [
                 'id' => $message->id,
