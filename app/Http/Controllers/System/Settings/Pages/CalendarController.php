@@ -16,7 +16,7 @@ class CalendarController extends Controller
 {
     public function index(Request $request)
     {
-        $branchId = $request->input('branch_id') ?? Branch::active()->ordered()->first()->id;
+        $branchId = $request->input('branch_id') ?? Branch::active()->first()->id;
 
         $academic = CalendarAcademic::where('branch_id', $branchId)->first();
         $official = CalendarOfficial::where('branch_id', $branchId)->first();

@@ -4,6 +4,7 @@ use App\Http\Controllers\System\Users\UserController;
 use App\Http\Controllers\Pages\NewsController;
 use App\Http\Controllers\Pages\NewsCategoryController;
 use App\Http\Controllers\Pages\GalleryCategoryController;
+use App\Http\Controllers\Pages\BranchController;
 use App\Http\Controllers\Pages\CampusController;
 use App\Http\Controllers\Pages\ClassroomController;
 use App\Http\Controllers\Profile\ProfileController;
@@ -75,6 +76,15 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{classroom}', [ClassroomController::class, 'destroy'])->name('destroy');
             Route::delete('/{classroom}/force', [ClassroomController::class, 'forceDelete'])->name('force_delete');
             Route::post('/{classroom}/restore', [ClassroomController::class, 'restore'])->name('restore');
+        });
+
+        Route::prefix('branches')->as('branches.')->group(function () {
+            Route::get('/', [BranchController::class, 'index'])->name('index');
+            Route::post('/', [BranchController::class, 'store'])->name('store');
+            Route::post('/{branch}', [BranchController::class, 'update'])->name('update');
+            Route::delete('/{branch}', [BranchController::class, 'destroy'])->name('destroy');
+            Route::delete('/{branch}/force', [BranchController::class, 'forceDelete'])->name('force_delete');
+            Route::post('/{branch}/restore', [BranchController::class, 'restore'])->name('restore');
         });
 
         // Gallery admin (separate page similar to News)

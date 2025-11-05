@@ -19,11 +19,6 @@ return new class extends Migration
             $table->json('description')->nullable(); // Translatable field
             $table->string('logo')->nullable();
             $table->string('color')->default('#0028DF'); // Primary color for the branch
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
-            $table->json('address')->nullable(); // Translatable field
-            $table->string('map_url')->nullable();
-            $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
@@ -45,7 +40,6 @@ return new class extends Migration
                 ]),
                 'logo' => '/img/logo.png',
                 'color' => '#0028DF',
-                'order' => 1,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -64,7 +58,6 @@ return new class extends Migration
                 ]),
                 'logo' => '/img/logo.png',
                 'color' => '#5200DF',
-                'order' => 2,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -83,7 +76,6 @@ return new class extends Migration
                 ]),
                 'logo' => '/img/logo.png',
                 'color' => '#337B7C',
-                'order' => 3,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -102,7 +94,6 @@ return new class extends Migration
                 ]),
                 'logo' => '/img/logo.png',
                 'color' => '#5D5466',
-                'order' => 4,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),

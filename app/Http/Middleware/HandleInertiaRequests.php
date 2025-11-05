@@ -56,8 +56,8 @@ class HandleInertiaRequests extends Middleware
             'languages' => Language::query()->select('id', 'name', 'slug', 'direction')->get(),
             'branches' => Branch::query()
                 ->active()
-                ->select('id', 'slug', 'name', 'logo', 'color', 'phone', 'email', 'address', 'map_url')
-                ->ordered()
+                ->with('media')
+                ->select('id', 'slug', 'name', 'color')
                 ->get(),
 
             'info' => AboutTouch::where('is_active', true)

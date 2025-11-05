@@ -111,6 +111,11 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Manage classroom and their data',
             ],
             [
+                'name' => 'branches',
+                'slug' => 'branches',
+                'description' => 'Manage branches and their data',
+            ],
+            [
                 'name' => 'gallery',
                 'slug' => 'gallery',
                 'description' => 'Manage gallery and their data',

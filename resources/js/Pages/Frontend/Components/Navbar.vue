@@ -102,13 +102,14 @@
                   class="w-full text-left px-4 py-1.5 hover:bg-gray-100 transition-colors cursor-pointer">
                 <div class="flex items-center justify-between gap-2">
                   <div class="flex items-center gap-1.5 text-start">
-                    <img :src="branch.logo" :alt="getBranchName(branch)" class="size-5 object-contain" />
+                    <img v-if="branch.logo_url" :src="branch.logo_url" :alt="getBranchName(branch)" class="size-5 object-contain" />
+                    <Svg v-else name="building_fill" class="size-5 text-gray-400"></Svg>
                     <span class="text-[10px] md:text-xs"
-                      :class="{ 'font-semibold text-f-primary': selectedBranch.id === branch.id }">
+                      :class="{ 'font-semibold text-f-primary': selectedBranch?.id === branch.id }">
                       {{ getBranchName(branch) }}
                     </span>
                   </div>
-                  <span v-if="selectedBranch.id === branch.id" class="text-f-primary">
+                  <span v-if="selectedBranch?.id === branch.id" class="text-f-primary">
                     <Svg name="check" class="size-4"></Svg>
                   </span>
                 </div>

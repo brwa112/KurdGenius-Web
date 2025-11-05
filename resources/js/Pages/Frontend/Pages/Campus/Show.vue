@@ -5,12 +5,12 @@
             <div class="flex-1 space-y-1 text-center">
                 <p
                     class="!leading-4 text-base lg:text-lg xl:text-xl font-normal text-pretty max-w-md lg:max-w-xl xl:max-w-3xl">
-                    {{ detail.date }}
+                    {{ detail.formatted_date || detail.date }}
                 </p>
                 <h2 class="text-2xl lg:text-3xl xl:text-[32px] font-semibold text-black !leading-tight">
-                    {{ detail.title }}
+                    {{ getTranslatedText(detail.title) }}
                 </h2>
-                <p
+                <p v-if="detail.hashtag"
                     class="!leading-6 text-xs lg:text-sm xl:text-base font-normal text-pretty max-w-md lg:max-w-xl xl:max-w-3xl">
                     {{ detail.hashtag }}
                 </p>
@@ -18,16 +18,16 @@
             <div class="flex flex-col items-center gap-8 w-full lg:w-2/3">
                 <img :src="detail.image" alt="detail"
                     class="w-full h-[240px] md:h-[320px] lg:h-[400px] xl:h-[480px] 2xl:h-[640px] object-cover" />
-                <p class="!leading-6 text-sm lg:text-base xl:text-xl font-normal text-pretty max-w-xl xl:max-w-3xl">
-                    {{ detail.description }}
-                </p>
+                <div class="!leading-6 text-sm lg:text-base xl:text-xl font-normal text-pretty max-w-xl xl:max-w-3xl" 
+                     v-html="getTranslatedText(detail.description)">
+                </div>
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import PublicLayout from '@/Pages/Frontend/Layouts/Public.vue';
 
 defineProps({
@@ -37,7 +37,15 @@ defineProps({
     },
 });
 
+const page = usePage();
 
+// Helper to get translated text
+const getTranslatedText = (translations) => {
+    if (!translations) return '';
+    if (typeof translations === 'string') return translations;
+    const locale = page.props.locale || 'en';
+    return translations[locale] || translations['en'] || Object.values(translations)[0] || '';
+};
 
 defineOptions({
     layout: PublicLayout

@@ -166,4 +166,6 @@ return [
     'model' => 'Model',
 
     'usage' => 'Usage',
+
+    'processing' => 'Processing',
 ];

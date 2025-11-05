@@ -20,7 +20,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $branchId = $request->input('branch_id') ?? Branch::active()->ordered()->first()->id;
+        $branchId = $request->input('branch_id') ?? Branch::active()->first()->id;
 
         $hero = HomeHero::where('branch_id', $branchId)->first();
         $history = HomeHistory::where('branch_id', $branchId)->first();

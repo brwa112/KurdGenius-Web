@@ -2,40 +2,74 @@
 
 namespace App\Models\Pages;
 
+use App\Models\Traits\BranchScopes;
+use App\Traits\LogsMediaActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
-class Branch extends Model
+class Branch extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, HasTranslations, LogsActivity;
+    use HasFactory, SoftDeletes, HasTranslations, LogsActivity, BranchScopes, InteractsWithMedia, LogsMediaActivity;
 
     protected $fillable = [
         'name',
         'slug',
         'description',
-        'logo',
         'color',
-        'phone',
-        'email',
-        'address',
-        'map_url',
-        'order',
         'is_active',
     ];
 
     public $translatable = [
         'name',
         'description',
-        'address',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    protected $appends = [
+        'logo_url',
+    ];
+
+    /**
+     * Get the logo URL attribute.
+     */
+    public function getLogoUrlAttribute()
+    {
+        $logo = $this->getFirstMedia('logo');
+        return $logo ? $logo->getUrl() : null;
+    }
+
+    /**
+     * Register media collections.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('logo')
+            ->singleFile() // Only one logo allowed
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/webp']);
+    }
+
+    /**
+     * Register media conversions.
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(200)
+            ->height(200)
+            ->sharpen(10)
+            ->nonQueued();
+    }
 
     /**
      * Get all news for this branch.
@@ -69,18 +103,10 @@ class Branch extends Model
         return $query->where('is_active', true);
     }
 
-    /**
-     * Scope a query to order by the order column.
-     */
-    public function scopeOrdered($query)
-    {
-        return $query->orderBy('order');
-    }
-
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'slug', 'description', 'logo', 'color', 'phone', 'email', 'address', 'map_url', 'order', 'is_active'])
+            ->logOnly(['name', 'slug', 'description', 'color', 'is_active'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs()
             ->setDescriptionForEvent(fn(string $eventName) => "Branch {$eventName}");

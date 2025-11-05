@@ -42,7 +42,17 @@ class Campus extends Model implements HasMedia
     protected $appends = [
         'images',
         'branch_name',
+        'slug',
     ];
+
+    public function getSlugAttribute()
+    {
+        // Generate slug from title (English or first available language)
+        $title = $this->getTranslation('title', 'en') ?? 
+                 $this->getTranslation('title', 'ckb') ?? 
+                 $this->title;
+        return Str::slug($title) . '-' . $this->id;
+    }
 
     public function getImagesAttribute()
     {

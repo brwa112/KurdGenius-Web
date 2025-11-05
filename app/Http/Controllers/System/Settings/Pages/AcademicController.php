@@ -14,7 +14,7 @@ class AcademicController extends Controller
 {
     public function index(Request $request)
     {
-        $branchId = $request->input('branch_id') ?? Branch::active()->ordered()->first()->id;
+        $branchId = $request->input('branch_id') ?? Branch::active()->first()->id;
 
         $choose = AcademicChoose::where('branch_id', $branchId)->first();
         $approach = AcademicApproach::where('branch_id', $branchId)->first();

@@ -20,7 +20,7 @@ class AboutController extends Controller
 {
     public function index(Request $request)
     {
-        $branchId = $request->input('branch_id') ?? Branch::active()->ordered()->first()->id;
+        $branchId = $request->input('branch_id') ?? Branch::active()->first()->id;
 
         $about = AboutAbout::where('branch_id', $branchId)->first();
         $message = AboutMessage::where('branch_id', $branchId)->first();

@@ -12,7 +12,7 @@ class BranchPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view-any Branch');
+        return $user->hasPermissionTo('view_branches');
     }
 
     /**
@@ -20,7 +20,7 @@ class BranchPolicy
      */
     public function view(User $user, Branch $branch): bool
     {
-        return $user->can('view Branch');
+        return $user->hasPermissionTo('view_branches');
     }
 
     /**
@@ -28,7 +28,7 @@ class BranchPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create Branch');
+        return $user->hasPermissionTo('create_branches');
     }
 
     /**
@@ -36,7 +36,7 @@ class BranchPolicy
      */
     public function update(User $user, Branch $branch): bool
     {
-        return $user->can('update Branch');
+        return $user->hasPermissionTo('edit_branches');
     }
 
     /**
@@ -44,7 +44,7 @@ class BranchPolicy
      */
     public function delete(User $user, Branch $branch): bool
     {
-        return $user->can('delete Branch');
+        return $user->hasPermissionTo('delete_branches');
     }
 
     /**
@@ -52,7 +52,7 @@ class BranchPolicy
      */
     public function restore(User $user, Branch $branch): bool
     {
-        return $user->can('restore Branch');
+        return $user->hasPermissionTo('restore_branches');
     }
 
     /**
@@ -60,6 +60,6 @@ class BranchPolicy
      */
     public function forceDelete(User $user, Branch $branch): bool
     {
-        return $user->can('force-delete Branch');
+        return $user->hasPermissionTo('delete_branches');
     }
 }

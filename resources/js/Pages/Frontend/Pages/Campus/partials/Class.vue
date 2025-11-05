@@ -24,20 +24,17 @@
       <div class="relative">
         <swiper ref="swiperRef" v-bind="swiperSettings" @swiper="onSwiper($event)" @slideChange="onSlideChange($event)"
           class="relative !z-0">
-          <swiper-slide v-for="(clas, slideIndex) in classItems" :key="slideIndex" :class="[
-            { '!w-[330px] 2xs:!w-[402px] lg:!w-[492px] xl:!w-[668px]': slideIndex === 2 },
-            { '!w-[180px] lg:!w-[200px] xl:!w-[268px]': slideIndex != 2 },
-          ]">
+          <swiper-slide v-for="(clas, slideIndex) in classItems" :key="slideIndex" class="group">
             <div
               class="relative h-[452px] sm:h-[372px] lg:h-[492px] xl:h-[612px] 2xl:h-[640px] rounded-3xl lg:rounded-[60px] overflow-hidden">
               <img :src="clas.imageUrl" alt="news" class="w-full h-full object-cover" />
-              <div :class="{ 'hidden': slideIndex != 2 }"
-                class="absolute inset-x-5 bottom-5 bg-white text-black py-5 px-7 lg:py-8 lg:px-10 rounded-3xl lg:rounded-[60px] text-justify duration-500">
-                <h3 class="text-base lg:text-xl font-medium mb-1 lg:mb-3">{{ clas.title }}</h3>
-                <p class="text-xs lg:text-base font-light !leading-5">{{ clas.description }}</p>
+              <div
+                class="absolute inset-x-5 bottom-5 bg-white text-black py-5 px-7 lg:py-8 lg:px-10 rounded-3xl lg:rounded-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <h3 class="text-base xl:text-xl font-medium mb-1 xl:mb-3">{{ clas.title }}</h3>
+                <p class="text-xs xl:text-base font-light !leading-5 text-justify">{{ clas.description }}</p>
               </div>
-              <div v-if="slideIndex === 2"
-                class="absolute end-3 2xl:end-5 top-14 2xl:top-[72px] z-[5] -translate-y-1/2 h-full flex items-center">
+              <div
+                class="absolute end-3 2xl:end-5 top-14 2xl:top-[72px] z-[5] -translate-y-1/2 h-full flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <Link :href="branchRoute(`/campus/class/${clas.slug || clas.id}`)"
                   class="relative z-10 flex size-10 xl:size-14 2xl:size-16 rounded-full bg-white items-center justify-center duration-[750ms]">
                   <Svg name="arrow_top" class="relative z-10 h-8 xl:h-12 rtl:-rotate-90"></Svg>
@@ -70,56 +67,67 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { trans } from 'laravel-vue-i18n';
+import { usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import helpers from '@/helpers';
 
-const classItems = ref([
-  {
-    id: 1,
-    imageUrl: '/img/class/1.jpg',
-    title: 'Campus Life',
-    description: 'Experience vibrant campus life with diverse activities, student clubs, and a supportive community that fosters personal growth and lifelong friendships.',
-  },
-  {
-    id: 2,
-    imageUrl: '/img/class/2.jpg',
-    title: 'Campus Facilities',
-    description: 'State-of-the-art facilities including modern classrooms, science laboratories, sports centers, and recreational areas designed for optimal learning.',
-  },
-  {
-    id: 3,
-    imageUrl: '/img/class/3.jpg',
-    title: 'Learning Environment',
-    description: 'A nurturing and stimulating environment that encourages creativity, critical thinking, and collaborative learning among students.',
-  },
-  {
-    id: 4,
-    imageUrl: '/img/class/4.jpg',
-    title: 'Sports & Recreation',
-    description: 'Comprehensive sports programs and recreational activities that promote physical fitness, teamwork, and healthy competition.',
-  },
-  {
-    id: 5,
-    imageUrl: '/img/class/5.jpg',
-    title: 'Science Labs',
-    description: 'Advanced science laboratories equipped with modern technology to support hands-on learning and scientific research.',
-  },
-  {
-    id: 6,
-    imageUrl: '/img/class/6.jpg',
-    title: 'Library',
-    description: 'A comprehensive library with extensive resources, digital collections, and quiet study spaces for academic research and learning.',
-  },
-  {
-    id: 7,
-    imageUrl: '/img/class/7.jpg',
-    title: 'Campus Events',
-    description: 'Exciting campus events including workshops, guest lectures, and cultural festivals that enrich the student experience.',
+const props = defineProps({
+  classrooms: {
+    type: Array,
+    default: () => []
   }
-]);
+});
+
+const page = usePage();
+
+// Helper to get translated text
+const getTranslatedText = (translations) => {
+  if (!translations) return '';
+  if (typeof translations === 'string') return translations;
+  const locale = page.props.locale || 'en';
+  return translations[locale] || translations['en'] || Object.values(translations)[0] || '';
+};
+
+// Transform backend data to frontend format
+const classItems = computed(() => {
+  if (!props.classrooms || props.classrooms.length === 0) {
+    // Fallback to hardcoded data if no backend data
+    return [
+      {
+        id: 1,
+        slug: '1',
+        imageUrl: '/img/class/1.jpg',
+        title: 'Science Laboratory',
+        description: 'Advanced science laboratories equipped with modern technology to support hands-on learning and scientific research.',
+      },
+      {
+        id: 2,
+        slug: '2',
+        imageUrl: '/img/class/2.jpg',
+        title: 'Computer Lab',
+        description: 'State-of-the-art computer facilities with the latest software and hardware for digital learning.',
+      },
+      {
+        id: 3,
+        slug: '3',
+        imageUrl: '/img/class/3.jpg',
+        title: 'Art Studio',
+        description: 'Creative spaces for artistic expression and hands-on learning in visual arts.',
+      },
+    ];
+  }
+
+  return props.classrooms.map(classroom => ({
+    id: classroom.id,
+    slug: classroom.slug || classroom.id,
+    imageUrl: classroom.imageUrl || (classroom.images && classroom.images.length > 0 ? classroom.images[0].medium || classroom.images[0].url : '/img/class/1.jpg'),
+    title: getTranslatedText(classroom.title),
+    description: helpers.limitWords(getTranslatedText(classroom.content), 100),
+  }));
+});
 
 const swiperSettings = computed(() => ({
-  slidesPerView: 'auto',
+  slidesPerView: 2,
   spaceBetween: 35,
   loop: false,
   direction: 'horizontal',
@@ -127,15 +135,19 @@ const swiperSettings = computed(() => ({
   breakpoints: {
     340: {
       spaceBetween: 20,
+      slidesPerView: 1,
     },
     768: {
       spaceBetween: 20,
+      slidesPerView: 2,
     },
     1024: {
       spaceBetween: 20,
+      slidesPerView: 2,
     },
     1280: {
       spaceBetween: 32,
+      slidesPerView: 2,
     },
   },
 }))

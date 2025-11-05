@@ -3,17 +3,17 @@
     <div class="w-full sm:container 3xl:max-w-[75%] mx-auto px-4">
       <div
         class="relative flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20 xl:gap-40 py-16 lg:py-28">
-        <!-- Logo -->
+        <!-- Branch Logo -->
         <div class="block">
-          <img :src="'/img/logo.png'" alt="logo" class="w-full h-[220px] lg:h-[380px] object-cover" />
+          <img :src="branchLogo" alt="Branch logo" class="w-full h-[220px] lg:h-[380px] object-contain" />
         </div>
         <!-- Content -->
         <div class="relative z-5 flex-1 space-y-1.5 max-w-xl xl:max-w-2xl">
           <h2 class="text-2xl lg:text-3xl xl:text-[32px] font-semibold text-black !leading-tight">
-            {{ $t('frontend.campus_contact.title') }}
+            {{ branchName }}
           </h2>
           <p class="!leading-6 text-base lg:text-lg xl:text-xl font-normal text-justify">
-            {{ $t('frontend.campus_contact.description') }}
+            {{ branchDescription }}
           </p>
           <Link :href="branchRoute('/about')"
             class="bg-f-primary hover:bg-white text-white hover:text-f-primary hover:font-semibold py-3 px-2 block text-center !w-40 !mt-7 rounded-full border-4 border-f-primary transition-all duration-500 text-base font-light transform">
@@ -26,5 +26,52 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const selectedBranch = computed(() => page.props.selectedBranch);
+
+// Get current language from page props
+const currentLang = computed(() => page.props.lang || 'en');
+
+// Helper to get translated text
+const getTranslatedText = (translations) => {
+  if (!translations) return '';
+  
+  // If it's a string, return it directly
+  if (typeof translations === 'string') return translations;
+  
+  // If it's an object, get the translation for current language
+  return translations[currentLang.value] || 
+         translations['en'] || 
+         translations['ckb'] || 
+         translations['ar'] || 
+         Object.values(translations)[0] || 
+         '';
+};
+
+// Computed properties for branch data
+const branchLogo = computed(() => {
+  return selectedBranch.value?.logo_url || '/img/logo.png';
+});
+
+const branchName = computed(() => {
+  if (!selectedBranch.value?.name) {
+    return page.props.lang === 'en' 
+      ? 'Kurd Genius School' 
+      : 'قوتابخانەی کورد جینیەس';
+  }
+  return getTranslatedText(selectedBranch.value.name);
+});
+
+const branchDescription = computed(() => {
+  if (!selectedBranch.value?.description) {
+    return page.props.lang === 'en'
+      ? 'Quality education and effective English learning environment for students.'
+      : 'ژینگەیەکی پەروەردەیی بە کوالێتی و فێربوونی ئینگلیزی کاریگەر بۆ قوتابیان.';
+  }
+  return getTranslatedText(selectedBranch.value.description);
+});
+
 </script>

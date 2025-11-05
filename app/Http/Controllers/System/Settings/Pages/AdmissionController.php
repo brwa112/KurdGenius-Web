@@ -15,7 +15,7 @@ class AdmissionController extends Controller
 {
     public function index(Request $request)
     {
-        $branchId = $request->input('branch_id') ?? Branch::active()->ordered()->first()->id;
+        $branchId = $request->input('branch_id') ?? Branch::active()->first()->id;
 
         $policy = AdmissionPolicy::where('branch_id', $branchId)->first();
         $documents = AdmissionDocument::where('branch_id', $branchId)->first();

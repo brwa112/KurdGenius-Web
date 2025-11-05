@@ -199,6 +199,25 @@ export default {
         const stripped = String(html).replace(/<[^>]*>?/gm, '');
         return stripped.length > length ? stripped.slice(0, length) + '...' : stripped;
     },
+    /**
+     * Limit text to a specific number of words
+     * @param {String|Object} text
+     * @param {Number} wordLimit
+     */
+    limitWords(text, wordLimit = 100) {
+        if (!text) return '';
+        // If a translation object is passed, try to get the text
+        if (typeof text === 'object') {
+            text = this.getTranslation(text);
+        }
+        // Strip HTML tags
+        const stripped = String(text).replace(/<[^>]*>?/gm, '');
+        const words = stripped.split(/\s+/);
+        if (words.length > wordLimit) {
+            return words.slice(0, wordLimit).join(' ') + '...';
+        }
+        return stripped;
+    },
     log(...args) {
         console.log(...args);
         return args;

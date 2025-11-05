@@ -5,6 +5,7 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Pages\Gallery;
+use App\Models\Pages\Branch;
 use App\Models\System\Settings\Reasons\Log;
 use App\Models\System\Settings\Settings\Theme;
 use App\Models\System\Users\Permission;
@@ -14,6 +15,7 @@ use App\Policies\PermissionPolicy;
 use App\Policies\ThemesPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\GalleryPolicy;
+use App\Policies\BranchPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Spatie\Activitylog\Models\Activity;
 
@@ -26,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Activity::class => LogsPolicy::class, // Add policy for Spatie Activity model
         Theme::class => ThemesPolicy::class,
         Gallery::class => GalleryPolicy::class,
+        Branch::class => BranchPolicy::class,
     ];
 
     public function boot(): void

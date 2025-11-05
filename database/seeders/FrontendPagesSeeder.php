@@ -560,26 +560,138 @@ class FrontendPagesSeeder extends Seeder
         $campuses = [
             [
                 'title' => [
-                    'en' => $branchNames['en'] ?? '',
-                    'ckb' => $branchNames['ckb'] ?? '',
-                    'ar' => $branchNames['ar'] ?? $branchNames['ckb'] ?? '',
+                    'en' => "{$branchNames['en']} Main Campus",
+                    'ckb' => "کەمپی سەرەکی {$branchNames['ckb']}",
+                    'ar' => "الحرم الرئيسي {$branchNames['ar']}",
                 ],
                 'content' => [
-                    'en' => "The {$branchNames['en']} campus is located in a vibrant educational district, offering students access to modern classrooms, advanced science laboratories, sports facilities, and cultural centers.",
-                    'ckb' => "کەمپی {$branchNames['ckb']} لە ناوچەیەکی پەروەردەیی گەشاوە جێگیرە، دەرفەتی بەکارهێنانی پۆلی مۆدێرن، تاقیگەی زانستی پێشکەوتوو، ئامێری وەرزشی و ناوەندە کولتووریەکان بۆ قوتابیان دابین دەکات.",
-                    'ar' => "يقع حرم {$branchNames['ar']} في منطقة تعليمية نابضة بالحياة، ويوفر للطلاب الوصول إلى الفصول الدراسية الحديثة والمختبرات العلمية المتقدمة والمرافق الرياضية والمراكز الثقافية.",
+                    'en' => "The {$branchNames['en']} main campus is located in a vibrant educational district, offering students access to modern classrooms, advanced science laboratories, sports facilities, and cultural centers. Our campus spans over 5 acres of beautifully landscaped grounds, providing an ideal environment for learning and personal development.",
+                    'ckb' => "کەمپی سەرەکی {$branchNames['ckb']} لە ناوچەیەکی پەروەردەیی گەشاوە جێگیرە، دەرفەتی بەکارهێنانی پۆلی مۆدێرن، تاقیگەی زانستی پێشکەوتوو، ئامێری وەرزشی و ناوەندە کولتووریەکان بۆ قوتابیان دابین دەکات. کەمپەکەمان زیاتر لە ۵ ئێکەر زەوی جوان و سەوز دەگرێتەوە.",
+                    'ar' => "يقع الحرم الرئيسي {$branchNames['ar']} في منطقة تعليمية نابضة بالحياة، ويوفر للطلاب الوصول إلى الفصول الدراسية الحديثة والمختبرات العلمية المتقدمة والمرافق الرياضية والمراكز الثقافية. يمتد حرمنا الجامعي على مساحة تزيد عن 5 أفدنة من الأراضي المنسقة بشكل جميل.",
                 ],
-                'views' => 0,
+                'views' => rand(50, 200),
                 'order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Science & Technology Wing',
+                    'ckb' => 'باڵی زانست و تەکنەلۆژیا',
+                    'ar' => 'جناح العلوم والتكنولوجيا',
+                ],
+                'content' => [
+                    'en' => "Our Science & Technology Wing features state-of-the-art laboratories, computer labs, and innovation centers. Students have access to cutting-edge equipment for physics, chemistry, biology, and robotics. The wing includes dedicated spaces for STEM projects, coding workshops, and scientific research.",
+                    'ckb' => "باڵی زانست و تەکنەلۆژیامان تاقیگە و لابی کۆمپیوتەری مۆدێرن و ناوەندی داهێنان لەخۆدەگرێت. قوتابیان دەتوانن ئامێرە پێشکەوتووەکان بۆ فیزیا، کیمیا، بایۆلۆجی و ڕۆبۆتیکس بەکاربهێنن. باڵەکە شوێنی تایبەت بۆ پڕۆژەی STEM و وۆرکشۆپی کۆدنووسین و لێکۆڵینەوەی زانستی لەخۆدەگرێت.",
+                    'ar' => "يحتوي جناح العلوم والتكنولوجيا لدينا على مختبرات حديثة ومختبرات حاسوب ومراكز ابتكار. يتمتع الطلاب بإمكانية الوصول إلى المعدات المتطورة للفيزياء والكيمياء والبيولوجيا والروبوتات. يتضمن الجناح مساحات مخصصة لمشاريع STEM وورش البرمجة والبحث العلمي.",
+                ],
+                'views' => rand(50, 200),
+                'order' => 2,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Sports & Recreation Complex',
+                    'ckb' => 'کۆمپلێکسی وەرزش و کاتی بەتاڵ',
+                    'ar' => 'مجمع الرياضة والترفيه',
+                ],
+                'content' => [
+                    'en' => "The Sports & Recreation Complex offers comprehensive athletic facilities including an indoor gymnasium, outdoor playing fields, swimming pool, and fitness center. We support various sports programs including basketball, football, volleyball, swimming, and athletics. Regular tournaments and inter-school competitions are organized to promote sportsmanship and teamwork.",
+                    'ckb' => "کۆمپلێکسی وەرزش و کاتی بەتاڵ ئامێری وەرزشی گشتگیر پێشکەش دەکات لەوانە زەوی لیستنی ناوخۆیی، گۆڕەپانی دەرەکی یاری، حەوزی مەلەوانی، و ناوەندی لەشجوانی. پشتیوانی لە پڕۆگرامە وەرزشییەکان دەکەین وەک تۆپی سەبەتە، تۆپی پێ، تۆپی بالیبال، مەلەوانی و ڕاکردن. پاڵەوانەتی و ڕکابەری نێوان قوتابخانەکان بە بەردەوامی ڕێکدەخرێت.",
+                    'ar' => "يوفر مجمع الرياضة والترفيه مرافق رياضية شاملة بما في ذلك صالة رياضية داخلية وملاعب خارجية ومسبح ومركز للياقة البدنية. ندعم برامج رياضية متنوعة بما في ذلك كرة السلة وكرة القدم والكرة الطائرة والسباحة وألعاب القوى. يتم تنظيم البطولات والمسابقات بين المدارس بانتظام لتعزيز الروح الرياضية والعمل الجماعي.",
+                ],
+                'views' => rand(50, 200),
+                'order' => 3,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Library & Learning Resource Center',
+                    'ckb' => 'کتێبخانە و ناوەندی سەرچاوەی فێربوون',
+                    'ar' => 'المكتبة ومركز موارد التعلم',
+                ],
+                'content' => [
+                    'en' => "Our comprehensive library houses over 10,000 books, digital resources, and multimedia materials in multiple languages. The Learning Resource Center provides quiet study areas, group discussion rooms, and computer workstations. Students have access to online databases, e-books, and research journals to support their academic pursuits.",
+                    'ckb' => "کتێبخانە گشتگیرەکەمان زیاتر لە ١٠،٠٠٠ کتێب، سەرچاوەی دیجیتاڵ و کەرەستەی ڕاگەیاندنی فرە لەخۆدەگرێت بە چەندین زمان. ناوەندی سەرچاوەی فێربوون شوێنی بێدەنگ بۆ خوێندن، ژووری گفتوگۆی گرووپی و وێستگەی کاری کۆمپیوتەر دابین دەکات. قوتابیان دەتوانن دەستیان بە بنکەدراوە ئۆنلاینەکان، کتێبی ئەلیکترۆنی و گۆڤاری لێکۆڵینەوە بگات.",
+                    'ar' => "تضم مكتبتنا الشاملة أكثر من 10000 كتاب وموارد رقمية ومواد متعددة الوسائط بلغات متعددة. يوفر مركز موارد التعلم مناطق دراسة هادئة وغرف مناقشة جماعية ومحطات عمل حاسوبية. يتمتع الطلاب بإمكانية الوصول إلى قواعد البيانات عبر الإنترنت والكتب الإلكترونية والمجلات البحثية لدعم متابعاتهم الأكاديمية.",
+                ],
+                'views' => rand(50, 200),
+                'order' => 4,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Arts & Culture Center',
+                    'ckb' => 'ناوەندی هونەر و کولتوور',
+                    'ar' => 'مركز الفنون والثقافة',
+                ],
+                'content' => [
+                    'en' => "The Arts & Culture Center celebrates creativity through music, drama, visual arts, and cultural events. Our facilities include art studios, music rooms, a theater, and exhibition spaces. Students can explore various artistic disciplines and participate in performances, exhibitions, and cultural festivals throughout the year.",
+                    'ckb' => "ناوەندی هونەر و کولتوور داهێنان لە ڕێگەی مۆسیقا، دراما، هونەری بینراو و بۆنە کولتوورییەکانەوە ئاهەنگ دەگرێت. ئامێرەکانمان ستودیۆی هونەر، ژووری مۆسیقا، شانۆگەر و شوێنی پێشانگا لەخۆدەگرێت. قوتابیان دەتوانن بوارە هونەرییە جۆراوجۆرەکان بەدوا بکەون و بەشدار بن لە نمایش، پێشانگا و فێستیڤاڵە کولتوورییەکان.",
+                    'ar' => "يحتفي مركز الفنون والثقافة بالإبداع من خلال الموسيقى والدراما والفنون البصرية والفعاليات الثقافية. تشمل مرافقنا استوديوهات فنية وغرف موسيقى ومسرحًا ومساحات للمعارض. يمكن للطلاب استكشاف التخصصات الفنية المختلفة والمشاركة في العروض والمعارض والمهرجانات الثقافية على مدار العام.",
+                ],
+                'views' => rand(50, 200),
+                'order' => 5,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Student Center & Cafeteria',
+                    'ckb' => 'ناوەندی قوتابیان و چێشتخانە',
+                    'ar' => 'مركز الطلاب والكافتيريا',
+                ],
+                'content' => [
+                    'en' => "The Student Center serves as the social hub of campus life, featuring comfortable lounges, recreation areas, and our modern cafeteria. The cafeteria offers nutritious meals prepared fresh daily, accommodating various dietary requirements. This is where students gather, socialize, and build lasting friendships in a welcoming environment.",
+                    'ckb' => "ناوەندی قوتابیان وەک ناوەندی کۆمەڵایەتی ژیانی کەمپ کاردەکات، شوێنی پشوودانی ئاسوودە، شوێنی کاتی بەتاڵ و چێشتخانەی مۆدێرنمان لەخۆدەگرێت. چێشتخانە خواردنی تەندروست پێشکەش دەکات کە ڕۆژانە تازە ئامادەدەکرێت. ئەمە شوێنێکە کە قوتابیان کۆدەبنەوە، پێکەوە کات بەسەردەبەن و هاوڕێیەتی درێژخایەن دروست دەکەن.",
+                    'ar' => "يعمل مركز الطلاب كمحور اجتماعي لحياة الحرم الجامعي، ويضم صالات مريحة ومناطق ترفيهية وكافتيريا حديثة. توفر الكافتيريا وجبات مغذية يتم إعدادها طازجة يوميًا، وتستوعب متطلبات غذائية مختلفة. هذا هو المكان الذي يجتمع فيه الطلاب ويتواصلون اجتماعيًا ويبنون صداقات دائمة في بيئة ترحيبية.",
+                ],
+                'views' => rand(50, 200),
+                'order' => 6,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Innovation & Maker Space',
+                    'ckb' => 'شوێنی داهێنان و دروستکردن',
+                    'ar' => 'مساحة الابتكار والإبداع',
+                ],
+                'content' => [
+                    'en' => "Our Innovation & Maker Space empowers students to bring their ideas to life through hands-on creation and experimentation. Equipped with 3D printers, laser cutters, electronics workbenches, and crafting tools, this space encourages creativity, problem-solving, and entrepreneurial thinking. Students can work on personal projects, participate in maker challenges, and develop prototypes.",
+                    'ckb' => "شوێنی داهێنان و دروستکردنمان هێز بە قوتابیان دەدات بۆ ژیاندار کردنی بیرۆکەکانیان لە ڕێگەی دروستکردن و تاقیکردنەوە. ئەم شوێنە بە پرینتەری ٣D، بڕینی لەیزەر، مێزی کاری ئەلیکترۆنیات و ئامێری پیشەکاری تێکەڵ کراوە، ئەم شوێنە داهێنان، چارەسەرکردنی کێشە و بیرکردنەوەی بازرگانی هاندەدات.",
+                    'ar' => "تمكّن مساحة الابتكار والإبداع لدينا الطلاب من تحويل أفكارهم إلى واقع من خلال الإنشاء والتجريب العملي. مجهزة بطابعات ثلاثية الأبعاد وقواطع ليزر ومناضد عمل إلكترونية وأدوات الحرف اليدوية، تشجع هذه المساحة على الإبداع وحل المشكلات والتفكير الريادي.",
+                ],
+                'views' => rand(50, 200),
+                'order' => 7,
                 'is_active' => true,
             ],
         ];
 
-        foreach ($campuses as $campus) {
-            Campus::create(array_merge($campus, [
+        foreach ($campuses as $campusData) {
+            $campus = Campus::create(array_merge($campusData, [
                 'user_id' => $user->id,
                 'branch_id' => $branch->id
             ]));
+
+            // Attach campus images (use available images from public/img/campus)
+            // Distribute images across different campuses
+            $imageMapping = [
+                1 => [1, 2],      // Main Campus
+                2 => [3, 4],      // Science & Tech
+                3 => [5],         // Sports
+                4 => [6],         // Library
+                5 => [7],         // Arts
+                6 => [1, 3],      // Student Center
+                7 => [2, 4, 5],   // Innovation Space
+            ];
+
+            $imagesToAttach = $imageMapping[$campusData['order']] ?? [1];
+            foreach ($imagesToAttach as $num) {
+                $imagePath = public_path("img/campus/{$num}.jpg");
+                if (file_exists($imagePath)) {
+                    $campus->addMedia($imagePath)
+                        ->preservingOriginal()
+                        ->toMediaCollection('images');
+                }
+            }
         }
 
         $this->command->info('  ✓ Campuses seeded');
@@ -592,48 +704,136 @@ class FrontendPagesSeeder extends Seeder
                 'title' => [
                     'en' => 'Science Laboratory',
                     'ckb' => 'تاقیگەی زانست',
+                    'ar' => 'مختبر العلوم',
                 ],
                 'content' => [
-                    'en' => '<p>Our state-of-the-art science laboratory is equipped with modern technology and equipment, providing students with hands-on experience in conducting experiments and research.</p><p>The laboratory includes microscopes, lab benches, safety equipment, and digital displays to support various scientific disciplines including physics, chemistry, and biology.</p>',
-                    'ckb' => '<p>تاقیگە زانستیەکانمان بە تەکنەلۆژیای مۆدێرن و ئامێرەکانی پێشکەوتوو چەکدار کراوە، کە ئەزموونی مەشقی بۆ قوتابیان دابین دەکات لە ئەنجامدانی تاقیکردنەوە و توێژینەوەدا.</p><p>تاقیگەکە میکرۆسکۆپ، میزی تاقیگە، ئامێری پاراستن و پیشاندەری دیجیتاڵی تێدایە بۆ پشتگیریکردنی بوارە زانستییە جیاوازەکان وەک فیزیک، کیمیا و بایەلۆژی.</p>',
+                    'en' => 'Our state-of-the-art science laboratory is equipped with modern technology and equipment, providing students with hands-on experience in conducting experiments and research. The laboratory includes microscopes, lab benches, safety equipment, and digital displays to support various scientific disciplines including physics, chemistry, and biology. Students learn through practical experimentation and inquiry-based learning.',
+                    'ckb' => 'تاقیگە زانستیەکانمان بە تەکنەلۆژیای مۆدێرن و ئامێرەکانی پێشکەوتوو چەکدار کراوە، کە ئەزموونی مەشقی بۆ قوتابیان دابین دەکات لە ئەنجامدانی تاقیکردنەوە و توێژینەوەدا. تاقیگەکە میکرۆسکۆپ، میزی تاقیگە، ئامێری پاراستن و پیشاندەری دیجیتاڵی تێدایە بۆ پشتگیریکردنی بوارە زانستییە جیاوازەکان.',
+                    'ar' => 'مختبرنا العلمي الحديث مجهز بأحدث التقنيات والمعدات، مما يوفر للطلاب خبرة عملية في إجراء التجارب والأبحاث. يشمل المختبر مجاهر ومناضد معملية ومعدات السلامة وشاشات رقمية لدعم التخصصات العلمية المختلفة.',
                 ],
-                'views' => 0,
+                'views' => rand(50, 200),
                 'order' => 1,
-                'is_active' => true,
-            ],
-            [
-                'title' => [
-                    'en' => 'Library & Resource Center',
-                    'ckb' => 'کتێبخانە و سەنتەری سەرچاوەکان',
-                ],
-                'content' => [
-                    'en' => '<p>Our comprehensive library offers over 10,000 books, digital resources, and dedicated study spaces for students. The library is designed to foster a love of reading and provide resources for academic research.</p><p>Features include quiet study rooms, computer access, and a wide selection of reference materials across all subjects.</p>',
-                    'ckb' => '<p>کتێبخانە گشتگیرەکەمان زیاتر لە ١٠،٠٠٠ کتێب، سەرچاوەی دیجیتاڵ و شوێنی تایبەتی خوێندن بۆ قوتابیان دابین دەکات. کتێبخانەکە دیزاین کراوە بۆ پەروەردەکردنی خۆشەویستی خوێندنەوە و دابینکردنی سەرچاوەکان بۆ توێژینەوەی ئەکادیمی.</p><p>تایبەتمەندییەکان ژووری بێدەنگی خوێندن، دەستڕاگەیشتن بە کۆمپیوتەر و هەڵبژاردنێکی فراوانی مادەی سەرچاوە لە هەموو بابەتەکاندا دەگرێتەوە.</p>',
-                ],
-                'views' => 0,
-                'order' => 2,
                 'is_active' => true,
             ],
             [
                 'title' => [
                     'en' => 'Computer Laboratory',
                     'ckb' => 'تاقیگەی کۆمپیوتەر',
+                    'ar' => 'مختبر الحاسوب',
                 ],
                 'content' => [
-                    'en' => '<p>Our modern computer laboratory is equipped with 40 high-performance computers, projectors, and coding software for programming classes.</p><p>Students have access to industry-standard development tools and software, preparing them for careers in technology and computer science.</p>',
-                    'ckb' => '<p>تاقیگەی کۆمپیوتەری مۆدێرنەکەمان چەکدار کراوە بە ٤٠ کۆمپیوتەری بەرزکارایی، پرۆژێکتەر و نەرمەڕەقی کۆدنووسی بۆ وانەکانی بەرنامەسازی.</p><p>قوتابیان دەستڕاگەیشتنیان هەیە بە ئامرازەکانی پەرەپێدان و نەرمەڕەقی ستانداردی پیشەسازی، کە ئامادەیان دەکات بۆ کارەکان لە تەکنەلۆژیا و زانستی کۆمپیوتەردا.</p>',
+                    'en' => 'Our modern computer laboratory is equipped with 40 high-performance computers, projectors, and coding software for programming classes. Students have access to industry-standard development tools and software, preparing them for careers in technology and computer science. The lab supports courses in programming, web development, graphic design, and digital literacy.',
+                    'ckb' => 'تاقیگەی کۆمپیوتەری مۆدێرنەکەمان چەکدار کراوە بە ٤٠ کۆمپیوتەری بەرزکارایی، پرۆژێکتەر و نەرمەڕەقی کۆدنووسی بۆ وانەکانی بەرنامەسازی. قوتابیان دەستڕاگەیشتنیان هەیە بە ئامرازەکانی پەرەپێدان و نەرمەڕەقی ستانداردی پیشەسازی.',
+                    'ar' => 'مختبر الحاسوب الحديث لدينا مجهز بـ 40 جهاز كمبيوتر عالي الأداء وأجهزة عرض وبرامج برمجة. يتمتع الطلاب بإمكانية الوصول إلى أدوات وبرامج تطوير معيارية في الصناعة.',
                 ],
-                'views' => 0,
+                'views' => rand(50, 200),
+                'order' => 2,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Library & Resource Center',
+                    'ckb' => 'کتێبخانە و سەنتەری سەرچاوەکان',
+                    'ar' => 'المكتبة ومركز الموارد',
+                ],
+                'content' => [
+                    'en' => 'Our comprehensive library offers over 10,000 books, digital resources, and dedicated study spaces for students. The library is designed to foster a love of reading and provide resources for academic research. Features include quiet study rooms, computer access, and a wide selection of reference materials across all subjects. Professional librarians are available to assist students with research and reading recommendations.',
+                    'ckb' => 'کتێبخانە گشتگیرەکەمان زیاتر لە ١٠،٠٠٠ کتێب، سەرچاوەی دیجیتاڵ و شوێنی تایبەتی خوێندن بۆ قوتابیان دابین دەکات. کتێبخانەکە دیزاین کراوە بۆ پەروەردەکردنی خۆشەویستی خوێندنەوە و دابینکردنی سەرچاوەکان بۆ توێژینەوەی ئەکادیمی.',
+                    'ar' => 'تقدم مكتبتنا الشاملة أكثر من 10000 كتاب وموارد رقمية ومساحات دراسة مخصصة للطلاب. تم تصميم المكتبة لتعزيز حب القراءة وتوفير الموارد للبحث الأكاديمي.',
+                ],
+                'views' => rand(50, 200),
                 'order' => 3,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Art Studio',
+                    'ckb' => 'ستودیۆی هونەر',
+                    'ar' => 'استوديو الفنون',
+                ],
+                'content' => [
+                    'en' => 'Our spacious art studio provides a creative environment for students to explore various artistic mediums including painting, drawing, sculpture, and mixed media. The studio is equipped with professional-grade art supplies, easels, pottery wheels, and a kiln for ceramics. Students develop their artistic skills while expressing their creativity and imagination through various art forms.',
+                    'ckb' => 'ستودیۆی فراوانی هونەرمان ژینگەیەکی داهێنەر دابین دەکات بۆ قوتابیان بۆ گەڕان بە ناوەندە هونەریە جۆراوجۆرەکاندا وەک نیگارکێشان، کێشان، پەیکەر و میدیای تێکەڵ. ستودیۆکە بە پێداویستیەکانی هونەری ئاستی پیشەیی چەکدار کراوە.',
+                    'ar' => 'يوفر استوديو الفن الواسع لدينا بيئة إبداعية للطلاب لاستكشاف وسائط فنية مختلفة بما في ذلك الرسم والنحت والوسائط المختلطة. الاستوديو مجهز بمستلزمات فنية احترافية.',
+                ],
+                'views' => rand(50, 200),
+                'order' => 4,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Music Room',
+                    'ckb' => 'ژووری مۆسیقا',
+                    'ar' => 'غرفة الموسيقى',
+                ],
+                'content' => [
+                    'en' => 'The music room is a soundproof space designed for musical education and practice. It features a variety of instruments including pianos, guitars, drums, and traditional instruments. Students learn music theory, composition, and performance skills. The room is equipped with recording equipment and audio technology for modern music production and learning.',
+                    'ckb' => 'ژووری مۆسیقا شوێنێکی دژ بە دەنگە کە دیزاین کراوە بۆ پەروەردەی مۆسیقی و مەشق. ئامێرە جۆراوجۆرەکانی مۆسیقای تێدایە وەک پیانۆ، گیتار، درامز و ئامێرە نەریتیەکان. قوتابیان تیۆری مۆسیقا و کۆمپۆزیشن و لێهاتوویی نمایش فێر دەبن.',
+                    'ar' => 'غرفة الموسيقى عبارة عن مساحة عازلة للصوت مصممة للتعليم والممارسة الموسيقية. يحتوي على مجموعة متنوعة من الآلات بما في ذلك البيانو والغيتار والطبول والآلات التقليدية.',
+                ],
+                'views' => rand(50, 200),
+                'order' => 5,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Robotics Lab',
+                    'ckb' => 'تاقیگەی ڕۆبۆتیکس',
+                    'ar' => 'مختبر الروبوتات',
+                ],
+                'content' => [
+                    'en' => 'Our cutting-edge robotics lab enables students to design, build, and program robots using industry-standard equipment and software. The lab features LEGO robotics kits, Arduino boards, 3D printers, and various sensors and motors. Students participate in robotics competitions and develop problem-solving skills through hands-on engineering projects.',
+                    'ckb' => 'تاقیگەی ڕۆبۆتیکسی پێشکەوتوومان توانای ئەوە بە قوتابیان دەدات کە ڕۆبۆت دیزاین بکەن، دروست بکەن و بەرنامە بۆ دابنێن بە بەکارهێنانی ئامێر و نەرمەڕەقی ستانداردی پیشەسازی. تاقیگەکە کیتی ڕۆبۆتیکسی LEGO و بۆردی Arduino و پرینتەری ٣D و هەستەوەر و مۆتۆری جۆراوجۆری تێدایە.',
+                    'ar' => 'يمكّن مختبر الروبوتات المتطور لدينا الطلاب من تصميم وبناء وبرمجة الروبوتات باستخدام المعدات والبرامج القياسية في الصناعة. يحتوي المختبر على مجموعات روبوتات LEGO ولوحات Arduino وطابعات ثلاثية الأبعاد.',
+                ],
+                'views' => rand(50, 200),
+                'order' => 6,
+                'is_active' => true,
+            ],
+            [
+                'title' => [
+                    'en' => 'Multipurpose Hall',
+                    'ckb' => 'هۆڵی فرە مەبەست',
+                    'ar' => 'القاعة متعددة الأغراض',
+                ],
+                'content' => [
+                    'en' => 'The multipurpose hall is a versatile space used for assemblies, performances, sports activities, and special events. The hall can accommodate up to 500 people and is equipped with a professional sound system, lighting, and projection equipment. It serves as the heart of school events and community gatherings, hosting everything from graduation ceremonies to cultural performances.',
+                    'ckb' => 'هۆڵی فرە مەبەست شوێنێکی فرە بەکارە کە بەکاردێت بۆ کۆبوونەوە، نمایش، چالاکی وەرزشی و بۆنە تایبەتەکان. هۆڵەکە دەتوانێت تا ٥٠٠ کەس بگرێتەوە و بە سیستەمی دەنگی پیشەیی، ڕووناکی و ئامێری پرۆژێکشن چەکدار کراوە.',
+                    'ar' => 'القاعة متعددة الأغراض عبارة عن مساحة متعددة الاستخدامات تستخدم للتجمعات والعروض والأنشطة الرياضية والفعاليات الخاصة. يمكن للقاعة استيعاب ما يصل إلى 500 شخص ومجهزة بنظام صوت احترافي وإضاءة ومعدات عرض.',
+                ],
+                'views' => rand(50, 200),
+                'order' => 7,
                 'is_active' => true,
             ],
         ];
 
         foreach ($classrooms as $classroomData) {
-            Classroom::create(array_merge($classroomData, [
+            $classroom = Classroom::create(array_merge($classroomData, [
                 'user_id' => $user->id,
                 'branch_id' => $branch->id
             ]));
+
+            // Attach classroom images (use available images from public/img/class)
+            // Distribute images across different classrooms
+            $imageMapping = [
+                1 => [1],         // Science Lab
+                2 => [2, 3],      // Computer Lab
+                3 => [4],         // Library
+                4 => [5],         // Art Studio
+                5 => [6],         // Music Room
+                6 => [7],         // Robotics Lab
+                7 => [1, 2],      // Multipurpose Hall
+            ];
+
+            $imagesToAttach = $imageMapping[$classroomData['order']] ?? [1];
+            foreach ($imagesToAttach as $num) {
+                $imagePath = public_path("img/class/{$num}.jpg");
+                if (file_exists($imagePath)) {
+                    $classroom->addMedia($imagePath)
+                        ->preservingOriginal()
+                        ->toMediaCollection('images');
+                }
+            }
         }
 
         $this->command->info('  ✓ Classrooms seeded');

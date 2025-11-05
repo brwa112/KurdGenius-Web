@@ -244,7 +244,6 @@ class NewsController extends Controller
     protected function getListings(): array
     {
         $branches = Branch::where('is_active', true)
-            ->orderBy('order')
             ->get()
             ->map(function ($branch) {
                 return [

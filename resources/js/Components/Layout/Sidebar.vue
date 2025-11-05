@@ -82,6 +82,19 @@
                                     </div>
                                     </Link>
                                 </li>
+                                <li v-if="$can('view_branches')" class="nav-item">
+                                    <Link :href="route('control.pages.branches.index')" class="nav-link group w-full"
+                                        :class="{ active: $page.component === 'Pages/Branches/Index' }">
+                                    <div class="flex items-center">
+                                        <Svg name="branch" class="size-5"></Svg>
+
+                                        <span
+                                            class="ltr:pl-3 rtl:pr-3 text-black dark:text-gray-300 dark:group-hover:text-gray-200">
+                                            {{ $t('nav.branches') }}
+                                        </span>
+                                    </div>
+                                    </Link>
+                                </li>
                             </ul>
                         </li>
 
