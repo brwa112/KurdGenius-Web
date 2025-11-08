@@ -25,6 +25,7 @@ class UpdatePolicyRequest extends FormRequest
             'branch_id' => 'nullable|exists:branches,id',
             'description.en' => 'required|string',
             'description.ckb' => 'required|string',
+            'description.ar' => 'nullable|string',
             'steps' => 'nullable|array',
             'steps.en' => 'nullable|array',
             'steps.en.*' => 'required|array',
@@ -34,6 +35,11 @@ class UpdatePolicyRequest extends FormRequest
             'steps.ckb.*' => 'required|array',
             'steps.ckb.*.level' => 'required|string',
             'steps.ckb.*.title' => 'required|string',
+            'steps.ar' => 'nullable|array',
+            'steps.ar.*' => 'nullable|array',
+            'steps.ar.*.level' => 'nullable|string',
+            'steps.ar.*.title' => 'nullable|string',
+            'is_active' => 'nullable|boolean',
         ];
     }
 

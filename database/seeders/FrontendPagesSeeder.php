@@ -496,10 +496,12 @@ class FrontendPagesSeeder extends Seeder
             'description' => [
                 'en' => "{$branchNames['en']} maintains a fair and transparent admission process. We welcome students from diverse backgrounds who demonstrate a genuine interest in learning and personal growth.",
                 'ckb' => "{$branchNames['ckb']} پرۆسەیەکی دادپەروەرانە و ڕوونی وەرگرتنی هەیە. ئێمە پێشوازی لە خوێندکاران دەکەین لە پاشخانە جیاوازەکانەوە.",
+                'ar' => "{$branchNames['ar']} تحافظ على عملية قبول عادلة وشفافة. نرحب بالطلاب من خلفيات متنوعة الذين يظهرون اهتماماً حقيقياً بالتعلم والنمو الشخصي.",
             ],
             'requirements' => [
                 'en' => 'Students must meet age requirements, submit required documents, pass entrance assessment, and attend an interview with parents.',
                 'ckb' => 'خوێندکاران دەبێت پێداویستیەکانی تەمەن پڕبکەنەوە، بەڵگەنامە پێویستەکان پێشکەش بکەن، هەڵسەنگاندنی چوونەژوورەوە تێبپەڕێنن، و لەگەڵ دایک و باوک چاوپێکەوتنێک ئەنجام بدەن.',
+                'ar' => 'يجب على الطلاب استيفاء متطلبات العمر، وتقديم المستندات المطلوبة، واجتياز تقييم القبول، وحضور مقابلة مع أولياء الأمور.',
             ],
             'steps' => [
                 'en' => [
@@ -512,15 +514,22 @@ class FrontendPagesSeeder extends Seeder
                     ['level' => 'Message', 'title' => 'Email request: ' . $this->getBranchSpecificData($branch, 'contact_email')],
                 ],
                 'ckb' => [
-                    // First 4 cards - Admission Process Steps
                     ['level' => 'یەکەم', 'title' => 'هەڵسەنگاندن و چاوپێکەوتنی چوونەژوورەوە'],
                     ['level' => 'دووەم', 'title' => 'پێداچوونەوەی تۆمارەکانی ئەکادیمی و ڕەفتار'],
                     ['level' => 'سێیەم', 'title' => 'ئەولەویەت بۆ داواکارانی زوو و خوشک و براکان'],
                     ['level' => 'چوارەم', 'title' => 'پەسەندکردنی کۆتایی لەلایەن لیژنەی وەرگرتنەوە'],
-                    // Last 3 cards - Application Methods
                     ['level' => 'خوێندنەوە', 'title' => 'وەرگرتنی قوتابخانە'],
                     ['level' => 'داگرتن', 'title' => 'داگرتن لە ماڵپەڕی فەرمیمان'],
                     ['level' => 'نامە', 'title' => 'داواکاری ئیمەیڵ: kurdgeniusschool@gmail.com'],
+                ],
+                'ar' => [
+                    ['level' => 'الأول', 'title' => 'تقييم القبول والمقابلة'],
+                    ['level' => 'الثاني', 'title' => 'مراجعة السجلات الأكاديمية والسلوك'],
+                    ['level' => 'الثالث', 'title' => 'الأفضلية للمتقدمين المبكرين والأشقاء'],
+                    ['level' => 'الرابع', 'title' => 'الموافقة النهائية من لجنة القبول'],
+                    ['level' => 'قراءة', 'title' => 'استقبال المدرسة'],
+                    ['level' => 'تحميل', 'title' => 'التحميل من موقعنا الرسمي'],
+                    ['level' => 'رسالة', 'title' => 'طلب عبر البريد الإلكتروني: kurdgeniusschool@gmail.com'],
                 ],
             ],
             'is_active' => true,
@@ -546,6 +555,12 @@ class FrontendPagesSeeder extends Seeder
                     ['title' => '٦ وێنەی پاسپۆرتی نوێ', 'icon' => '/img/admission/editing.svg'],
                     ['title' => 'پەڕگەکانی ئەکادیمی یان کارتی ڕاپۆرت', 'icon' => '/img/admission/report.svg'],
                     ['title' => 'تۆمارەکانی پزیشکی و کوتان', 'icon' => '/img/admission/medicine.svg'],
+                ],
+                'ar' => [
+                    ['title' => 'نسخة من جواز السفر أو الهوية الوطنية', 'icon' => '/img/admission/passport.svg'],
+                    ['title' => '6 صور حديثة بحجم جواز السفر', 'icon' => '/img/admission/editing.svg'],
+                    ['title' => 'السجلات الأكاديمية أو بطاقات التقرير', 'icon' => '/img/admission/report.svg'],
+                    ['title' => 'السجلات الطبية وسجلات التطعيم', 'icon' => '/img/admission/medicine.svg'],
                 ],
             ],
             'is_active' => true,

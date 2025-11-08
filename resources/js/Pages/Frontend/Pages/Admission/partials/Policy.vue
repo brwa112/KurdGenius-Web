@@ -7,7 +7,7 @@
           {{ $t('frontend.admission.policy') }}
         </h2>
         <p class="!leading-6 text-base lg:text-base xl:text-xl font-normal text-pretty">
-          {{ $t('frontend.admission.policy_description') }}
+          {{ description }}
         </p>
         <p class="!leading-10 text-base lg:text-base xl:text-xl font-medium text-pretty text-primary">
           {{ $t('frontend.admission.requirements') }}
@@ -68,49 +68,80 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import helpers from '@/helpers';
 
-const firstCol = ref([
-  {
-    id: 1,
-    title: 'Entrance assessment & interview',
-    level: 'First',
-  },
-  {
-    id: 2,
-    title: 'Review of academic records and conduct',
-    level: 'Second',
-  },
-  {
-    id: 3,
-    title: 'Preference for early applicants and siblings',
-    level: 'Third',
-  },
-  {
-    id: 4,
-    title: 'Final approval by the admissions committee',
-    level: 'Fourth',
-  },
-]);
+const props = defineProps({
+  policy: Object,
+});
 
-const secondCol = ref([
-  {
-    id: 1,
-    title: 'School reception',
-    level: 'Read',
-    icon: 'file',
-  },
-  {
-    id: 2,
-    title: 'Download from our official website',
-    level: 'Download',
-    icon: 'download',
-  },
-  {
-    id: 3,
-    title: 'Email request: kurdgeniusschool@gmail.com',
-    level: 'Message',
-    icon: 'mail',
-  },
-]);
+const page = usePage();
+
+// Computed properties for dynamic database content with fallback
+const description = computed(() => {
+  return props.policy?.description 
+    ? helpers.getTranslatedText(props.policy.description, page)
+    : 'Admission to Kurd Genius Schools is based on a holistic review of each applicant, ensuring that every child can thrive in our unique learning environment.';
+});
+
+const requirements = computed(() => {
+  return props.policy?.requirements 
+    ? helpers.getTranslatedText(props.policy.requirements, page)
+    : 'The admission decision is determined through a combination of the following:';
+});
+
+const steps = computed(() => {
+  if (props.policy?.steps) {
+    const stepsData = helpers.getTranslatedText(props.policy.steps, page);
+    // Ensure it's an array
+    return Array.isArray(stepsData) ? stepsData : [];
+  }
+  // Fallback hardcoded data
+  return [];
+});
+
+// Split steps into two columns
+const firstCol = computed(() => {
+    // First 4 items are admission process steps
+    return steps.value.slice(0, 4).map((step, index) => ({
+      id: index + 1,
+      title: step.title,
+      level: step.level,
+    }));
+});
+
+const secondCol = computed(() => {
+  if (steps.value.length > 4) {
+    // Last 3 items are application methods
+    return steps.value.slice(4, 7).map((step, index) => ({
+      id: index + 1,
+      title: step.title,
+      level: step.level,
+      icon: step.level === 'Read' || step.level === 'خوێندنەوە' ? 'file' :
+            step.level === 'Download' || step.level === 'داگرتن' ? 'download' : 'mail',
+    }));
+  }
+  // Fallback hardcoded data
+  return [
+    {
+      id: 1,
+      title: 'School reception',
+      level: 'Read',
+      icon: 'file',
+    },
+    {
+      id: 2,
+      title: 'Download from our official website',
+      level: 'Download',
+      icon: 'download',
+    },
+    {
+      id: 3,
+      title: 'Email request: kurdgeniusschool@gmail.com',
+      level: 'Message',
+      icon: 'mail',
+    },
+  ];
+});
 </script>

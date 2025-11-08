@@ -37,7 +37,7 @@ class AdmissionController extends Controller
                 'user_id' => auth()->id(),
                 'description' => $validated['description'],
                 'steps' => $validated['steps'] ?? null,
-                'is_active' => true,
+                'is_active' => $validated['is_active'] ?? true,
             ]
         );
 

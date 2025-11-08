@@ -9,32 +9,11 @@
       </div>
       <!-- Bottom Content -->
       <div class="relative z-5 grid grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 w-full">
-        <div
+        <div v-for="doc in documents" :key="doc.id"
           class="bg-gray-50 border-4 border-gray-50 hover:border-pink-600 duration-500 rounded-[40px] text-center py-1 px-2 h-36 flex flex-col items-center justify-start gap-1.5 w-full">
-          <img :src="'/img/admission/passport.svg'" alt="passport" class="size-16" />
+          <img :src="doc.icon" :alt="doc.title" class="size-16" />
           <span class="text-sm sm:text-base lg:text-xl font-medium">
-            Copy of passport or national ID
-          </span>
-        </div>
-        <div
-          class="bg-gray-50 border-4 border-gray-50 hover:border-pink-600 duration-500 rounded-[40px] text-center py-1 px-2 h-36 flex flex-col items-center justify-start gap-1.5 w-full">
-          <img :src="'/img/admission/editing.svg'" alt="editing" class="size-16" />
-          <span class="text-sm sm:text-base lg:text-xl font-medium">
-            6 recent passport-sized photos
-          </span>
-        </div>
-        <div
-          class="bg-gray-50 border-4 border-gray-50 hover:border-pink-600 duration-500 rounded-[40px] text-center py-1 px-2 h-36 flex flex-col items-center justify-start gap-1.5 w-full">
-          <img :src="'/img/admission/report.svg'" alt="report" class="size-16" />
-          <span class="text-sm sm:text-base lg:text-xl font-medium">
-            Academic transcripts or report cards
-          </span>
-        </div>
-        <div
-          class="bg-gray-50 border-4 border-gray-50 hover:border-pink-600 duration-500 rounded-[40px] text-center py-1 px-2 h-36 flex flex-col items-center justify-start gap-1.5 w-full">
-          <img :src="'/img/admission/medicine.svg'" alt="medicine" class="size-16" />
-          <span class="text-sm sm:text-base lg:text-xl font-medium">
-            Medical & vaccination records
+            {{ doc.title }}
           </span>
         </div>
       </div>
@@ -75,6 +54,52 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import helpers from '@/helpers';
+
+const props = defineProps({
+  document: Object,
+});
+
+const page = usePage();
+
+// Computed property for documents with fallback
+const documents = computed(() => {
+  if (props.document?.documents) {
+    const docsData = helpers.getTranslatedText(props.document.documents, page);
+    // Ensure it's an array and map to add id
+    if (Array.isArray(docsData)) {
+      return docsData.map((doc, index) => ({
+        id: index + 1,
+        title: doc.title,
+        icon: doc.icon || '/img/admission/passport.svg',
+      }));
+    }
+  }
+  // Fallback hardcoded data
+  return [
+    {
+      id: 1,
+      title: 'Copy of passport or national ID',
+      icon: '/img/admission/passport.svg'
+    },
+    {
+      id: 2,
+      title: '6 recent passport-sized photos',
+      icon: '/img/admission/editing.svg'
+    },
+    {
+      id: 3,
+      title: 'Academic transcripts or report cards',
+      icon: '/img/admission/report.svg'
+    },
+    {
+      id: 4,
+      title: 'Medical & vaccination records',
+      icon: '/img/admission/medicine.svg'
+    },
+  ];
+});
 </script>
 

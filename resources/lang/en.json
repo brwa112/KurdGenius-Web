@@ -632,6 +632,8 @@
     "system.requirements": "Requirements",
     "system.enter_document_title": "Enter document title",
     "system.map_iframe": "Map Iframe",
+    "system.maximum_reasons_reached": "You can only add a maximum of 10 reasons.",
+    "system.maximum_features_reached": "You can only add a maximum of 10 features.",
     "user.homele": "Homele",
     "user.user": "User",
     "user.add_property": "Add Property",
