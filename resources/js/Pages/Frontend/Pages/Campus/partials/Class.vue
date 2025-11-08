@@ -12,12 +12,12 @@
             {{ $t('frontend.classrooms.description') }}
           </p>
         </div>
-        <div class="md:mx-4 mt-4">
+        <!-- <div class="md:mx-4 mt-4">
           <a href="#" class="font-normal">
             <span>{{ $t('frontend.common.see_more') }}</span>
             <div class="w-10 h-0.5 bg-yellow-400 rounded-full"></div>
           </a>
-        </div>
+        </div> -->
       </div>
 
       <!-- List -->

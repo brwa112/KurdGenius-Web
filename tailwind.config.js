@@ -23,7 +23,7 @@ export default {
         '4xl': '160rem', // 2560px
       },
       colors: {
-        'f-primary': '#0028DF',
+        'f-primary': 'var(--color-f-primary, #0028DF)',
         'f-secondary': '#CE8440',
         primary: {
           DEFAULT: '#4361ee',

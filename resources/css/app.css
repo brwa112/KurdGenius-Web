@@ -67,6 +67,7 @@ label.required:after {
 :root {
     --font-scale: 1;
     --font-weight: 400;
+    --color-f-primary: #0028DF; /* Default branch color */
 }
 
 /* Font scale variations */

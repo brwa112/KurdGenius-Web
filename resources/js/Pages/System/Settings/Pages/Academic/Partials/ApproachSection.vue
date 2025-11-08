@@ -26,11 +26,11 @@
                     <div v-for="(feature, index) in form.features[selectLanguage.slug]" :key="index"
                         class="flex items-center gap-2">
                         <div class="flex-1">
-                            <input v-model="form.features[selectLanguage.slug][index]" type="text" class="form-input"
-                                :placeholder="$t('system.feature') + ' ' + (index + 1)" />
+                            <input v-model="form.features[selectLanguage.slug][index].title" type="text"
+                                class="form-input" :placeholder="$t('system.feature') + ' ' + (index + 1)" />
                             <div class="mt-1 text-sm text-danger"
-                                v-if="form.errors['features.' + selectLanguage.slug + '.' + index]"
-                                v-html="form.errors['features.' + selectLanguage.slug + '.' + index]">
+                                v-if="form.errors['features.' + selectLanguage.slug + '.' + index + '.title']"
+                                v-html="form.errors['features.' + selectLanguage.slug + '.' + index + '.title']">
                             </div>
                         </div>
                         <button type="button" @click="removeFeature(index)"
@@ -48,15 +48,25 @@
                 <div class="mt-1 text-sm text-danger" v-if="form.errors['features.' + selectLanguage.slug]"
                     v-html="form.errors['features.' + selectLanguage.slug]">
                 </div>
-                <button type="button" @click="addFeature" class="btn btn-sm btn-primary mt-2">
+                <button type="button" @click="addFeature" :disabled="form.features[selectLanguage.slug]?.length >= 10"
+                    :class="{ 'opacity-50 cursor-not-allowed': form.features[selectLanguage.slug]?.length >= 10 }"
+                    class="btn btn-sm btn-primary mt-2">
                     + {{ $t('system.add_feature') }}
                 </button>
+                <p v-if="form.features[selectLanguage.slug]?.length >= 10" class="text-sm text-warning mt-2">
+                    {{ $t('system.maximum_features_reached') }} (10/10)
+                </p>
+                <p v-else class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    {{ form.features[selectLanguage.slug]?.length || 0 }}/10 {{ $t('system.features') }}
+                </p>
             </div>
         </form>
     </div>
 </template>
 
 <script setup>
+import { inject } from 'vue';
+
 const props = defineProps({
     form: {
         type: Object,
@@ -68,11 +78,20 @@ const props = defineProps({
     }
 });
 
+const $helpers = inject('helpers');
+
 const addFeature = () => {
     if (!props.form.features[props.selectLanguage.slug]) {
         props.form.features[props.selectLanguage.slug] = [];
     }
-    props.form.features[props.selectLanguage.slug].push('');
+
+    // Check if maximum limit reached
+    if (props.form.features[props.selectLanguage.slug].length >= 10) {
+        $helpers.toast('Maximum 10 features allowed', 'warning');
+        return;
+    }
+
+    props.form.features[props.selectLanguage.slug].push({ title: '' });
 };
 
 const removeFeature = (index) => {

@@ -334,6 +334,7 @@ const getBranchName = (branch) => {
 function selectBranch(b) {
   selectedBranch.value = b;
   // Set the f-primary color based on the selected branch
+  console.log('Setting primary color to:', b.color);
   document.documentElement.style.setProperty('--color-f-primary', b.color);
 
   // Navigate to branch-specific URL
@@ -394,8 +395,16 @@ function closeMobileMenu() {
 
 // Initialize the f-primary color and direction when component mounts
 onMounted(() => {
-  document.documentElement.style.setProperty('--color-f-primary', selectedBranch.value.color);
-
+  // Ensure selectedBranch is properly set from page props
+  if (page.props.selectedBranch) {
+    selectedBranch.value = page.props.selectedBranch;
+  }
+  // Set the primary color based on the selected branch
+  if (selectedBranch.value?.color) {
+    document.documentElement.style.setProperty('--color-f-primary', selectedBranch.value.color);
+  }
+  
+  console.log('Selected branch on mount:', selectedBranch.value);
   // Set initial direction based on current language
   const savedDirection = localStorage.getItem('rtlClass') ||
     ((page.props.locale === 'ar' || page.props.locale === 'ckb') ? 'rtl' : 'ltr');

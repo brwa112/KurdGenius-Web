@@ -1,4 +1,5 @@
 <template>
+
     <Head>
         <title>{{ $t('system.academic') }}</title>
     </Head>
@@ -11,7 +12,8 @@
                         <span>{{ $t('system.system') }}</span>
                     </li>
                     <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
-                        <Link :href="route('control.system.settings') + '#pages'" class="duration-200 hover:text-primary">
+                        <Link :href="route('control.system.settings') + '#pages'"
+                            class="duration-200 hover:text-primary">
                         {{ $t("system.pages") }}
                         </Link>
                     </li>
@@ -35,11 +37,11 @@
 
         <div class="pt-4 space-y-4">
 
-            <!-- Choose Section -->
-            <ChooseSection :form="chooseForm" :selectLanguage="selectLanguage" />
-
             <!-- Approach Section -->
             <ApproachSection :form="approachForm" :selectLanguage="selectLanguage" />
+
+            <!-- Choose Section -->
+            <ChooseSection :form="chooseForm" :selectLanguage="selectLanguage" />
 
             <!-- Bottom Actions -->
             <div
@@ -53,7 +55,8 @@
                             :showValue="false" parent-key="system" placeholder="languages" :require-selection="true" />
                     </div>
                     <div class="flex items-center gap-3">
-                        <Link :href="route('control.system.settings') + '#pages'" class="btn btn-sm btn-outline-secondary">
+                        <Link :href="route('control.system.settings') + '#pages'"
+                            class="btn btn-sm btn-outline-secondary">
                         {{ $t('common.back') }}
                         </Link>
                         <button @click="saveAllSections" :disabled="chooseForm.processing" type="button"

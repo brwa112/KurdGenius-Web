@@ -1,7 +1,7 @@
 <template>
   <div class="block min-h-[100dvh]">
-    <Approach />
-    <Choose />
+    <Approach :approach="approach" />
+    <Choose :choose="choose" />
   </div>
 </template>
 
@@ -9,6 +9,17 @@
 import Approach from './partials/Approach.vue';
 import Choose from './partials/Choose.vue';
 import PublicLayout from '@/Pages/Frontend/Layouts/Public.vue';
+
+defineProps({
+  approach: {
+    type: Object,
+    default: null
+  },
+  choose: {
+    type: Object,
+    default: null
+  }
+});
 
 defineOptions({
   layout: PublicLayout

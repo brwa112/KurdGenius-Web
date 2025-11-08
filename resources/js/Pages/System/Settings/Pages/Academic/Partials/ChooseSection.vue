@@ -22,11 +22,17 @@
 
             <div>
                 <label>{{ $t('system.reasons') }} ({{ $t(`system.${selectLanguage.slug}`) }})</label>
-                <div class="space-y-4">
+                <div class="grid md:grid-cols-2 2xl:grid-cols-3 gap-4">
                     <div v-for="(reason, index) in form.reasons[selectLanguage.slug]" :key="index"
                         class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <h6 class="font-semibold">{{ $t('system.reason') }} {{ index + 1 }}</h6>
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="w-full flex justify-between gap-2">
+                                <h6 class="font-semibold">{{ $t('system.reason') }} {{ index + 1 }}</h6>
+                                <span
+                                    class="px-3 py-0.5 bg-gray-50 dark:bg-gray-800 rounded text-sm text-gray-600 dark:text-gray-400">
+                                    {{ getColorForIndex(index) }}
+                                </span>
+                            </div>
                             <button type="button" @click="removeReason(index)"
                                 class="btn btn-sm btn-outline-danger px-1.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -40,9 +46,9 @@
                         </div>
 
                         <div>
-                            <label>{{ $t('system.title') }}</label>
+                            <label>{{ $t('pages.title') }}</label>
                             <input v-model="reason.title" type="text" class="form-input"
-                                :placeholder="$t('system.title')" />
+                                :placeholder="$t('pages.title')" />
                             <div class="mt-1 text-sm text-danger"
                                 v-if="form.errors['reasons.' + selectLanguage.slug + '.' + index + '.title']"
                                 v-html="form.errors['reasons.' + selectLanguage.slug + '.' + index + '.title']">
@@ -58,26 +64,31 @@
                                 v-html="form.errors['reasons.' + selectLanguage.slug + '.' + index + '.description']">
                             </div>
                         </div>
-
-                        <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded">
-                            <span class="text-sm text-gray-600 dark:text-gray-400">
-                                {{ $t('system.color') }}: {{ getColorForIndex(index) }}
-                            </span>
-                        </div>
                     </div>
                 </div>
                 <div class="mt-1 text-sm text-danger" v-if="form.errors['reasons.' + selectLanguage.slug]"
                     v-html="form.errors['reasons.' + selectLanguage.slug]">
                 </div>
-                <button type="button" @click="addReason" class="btn btn-sm btn-primary mt-3">
+                <button type="button" @click="addReason" 
+                    :disabled="form.reasons[selectLanguage.slug]?.length >= 10"
+                    :class="{'opacity-50 cursor-not-allowed': form.reasons[selectLanguage.slug]?.length >= 10}"
+                    class="btn btn-sm btn-primary mt-3">
                     + {{ $t('system.add_reason') }}
                 </button>
+                <p v-if="form.reasons[selectLanguage.slug]?.length >= 10" class="text-sm text-warning mt-2">
+                    {{ $t('system.maximum_reasons_reached') }} (10/10)
+                </p>
+                <p v-else class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    {{ form.reasons[selectLanguage.slug]?.length || 0 }}/10 {{ $t('system.reasons') }}
+                </p>
             </div>
         </form>
     </div>
 </template>
 
 <script setup>
+import { inject } from 'vue';
+
 const props = defineProps({
     form: {
         type: Object,
@@ -88,6 +99,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const $helpers = inject('helpers');
 
 // Three colors that will repeat
 const colors = [
@@ -105,9 +118,16 @@ const addReason = () => {
     if (!props.form.reasons[props.selectLanguage.slug]) {
         props.form.reasons[props.selectLanguage.slug] = [];
     }
+    
+    // Check if maximum limit reached
+    if (props.form.reasons[props.selectLanguage.slug].length >= 10) {
+        $helpers.toast('Maximum 10 reasons allowed', 'warning');
+        return;
+    }
+    
     const index = props.form.reasons[props.selectLanguage.slug].length;
     const colorIndex = index % 3;
-    
+
     props.form.reasons[props.selectLanguage.slug].push({
         title: '',
         description: '',

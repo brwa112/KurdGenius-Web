@@ -54,8 +54,6 @@ class FrontendPagesSeeder extends Seeder
 
         // Seed global sections first (no branch_id)
         $this->command->info('Seeding global sections...');
-        $this->seedAcademicApproach($user);
-        $this->seedAcademicChoose($user);
         $this->seedCalendarEvents($user);
         $this->seedCategoriesAndHashtags();
         
@@ -74,6 +72,9 @@ class FrontendPagesSeeder extends Seeder
             $this->seedAboutMessage($user, $branch);
             $this->seedAboutMission($user, $branch);
             $this->seedAboutTouch($user, $branch);
+            
+            $this->seedAcademicApproach($user, $branch);
+            $this->seedAcademicChoose($user, $branch);
             
             $this->seedAdmissionPolicy($user, $branch);
             $this->seedAdmissionDocuments($user, $branch);
@@ -400,60 +401,88 @@ class FrontendPagesSeeder extends Seeder
     }
 
     // ACADEMIC PAGE SEEDERS
-    private function seedAcademicApproach($user)
+    private function seedAcademicApproach($user, $branch)
     {
+        $branchNames = $branch->getTranslations('name');
+        
         AcademicApproach::create([
             'user_id' => $user->id,
+            'branch_id' => $branch->id,
             'description' => [
-                'en' => 'We believe in fostering a learning environment where students are active participants in their education. Our approach combines traditional wisdom with modern pedagogical methods.',
-                'ckb' => 'ئێمە باوەڕمان بە پەروەردەکردنی ژینگەیەکی فێربوونە کە خوێندکاران بەشداربووی چالاکن لە پەروەردەکەیاندا.',
+                'en' => "At {$branchNames['en']}, we believe in fostering a learning environment where students are active participants in their education. Our approach combines traditional wisdom with modern pedagogical methods, ensuring a well-rounded educational experience that prepares students for the challenges of tomorrow.",
+                'ckb' => "لە {$branchNames['ckb']}، ئێمە باوەڕمان بە پەروەردەکردنی ژینگەیەکی فێربوونە کە خوێندکاران بەشداربووی چالاکن لە پەروەردەکەیاندا. ڕێبازەکەمان دانایی نەریتی بە شێوازە پەروەردەیی مۆدێرنەکان تێکەڵ دەکات، دڵنیابوون لە ئەزموونێکی پەروەردەیی هەمەلایەنە کە خوێندکاران بۆ تەحەدای سبەینێ ئامادە دەکات.",
+                'ar' => "في {$branchNames['ar']}، نحن نؤمن بتعزيز بيئة تعليمية حيث يكون الطلاب مشاركين نشطين في تعليمهم. يجمع نهجنا بين الحكمة التقليدية والأساليب التربوية الحديثة، مما يضمن تجربة تعليمية شاملة تعد الطلاب لتحديات الغد.",
             ],
             'features' => [
                 'en' => [
-                    ['title' => 'Personalized Learning Plans'],
-                    ['title' => 'Interactive Classrooms'],
-                    ['title' => 'Project-Based Learning'],
-                    ['title' => 'Critical Thinking Development'],
+                    ['title' => 'International standards adapted to local needs'],
+                    ['title' => 'English, Math, Science, and IT based on global benchmarks'],
+                    ['title' => 'Strong focus on Kurdish and Arabic to preserve identity'],
+                    ['title' => 'Technology-enhanced classrooms and practical teaching methods'],
+                    ['title' => 'Emphasis on collaboration, communication, and critical thinking'],
                 ],
                 'ckb' => [
-                    ['title' => 'پلانی فێربوونی تایبەتمەند'],
-                    ['title' => 'پۆلە کارلێکەرەکان'],
-                    ['title' => 'فێربوونی بنەما لەسەر پرۆژە'],
-                    ['title' => 'گەشەپێدانی بیرکردنەوەی ڕەخنەگرانە'],
+                    ['title' => 'ستانداردە نێودەوڵەتییەکان گونجێنراو بۆ پێداویستییە ناوخۆییەکان'],
+                    ['title' => 'ئینگلیزی، ماتماتیک، زانست و تەکنەلۆژیای زانیاری بەپێی پێوەرە جیهانییەکان'],
+                    ['title' => 'گرنگیدان بە کوردی و عەرەبی بۆ پاراستنی ناسنامە'],
+                    ['title' => 'پۆلی پێشکەوتوو بە تەکنەلۆژیا و شێوازی وانەوتنەوەی کردەیی'],
+                    ['title' => 'جەختکردنەوە لەسەر هاوکاری، پەیوەندی و بیرکردنەوەی ڕەخنەگرانە'],
+                ],
+                'ar' => [
+                    ['title' => 'معايير دولية مكيفة مع الاحتياجات المحلية'],
+                    ['title' => 'اللغة الإنجليزية والرياضيات والعلوم وتكنولوجيا المعلومات بناءً على المعايير العالمية'],
+                    ['title' => 'تركيز قوي على الكردية والعربية للحفاظ على الهوية'],
+                    ['title' => 'فصول دراسية محسنة بالتكنولوجيا وأساليب تدريس عملية'],
+                    ['title' => 'التركيز على التعاون والتواصل والتفكير النقدي'],
                 ],
             ],
             'order' => 1,
             'is_active' => true,
         ]);
 
-        $this->command->info('Academic approach seeded.');
+        $this->command->info('  ✓ Academic approach seeded');
     }
 
-    private function seedAcademicChoose($user)
+    private function seedAcademicChoose($user, $branch)
     {
+        $branchNames = $branch->getTranslations('name');
+        
         AcademicChoose::create([
             'user_id' => $user->id,
+            'branch_id' => $branch->id,
             'description' => [
-                'en' => 'We believe every student is unique. That\'s why our low student-to-teacher ratio allows for personalized attention and tailored learning paths — ensuring academic success and emotional growth.',
-                'ckb' => 'ئێمە باوەڕمان وایە هەر خوێندکارێک تایبەتە. بۆیە ڕێژەی کەمی خوێندکار بۆ مامۆستا ڕێگە بە سەرنج و ڕێگای فێربوونی تایبەتمەند دەدات.',
+                'en' => "We believe every student at {$branchNames['en']} is unique. That's why our low student-to-teacher ratio allows for personalized attention and tailored learning paths — ensuring academic success and emotional growth. Our commitment to excellence has made us one of the most trusted educational institutions in the region.",
+                'ckb' => "ئێمە باوەڕمان وایە هەر خوێندکارێک لە {$branchNames['ckb']} تایبەتە. بۆیە ڕێژەی کەمی خوێندکار بۆ مامۆستا ڕێگە بە سەرنج و ڕێگای فێربوونی تایبەتمەند دەدات - دڵنیابوون لە سەرکەوتنی ئەکادیمی و گەشەی هەستی. پابەندبوونمان بە باشی وایکردووە ببینە یەکێک لە باوەڕپێکراوترین دامەزراوە پەروەردەییەکانی هەرێمەکە.",
+                'ar' => "نحن نؤمن أن كل طالب في {$branchNames['ar']} فريد من نوعه. لهذا السبب تسمح نسبة الطلاب إلى المعلمين المنخفضة لدينا باهتمام شخصي ومسارات تعلم مخصصة - مما يضمن النجاح الأكاديمي والنمو العاطفي. جعلنا التزامنا بالتميز واحدة من أكثر المؤسسات التعليمية الموثوقة في المنطقة.",
             ],
             'reasons' => [
                 'en' => [
-                    ['title' => 'Top-ranked educational institution', 'description' => 'Leading excellence in education'],
-                    ['title' => 'Experienced and qualified teachers', 'description' => 'Expert educators dedicated to student success'],
-                    ['title' => 'State-of-the-art facilities', 'description' => 'Modern learning environment and resources'],
+                    ['title' => 'Top Recognition', 'description' => 'Annually awarded by the Ministry of Education for outstanding performance'],
+                    ['title' => 'Expert Educators', 'description' => 'Experienced, passionate teachers with advanced qualifications'],
+                    ['title' => 'Modern Facilities', 'description' => 'Smart classrooms, science labs, and cutting-edge digital learning tools'],
+                    ['title' => 'Strong Values', 'description' => 'Building character through leadership, empathy, and social responsibility'],
+                    ['title' => 'University Preparation', 'description' => 'Proven track record of students gaining admission to top universities'],
                 ],
                 'ckb' => [
-                    ['title' => 'دامەزراوەی پەروەردەی پلەی یەکەم', 'description' => 'پێشەنگی باشی لە پەروەردەدا'],
-                    ['title' => 'مامۆستایانی شارەزا و شایستە', 'description' => 'مامۆستایانی پسپۆڕ تەرخانکراو بۆ سەرکەوتنی خوێندکار'],
-                    ['title' => 'کەرەستەی سەردەم', 'description' => 'ژینگەی فێربوونی مۆدێرن و سەرچاوەکان'],
+                    ['title' => 'ناسینەوەی بەرز', 'description' => 'ساڵانە لەلایەن وەزارەتی پەروەردەوە خەڵاتی دەدرێت بۆ کارکردنی نایاب'],
+                    ['title' => 'پەروەردەکارانی پسپۆڕ', 'description' => 'مامۆستایانی شارەزا و بەخشراو بە بڕوانامە پێشکەوتووەکان'],
+                    ['title' => 'کەرەستەی مۆدێرن', 'description' => 'پۆلە زیرەکەکان، تاقیگەی زانست و ئامێرە دیجیتاڵییە پێشکەوتووەکانی فێربوون'],
+                    ['title' => 'بەهاکانی بەهێز', 'description' => 'بنیاتنانی کەسایەتی لە ڕێگەی سەرکردایەتی، هاوسۆزی و بەرپرسیارێتی کۆمەڵایەتی'],
+                    ['title' => 'ئامادەکاری زانکۆ', 'description' => 'ڕێکۆردێکی سەلماوە لە وەرگرتنی خوێندکاران لە زانکۆکانی بەرز'],
+                ],
+                'ar' => [
+                    ['title' => 'أعلى تقدير', 'description' => 'تحصل سنويًا على جوائز من وزارة التربية والتعليم للأداء المتميز'],
+                    ['title' => 'معلمون خبراء', 'description' => 'معلمون ذوو خبرة وشغف بمؤهلات متقدمة'],
+                    ['title' => 'مرافق حديثة', 'description' => 'فصول دراسية ذكية ومختبرات علمية وأدوات تعلم رقمية متطورة'],
+                    ['title' => 'قيم قوية', 'description' => 'بناء الشخصية من خلال القيادة والتعاطف والمسؤولية الاجتماعية'],
+                    ['title' => 'التحضير للجامعة', 'description' => 'سجل حافل بقبول الطلاب في أفضل الجامعات'],
                 ],
             ],
             'order' => 1,
             'is_active' => true,
         ]);
 
-        $this->command->info('Academic choose seeded.');
+        $this->command->info('  ✓ Academic choose seeded');
     }
 
     // ADMISSION PAGE SEEDERS

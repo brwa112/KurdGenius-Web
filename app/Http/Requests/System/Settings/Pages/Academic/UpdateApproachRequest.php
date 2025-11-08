@@ -26,11 +26,14 @@ class UpdateApproachRequest extends FormRequest
             'description' => 'required|array',
             'description.en' => 'required|string',
             'description.ckb' => 'required|string',
+            'description.ar' => 'nullable|string',
             'features' => 'required|array',
-            'features.en' => 'required|array|min:1',
-            'features.en.*' => 'required|string',
-            'features.ckb' => 'required|array|min:1',
-            'features.ckb.*' => 'required|string',
+            'features.en' => 'required|array|min:1|max:10',
+            'features.en.*.title' => 'required|string',
+            'features.ckb' => 'required|array|min:1|max:10',
+            'features.ckb.*.title' => 'required|string',
+            'features.ar' => 'nullable|array|max:10',
+            'features.ar.*.title' => 'nullable|string',
             'is_active' => 'nullable|boolean',
         ];
     }
@@ -40,10 +43,13 @@ class UpdateApproachRequest extends FormRequest
         return [
             'description.en' => __('system.description') . ' (' . __('system.en') . ')',
             'description.ckb' => __('system.description') . ' (' . __('system.ckb') . ')',
+            'description.ar' => __('system.description') . ' (' . __('system.ar') . ')',
             'features.en' => __('system.features') . ' (' . __('system.en') . ')',
-            'features.en.*' => __('system.feature') . ' (' . __('system.en') . ')',
+            'features.en.*.title' => __('system.feature') . ' (' . __('system.en') . ')',
             'features.ckb' => __('system.features') . ' (' . __('system.ckb') . ')',
-            'features.ckb.*' => __('system.feature') . ' (' . __('system.ckb') . ')',
+            'features.ckb.*.title' => __('system.feature') . ' (' . __('system.ckb') . ')',
+            'features.ar' => __('system.features') . ' (' . __('system.ar') . ')',
+            'features.ar.*.title' => __('system.feature') . ' (' . __('system.ar') . ')',
         ];
     }
 }

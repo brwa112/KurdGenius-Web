@@ -321,5 +321,8 @@ return [
     'requirements' => 'Requirements',
     'enter_document_title' => 'Enter document title',
     'map_iframe' => 'Map Iframe',
+
+    'maximum_reasons_reached' => 'You can only add a maximum of 10 reasons.',
+    'maximum_features_reached' => 'You can only add a maximum of 10 features.',
     
 ];
