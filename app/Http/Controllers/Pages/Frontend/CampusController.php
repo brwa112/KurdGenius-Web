@@ -80,7 +80,7 @@ class CampusController extends Controller
         ]);
     }
 
-    public function show($slug)
+    public function show($branch_slug, $slug)
     {
         // Extract ID from slug (format: "title-slug-{id}")
         $id = null;
@@ -127,7 +127,7 @@ class CampusController extends Controller
         ]);
     }
 
-    public function showClass($slug)
+    public function showClass($branch_slug, $slug)
     {
         // Extract ID from slug (format: "title-slug-{id}")
         $id = null;

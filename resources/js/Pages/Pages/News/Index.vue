@@ -13,8 +13,8 @@
                 <!-- Categories Button -->
                 <Link :href="route('control.pages.news-categories.index')"
                     class="btn btn-sm btn-secondary shadow-none flex items-center gap-1">
-                    <Svg name="box" class="size-4"></Svg>
-                    <span>{{ $t('pages.category') }}</span>
+                <Svg name="box" class="size-4"></Svg>
+                <span>{{ $t('pages.category') }}</span>
                 </Link>
 
                 <!-- Add New Button -->
@@ -86,7 +86,8 @@
 
                     <template #content="data">
                         <div class="b-text-sm text-gray-600">
-                            {{ $helpers.excerpt($helpers.getTranslation(data.value.content || {}, selectLanguage.slug)) }}
+                            {{ $helpers.excerpt($helpers.getTranslation(data.value.content || {}, selectLanguage.slug))
+                            }}
                         </div>
                     </template>
 
@@ -441,7 +442,7 @@ const columns = ref([
 // View news on frontend
 const viewNews = (row) => {
     if (row.branch_name?.slug) {
-        const url = `/${row.branch_name.slug}/news/${row.id}`;
+        const url = `/${row.branch_name.slug}/news/${row.slug}`;
         window.open(url, '_blank');
     }
 };

@@ -122,45 +122,30 @@ class News extends Model implements HasMedia
     {
         parent::boot();
 
-        // Automatically generate slug from English title when creating
-        static::creating(function ($news) {
-            if (empty($news->slug)) {
-                $title = is_array($news->title) 
-                    ? ($news->title['en'] ?? $news->title[array_key_first($news->title)] ?? 'news')
-                    : $news->title;
-                
-                $slug = Str::slug($title);
-                $originalSlug = $slug;
-                $counter = 1;
+        // After create: generate slug using title and id -> guarantees uniqueness via id
+        static::created(function ($news) {
+            // Only set if slug is empty or doesn't include the id
+            $title = is_array($news->title)
+                ? ($news->title['en'] ?? $news->title[array_key_first($news->title)] ?? 'news')
+                : $news->title;
 
-                // Ensure slug is unique
-                while (static::where('slug', $slug)->exists()) {
-                    $slug = $originalSlug . '-' . $counter;
-                    $counter++;
-                }
+            $generated = Str::slug($title . '-' . $news->id);
 
-                $news->slug = $slug;
+            if (empty($news->slug) || $news->slug !== $generated) {
+                // use saveQuietly to avoid firing observers again
+                $news->slug = $generated;
+                $news->saveQuietly();
             }
         });
 
-        // Regenerate slug when title changes
+        // Before update: if title changed, regenerate slug using title and id
         static::updating(function ($news) {
-            if ($news->isDirty('title') && empty($news->slug)) {
-                $title = is_array($news->title) 
+            if ($news->isDirty('title')) {
+                $title = is_array($news->title)
                     ? ($news->title['en'] ?? $news->title[array_key_first($news->title)] ?? 'news')
                     : $news->title;
-                
-                $slug = Str::slug($title);
-                $originalSlug = $slug;
-                $counter = 1;
 
-                // Ensure slug is unique (exclude current record)
-                while (static::where('slug', $slug)->where('id', '!=', $news->id)->exists()) {
-                    $slug = $originalSlug . '-' . $counter;
-                    $counter++;
-                }
-
-                $news->slug = $slug;
+                $news->slug = Str::slug($title . '-' . $news->id);
             }
         });
     }

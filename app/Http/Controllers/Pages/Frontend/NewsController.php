@@ -17,7 +17,7 @@ class NewsController extends Controller
     {
         // Get selected branch from request/session
         $selectedBranchId = $request->input('branch_id') ?? session('selected_branch_id');
-        
+
         // Items per page
         $perPage = 6;
 
@@ -66,9 +66,9 @@ class NewsController extends Controller
         if ($searchQuery) {
             $newsQuery->where(function ($query) use ($searchQuery) {
                 $query->where('title->en', 'LIKE', "%{$searchQuery}%")
-                      ->orWhere('title->ckb', 'LIKE', "%{$searchQuery}%")
-                      ->orWhere('content->en', 'LIKE', "%{$searchQuery}%")
-                      ->orWhere('content->ckb', 'LIKE', "%{$searchQuery}%");
+                    ->orWhere('title->ckb', 'LIKE', "%{$searchQuery}%")
+                    ->orWhere('content->en', 'LIKE', "%{$searchQuery}%")
+                    ->orWhere('content->ckb', 'LIKE', "%{$searchQuery}%");
             });
         }
 
@@ -118,14 +118,14 @@ class NewsController extends Controller
         ]);
     }
 
-    public function show($slug)
+    public function show($branch_slug, $slug)
     {
         // Find news by slug or ID (fallback)
         $news = News::query()
             ->active()
-            ->where(function($query) use ($slug) {
+            ->where(function ($query) use ($slug) {
                 $query->where('slug', $slug)
-                      ->orWhere('id', $slug);
+                    ->orWhere('id', $slug);
             })
             ->with(['category', 'hashtags', 'branch', 'media'])
             ->firstOrFail();
@@ -150,4 +150,3 @@ class NewsController extends Controller
         ]);
     }
 }
-

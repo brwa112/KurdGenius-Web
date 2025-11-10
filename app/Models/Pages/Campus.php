@@ -28,6 +28,7 @@ class Campus extends Model implements HasMedia
     protected $fillable = [
         'user_id',
         'branch_id',
+        'slug',
         'title',
         'content',
         'views',
@@ -42,17 +43,7 @@ class Campus extends Model implements HasMedia
     protected $appends = [
         'images',
         'branch_name',
-        'slug',
     ];
-
-    public function getSlugAttribute()
-    {
-        // Generate slug from title (English or first available language)
-        $title = $this->getTranslation('title', 'en') ?? 
-                 $this->getTranslation('title', 'ckb') ?? 
-                 $this->title;
-        return Str::slug($title) . '-' . $this->id;
-    }
 
     public function getImagesAttribute()
     {
@@ -96,6 +87,31 @@ class Campus extends Model implements HasMedia
     protected static function boot()
     {
         parent::boot();
+
+        // After create: generate slug using title and id -> guarantees uniqueness via id
+        static::created(function ($campus) {
+            $title = is_array($campus->title)
+                ? ($campus->title['en'] ?? $campus->title[array_key_first($campus->title)] ?? 'campus')
+                : $campus->title;
+
+            $generated = Str::slug($title . '-' . $campus->id);
+
+            if (empty($campus->slug) || $campus->slug !== $generated) {
+                $campus->slug = $generated;
+                $campus->saveQuietly();
+            }
+        });
+
+        // Before update: if title changed, regenerate slug using title and id
+        static::updating(function ($campus) {
+            if ($campus->isDirty('title')) {
+                $title = is_array($campus->title)
+                    ? ($campus->title['en'] ?? $campus->title[array_key_first($campus->title)] ?? 'campus')
+                    : $campus->title;
+
+                $campus->slug = Str::slug($title . '-' . $campus->id);
+            }
+        });
     }
 
     /**

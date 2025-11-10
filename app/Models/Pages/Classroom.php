@@ -28,6 +28,7 @@ class Classroom extends Model implements HasMedia
     protected $fillable = [
         'user_id',
         'branch_id',
+        'slug',
         'title',
         'content',
         'views',
@@ -42,17 +43,7 @@ class Classroom extends Model implements HasMedia
     protected $appends = [
         'images',
         'branch_name',
-        'slug',
     ];
-
-    public function getSlugAttribute()
-    {
-        // Generate slug from title (English or first available language)
-        $title = $this->getTranslation('title', 'en') ?? 
-                 $this->getTranslation('title', 'ckb') ?? 
-                 $this->title;
-        return Str::slug($title) . '-' . $this->id;
-    }
 
     public function getImagesAttribute()
     {
@@ -96,6 +87,31 @@ class Classroom extends Model implements HasMedia
     protected static function boot()
     {
         parent::boot();
+
+        // After create: generate slug using title and id -> guarantees uniqueness via id
+        static::created(function ($classroom) {
+            $title = is_array($classroom->title)
+                ? ($classroom->title['en'] ?? $classroom->title[array_key_first($classroom->title)] ?? 'classroom')
+                : $classroom->title;
+
+            $generated = Str::slug($title . '-' . $classroom->id);
+
+            if (empty($classroom->slug) || $classroom->slug !== $generated) {
+                $classroom->slug = $generated;
+                $classroom->saveQuietly();
+            }
+        });
+
+        // Before update: if title changed, regenerate slug using title and id
+        static::updating(function ($classroom) {
+            if ($classroom->isDirty('title')) {
+                $title = is_array($classroom->title)
+                    ? ($classroom->title['en'] ?? $classroom->title[array_key_first($classroom->title)] ?? 'classroom')
+                    : $classroom->title;
+
+                $classroom->slug = Str::slug($title . '-' . $classroom->id);
+            }
+        });
     }
 
     /**

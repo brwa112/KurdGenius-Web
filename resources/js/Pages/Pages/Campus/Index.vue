@@ -361,7 +361,7 @@ const columns = ref([
 // View campus on frontend
 const viewCampus = (row) => {
     if (row.branch_name?.slug) {
-        const url = `/${row.branch_name.slug}/campus/${row.id}`;
+        const url = `/${row.branch_name.slug}/campus/${row.slug}`;
         window.open(url, '_blank');
     }
 };
