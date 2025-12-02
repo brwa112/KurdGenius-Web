@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use App\Models\System\Settings\Settings\Key;
 use App\Models\System\Settings\Settings\Language;
 use App\Models\System\Settings\Settings\Translations;
@@ -45,6 +46,9 @@ class TranslationsSeeder extends Seeder
             return;
         }
 
+        // Sort languages: English first, then alphabetically
+        $languageDirs = $this->sortLanguagesWithEnglishFirst($languageDirs);
+
         // Define language directions (RTL vs LTR)
         $languageDirections = $this->getLanguageDirections();
 
@@ -67,10 +71,20 @@ class TranslationsSeeder extends Seeder
         }
 
         $this->command->info("🗑️  Clearing existing data...");
-        // Delete in correct order
-        Translations::query()->delete();
-        Key::query()->delete();
-        $this->command->info("✅ Cleared existing translations and keys");
+        // Truncate tables to ensure fresh state and reset auto-increment
+        // Disable foreign key checks around truncation for MySQL
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        try {
+            Translations::truncate();
+            Key::truncate();
+            $this->command->info("✅ Truncated translations and keys tables");
+        } catch (\Throwable $e) {
+            // Fall back to delete if truncate fails (e.g., unsupported DB)
+            Translations::query()->delete();
+            Key::query()->delete();
+            $this->command->warn("⚠️  Truncate failed, performed delete instead: " . $e->getMessage());
+        }
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         // Collect all keys and translations
         $allKeys = collect();
@@ -303,6 +317,32 @@ class TranslationsSeeder extends Seeder
             'sr' => 'ltr',     // Serbian
             'uk' => 'ltr',     // Ukrainian
         ];
+    }
+
+    /**
+     * Sort languages array with English first, then others alphabetically.
+     *
+     * @param array $languages
+     * @return array
+     */
+    private function sortLanguagesWithEnglishFirst(array $languages): array
+    {
+        $english = [];
+        $others = [];
+
+        foreach ($languages as $lang) {
+            if (strtolower($lang) === 'en') {
+                $english[] = $lang;
+            } else {
+                $others[] = $lang;
+            }
+        }
+
+        // Sort other languages alphabetically
+        sort($others);
+
+        // Merge with English first
+        return array_merge($english, $others);
     }
 
     /**

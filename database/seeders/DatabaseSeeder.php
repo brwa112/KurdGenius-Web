@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\System\Users\UserSettings;
 use Database\Seeders\RolePermissionSeeder;
-use App\Models\System\Settings\System\UserType;
 use App\Models\System\Users\User;
 use App\Traits\GenerateSlugKey;
 
@@ -26,8 +25,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::transaction(function () {
-            $this->createUserTypes();
             $user = $this->createTestUser();
+            // user types removed: createUserTypes() skipped
             $this->createPermissions($user);
             $this->callAdditionalSeeders();
             $this->createUserSettings($user);
@@ -49,33 +48,20 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function createUserTypes(): void
-    {
-        $userTypes = [
-            ['name' => 'user', 'slug' => 'user'],
-            ['name' => 'admin', 'slug' => 'admin'],
-            ['name' => 'developer', 'slug' => 'developer'],
-        ];
-
-        foreach ($userTypes as $userType) {
-            UserType::firstOrCreate($userType);
-        }
-    }
+    // user types were removed from the system; seeding not required
 
     private function createTestUser(): User
     {
         $user = [
-            [
+                [
                 'name' => 'Super Admin',
                 'email' => 'super@safedatait.com',
                 'password' => 'password',
-                'user_type_id' => UserType::where('name', 'admin')->first()->id,
             ],
             [
                 'name' => 'developer',
                 'email' => 'developer@safedatait.com',
                 'password' => 'password',
-                'user_type_id' => UserType::where('name', 'developer')->first()->id,
             ],
         ];
 
@@ -96,50 +82,50 @@ class DatabaseSeeder extends Seeder
     {
         $permissionsData = [
             [
-                'name' => 'clients',
-                'slug' => 'clients',
-                'description' => 'Manage clients and their data',
+                'name' => 'news',
+                'slug' => 'news',
+                'description' => 'Manage news articles and their data',
             ],
             [
-                'name' => 'services',
-                'slug' => 'services',
-                'description' => 'Manage services and their data',
+                'name' => 'campus',
+                'slug' => 'campus',
+                'description' => 'Manage campus and their data',
             ],
             [
-                'name' => 'products',
-                'slug' => 'products',
-                'description' => 'Manage products and their data',
+                'name' => 'classroom',
+                'slug' => 'classroom',
+                'description' => 'Manage classroom and their data',
             ],
             [
-                'name' => 'hostings',
-                'slug' => 'hostings',
-                'description' => 'Manage hostings and their data',
+                'name' => 'branches',
+                'slug' => 'branches',
+                'description' => 'Manage branches and their data',
+            ],
+            [
+                'name' => 'gallery',
+                'slug' => 'gallery',
+                'description' => 'Manage gallery and their data',
             ],
             [
                 'name' => 'users',
                 'slug' => 'users',
                 'description' => 'Manage users and their permissions',
             ],
-            [
-                'name' => 'settings',
-                'slug' => 'settings',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'usertypes',
-                'slug' => 'usertypes',
-                'description' => 'System settings and configurations',
-            ],
+            // [
+            //     'name' => 'settings',
+            //     'slug' => 'settings',
+            //     'description' => 'System settings and configurations',
+            // ],
             [
                 'name' => 'permissions',
                 'slug' => 'permissions',
                 'description' => 'System settings and configurations',
             ],
-            [
-                'name' => 'status',
-                'slug' => 'status',
-                'description' => 'System settings and configurations',
-            ],
+            // [
+            //     'name' => 'status',
+            //     'slug' => 'status',
+            //     'description' => 'System settings and configurations',
+            // ],
             [
                 'name' => 'group_permissions',
                 'slug' => 'group-permissions',
@@ -167,12 +153,37 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'logs',
                 'slug' => 'logs',
-                'description' => 'Manage client status history',
+                'description' => 'View system logs and activities',
             ],
             [
                 'name' => 'roles',
                 'slug' => 'roles',
-                'description' => 'Manage client status history',
+                'description' => 'Manage roles and their permissions',
+            ],
+            [
+                'name' => 'home',
+                'slug' => 'home',
+                'description' => 'Manage home page settings and content',
+            ],
+            [
+                'name' => 'about',
+                'slug' => 'about',
+                'description' => 'Manage about page settings and content',
+            ],
+            [
+                'name' => 'calendar',
+                'slug' => 'calendar',
+                'description' => 'Manage calendar page settings and content',
+            ],
+            [
+                'name' => 'academic',
+                'slug' => 'academic',
+                'description' => 'Manage academic page settings and content',
+            ],
+            [
+                'name' => 'admission',
+                'slug' => 'admission',
+                'description' => 'Manage admission page settings and content',
             ],
         ];
 
@@ -206,6 +217,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TranslationsSeeder::class,
             RolePermissionSeeder::class,
+            FrontendPagesSeeder::class,
         ]);
     }
 }

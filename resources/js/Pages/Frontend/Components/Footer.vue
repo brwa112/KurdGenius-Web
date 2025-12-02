@@ -9,37 +9,37 @@
                         <h3 class="text-sm font-medium">{{ $t('frontend.footer.about') }}</h3>
                         <ul class="space-y-1">
                             <li>
-                                <a href="#" class="text-white hover:text-white transition-colors text-sm">
+                                <Link :href="branchRoute('/about')" class="text-white hover:text-white transition-colors text-sm">
                                     {{ $t('frontend.footer.history_achievements') }}
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" class="text-white hover:text-white transition-colors text-sm">
+                                <Link :href="branchRoute('/about')" class="text-white hover:text-white transition-colors text-sm">
                                     {{ $t('frontend.footer.principal_message') }}
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
                     <!-- Contact Section -->
                     <div class="space-y-1">
                         <h3 class="text-sm font-medium">{{ $t('frontend.footer.contact') }}</h3>
-                        <ul class="space-y-1">
-                            <li>
-                                <a href="mailto:kurdgeniusschool@gmail.com"
+                        <ul class="space-y-1 max-w-xs">
+                            <li v-if="contactInfo.email">
+                                <a :href="`mailto:${contactInfo.email}`"
                                     class="text-white hover:text-white transition-colors text-sm">
-                                    kurdgeniusschool@gmail.com
+                                    {{ contactInfo.email }}
                                 </a>
                             </li>
-                            <li>
-                                <a href="tel:+9647703420606" dir="ltr"
+                            <li v-if="contactInfo.phone">
+                                <a :href="`tel:${contactInfo.phone}`" dir="ltr"
                                     class="text-white hover:text-white transition-colors text-sm">
-                                    +964 770 342 0606
+                                    {{ contactInfo.phone }}
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" class="text-white hover:text-white transition-colors text-sm">
-                                    Bakhtiary
-                                </a>
+                            <li v-if="contactInfo.address">
+                                <span class="text-white text-sm">
+                                    {{ contactInfo.address }}
+                                </span>
                             </li>
                         </ul>
                     </div>
@@ -48,14 +48,14 @@
                         <h3 class="text-sm font-medium">{{ $t('frontend.footer.academics') }}</h3>
                         <ul class="space-y-1">
                             <li>
-                                <a href="#" class="text-white hover:text-white transition-colors text-sm">
+                                <Link :href="branchRoute('/academics')" class="text-white hover:text-white transition-colors text-sm">
                                     {{ $t('frontend.footer.approach_to_education') }}
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" class="text-white hover:text-white transition-colors text-sm">
+                                <Link :href="branchRoute('/academics')" class="text-white hover:text-white transition-colors text-sm">
                                     {{ $t('frontend.footer.why_kurd_genius') }}
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -64,19 +64,19 @@
                         <h3 class="text-sm font-medium">{{ $t('frontend.footer.admission') }}</h3>
                         <ul class="space-y-1">
                             <li>
-                                <a href="#" class="text-white hover:text-white transition-colors text-sm">
+                                <Link :href="branchRoute('/admission')" class="text-white hover:text-white transition-colors text-sm">
                                     {{ $t('frontend.footer.school_policy') }}
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" class="text-white hover:text-white transition-colors text-sm">
+                                <Link :href="branchRoute('/admission')" class="text-white hover:text-white transition-colors text-sm">
                                     {{ $t('frontend.footer.application_form') }}
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" class="text-white hover:text-white transition-colors text-sm">
+                                <Link :href="branchRoute('/admission')" class="text-white hover:text-white transition-colors text-sm">
                                     {{ $t('frontend.footer.tuition_fee') }}
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -95,22 +95,22 @@
 
                     <!-- Social Media Icons -->
                     <div class="flex items-center gap-2">
-                        <a href="#"
+                        <a v-if="socialLinks.youtube" :href="socialLinks.youtube" target="_blank" rel="noopener noreferrer"
                             class="p-2.5 bg-white rounded-full flex items-center justify-center hover:bg-white/90 transition-all hover:-translate-y-0.5"
                             aria-label="YouTube">
                             <Svg name="youtube" class="size-6 text-black" />
                         </a>
-                        <a href="#"
+                        <a v-if="socialLinks.facebook" :href="socialLinks.facebook" target="_blank" rel="noopener noreferrer"
                             class="p-2.5 bg-white rounded-full flex items-center justify-center hover:bg-white/90 transition-all hover:-translate-y-0.5"
                             aria-label="Facebook">
                             <Svg name="facebook_fill" class="size-6 text-black" />
                         </a>
-                        <a href="#"
+                        <a v-if="socialLinks.instagram" :href="socialLinks.instagram" target="_blank" rel="noopener noreferrer"
                             class="p-2.5 bg-white rounded-full flex items-center justify-center hover:bg-white/90 transition-all hover:-translate-y-0.5"
                             aria-label="Instagram">
                             <Svg name="instagram_fill" class="size-6 text-black" />
                         </a>
-                        <a href="#"
+                        <a v-if="socialLinks.twitter" :href="socialLinks.twitter" target="_blank" rel="noopener noreferrer"
                             class="p-3 bg-white rounded-full flex items-center justify-center hover:bg-white/90 transition-all hover:-translate-y-0.5"
                             aria-label="Twitter">
                             <Svg name="twitter" class="w-[22px] h-[22px] text-black" />
@@ -137,4 +137,41 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import helpers from '@/helpers';
+
+const page = usePage();
+
+// Contact info from AboutTouch model
+const contactInfo = computed(() => {
+  const info = page.props.info;
+  if (!info) return { phone: null, email: null, address: null };
+  
+  return {
+    phone: info.contact_phone || null,
+    email: info.contact_email || null,
+    address: info.contact_address ? helpers.getTranslatedText(info.contact_address, page) : null,
+  };
+});
+
+// Social links from HomeKnow model
+const socialLinks = computed(() => {
+  const social = page.props.social;
+  if (!social || !social.metadata) {
+    return {
+      facebook: null,
+      instagram: null,
+      youtube: null,
+      twitter: null,
+    };
+  }
+  
+  return {
+    facebook: social.metadata.facebook || null,
+    instagram: social.metadata.instagram || null,
+    youtube: social.metadata.youtube || null,
+    twitter: social.metadata.twitter || null,
+  };
+});
 </script>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\System\Settings\Settings;
 
 use Inertia\Inertia;
-use App\Traits\LogsActivity;
 use Illuminate\Http\Request;
 use App\Traits\HandlesSorting;
 use App\Http\Controllers\Controller;
@@ -12,7 +11,7 @@ use App\Models\System\Settings\Settings\Theme;
 
 class ThemeController extends Controller
 {
-    use LogsActivity, HandlesSorting;
+    use HandlesSorting;
 
     public function index(Request $request)
     {
@@ -55,7 +54,7 @@ class ThemeController extends Controller
         /** @var \App\Models\System\Users\User $user */
         $user = Auth::user();
         $theme = $user->theme()->create($validated);
-        $this->logCreated('Theme ' . $theme->name, $theme->id);
+
         return redirect()->back();
     }
 
@@ -70,8 +69,6 @@ class ThemeController extends Controller
             'slug' => 'required|string|max:255|unique:themes,slug,' . $theme->id,
         ]);
 
-        $this->logUpdated('Theme ' . $theme->name, $theme->id);
-
         $theme->update($validated);
 
         return redirect()->back();
@@ -84,10 +81,9 @@ class ThemeController extends Controller
 
         $this->authorize('delete', $theme);
 
-        $this->logDeleted('Theme ' . $theme->name, $theme->id);
-
         $theme->delete();
 
         return redirect()->back();
     }
 }
+

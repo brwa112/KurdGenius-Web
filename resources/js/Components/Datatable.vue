@@ -41,7 +41,7 @@
                     <!-- Search Input -->
                     <div class="relative block sm:min-w-64">
                         <input ref="searchInput" v-model="search" type="text"
-                            class="form-input shadow-none dark:!border-transparent pe-8 min-w-44"
+                            class="form-input shadow-none dark:!border-transparent pe-8 py-1.5 min-w-44"
                             :placeholder="$t('common.search')" />
                         <Svg name="search" class="size-4 absolute end-2 top-1/2 -translate-y-1/2"></Svg>
                     </div>
@@ -90,9 +90,9 @@
             :stickyFirstColumn="stickyFirstColumn" :totalRows="totalRows" @change="changeSort($event)"
             class="alt-pagination whitespace-nowrap">
             <template v-for="column in columns" v-slot:[column.field]="data">
-                <slot class="capitalize" v-if="hasSlot(column.field)" :name="column.field" v-bind="data"></slot>
+                <slot class="capitalizee" v-if="hasSlot(column.field)" :name="column.field" v-bind="data"></slot>
                 <template v-else>
-                    <span class="capitalize">
+                    <span class="capitalizee">
                         {{typeof column?.format == 'function' ? column.format(get_property(rows.find(x => x.id
                             ==
                             data.value.id), column.field), rows.find(x => x.id == data.value.id)) :

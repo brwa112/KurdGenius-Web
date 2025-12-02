@@ -23,4 +23,9 @@ return [
     'all_reserved' => 'All rights reserved',
     'others' => 'Others',
     'settings' => 'Settings',
+    'news' => 'News',
+    'classroom' => 'Classroom',
+    'campus' => 'Campus',
+    'gallery' => 'Gallery',
+    'branches' => 'Branches',
 ];

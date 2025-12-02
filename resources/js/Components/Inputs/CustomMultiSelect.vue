@@ -3,23 +3,29 @@
         <template v-if="!disabled">
             <VDropdown :placement="placement" @apply-hide="handleDropdownHide">
                 <button ref="buttonRef" type="button"
-                    class="w-full flex items-center gap-1.5 rounded-md leading-3 border cursor-pointer font-semibold bg-white border-[#e0e6ed] dark:border-transparent dark:bg-[#121e32] text-gray-500 dark:text-white-dark">
+                    class="w-full truncate flex items-center gap-1.5 rounded-md leading-3 border cursor-pointer font-semibold bg-white border-[#e0e6ed] dark:border-transparent dark:bg-[#121e32] text-gray-500 dark:text-white-dark">
                     <div class="flex items-center gap-2 px-2.5 py-2 rounded-md font-bold"
                         :class="{ 'text-primary': count.length > 0, style }">
                         <button v-if="multiple == true" type="button" @click="countFocus"
-                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-1">
-                            <span v-if="count.length > 0" :class="buttonStyle">
-                                ({{ count.length }}) {{count.map(item => item[label] || item.name).join(', ')}}
+                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-1 text-sm">
+                            <span v-if="count.length > 0" :class="buttonStyle" class="max-w-56 truncate">
+                                <template v-if="count.length <= 2">
+                                    {{count.map(item => item[label] || item.name).join(', ')}}
+                                </template>
+                                <template v-else>
+                                    {{count.slice(0, 2).map(item => item[label] || item.name).join(', ')}} +{{
+                                    count.length - 2 }}
+                                </template>
                             </span>
                             <span v-else class="text-sm">
-                                {{ placeholder ? $t(`${parentKey}.${placeholder}`) : $t('common.please_select') }}
+                                {{ placeholder ? (isTrans ? $t(`${parentKey}.${placeholder}`) : placeholder) :
+                                $t('common.please_select') }}
                             </span>
-                            <Svg name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
                         </button>
                         <button v-if="multiple == false" type="button" @click="countFocus"
-                            class="whitespace-nowrap flex justify-between items-center min-w-24 gap-4">
-                            <span v-if="Object.keys(count)?.length > 0" :class="buttonStyle">
-                                <span v-if="props.parentKey">
+                            class="flex justify-between items-center min-w-24 gap-4 text-sm">
+                            <span v-if="Object.keys(count)?.length > 0" :class="buttonStyle" class="max-w-56 truncate">
+                                <span v-if="props.parentKey && isTrans">
                                     {{ $t(`${parentKey}.${checkObject(count[props.label])}`) ||
                                         checkObject(count[props.label] || count.name) }}
                                 </span>
@@ -28,16 +34,19 @@
                                 </span>
                             </span>
                             <span v-else class="text-sm">
-                                {{ placeholder ? $t(`${placeholderParentKey}.${placeholder}`) :
-                                $t('common.please_select') }}
+                                {{ placeholder ? (isTrans ? $t(`${placeholderParentKey}.${placeholder}`) : placeholder)
+                                    :
+                                    $t('common.please_select') }}
                             </span>
-                            <Svg v-if="!checkObject(count[props.label] || count.name) || count.length < 0"
-                                name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
                         </button>
                         <button v-if="checkObject(count[props.label] || count.name) || count.length > 0" type="button"
-                            @click="clearCount" class="whitespace-nowrap flex justify-between items-center gap-1">
-                            <Svg name="close" class="size-4 text-gray-500"></Svg>
+                            @click="clearCount"
+                            :disabled="props.requireSelection && (props.multiple ? count.length === 1 : Object.keys(count).length > 0)"
+                            :class="{ 'opacity-50 cursor-not-allowed': props.requireSelection && (props.multiple ? count.length === 1 : Object.keys(count).length > 0) }"
+                            class="whitespace-nowrap flex justify-between items-center gap-1">
+                            <Svg v-if="!requireSelection" name="close" class="size-4 text-gray-500"></Svg>
                         </button>
+                        <Svg name="arrow_right" class="size-4 text-gray-500 rotate-90"></Svg>
                     </div>
                 </button>
 
@@ -49,7 +58,7 @@
                                 <div class="relative w-full">
                                     <input ref="focusInput" type="text" :placeholder="$t('common.search')"
                                         v-model="countFilter"
-                                        class="form-input shadow-none focus:border-gray-200 dark:focus:border-gray-800" />
+                                        class="form-input !py-1 shadow-none focus:border-gray-200 dark:focus:border-gray-800" />
                                     <button v-if="countFilter.length > 0" type="button" @click="clearFilter"
                                         class="absolute end-0 top-2 z-20 mx-2">
                                         <Svg name="close" class="size-5 text-gray-500"></Svg>
@@ -57,12 +66,12 @@
                                 </div>
                             </div>
                         </li>
-                        <li :class="{ 'mt-10': searchable }">
-                            <perfect-scrollbar class="relative max-h-52 min-w-56 overflow-auto" :class="style">
+                        <li :class="{ 'mt-9': searchable }">
+                            <perfect-scrollbar class="relative max-h-52 min-w-52 overflow-auto" :class="style">
                                 <button type="button" v-for="(countOption, i) in countOptions" :key="i"
                                     @click="() => { selectOption(countOption, hide); buttonRef?.focus(); }"
-                                    class="w-full flex items-center justify-between gap-10 px-3.5 py-2 duration-150 hover:text-primary hover:bg-primary/10"
-                                    :class="[{ '!bg-primary/10 !text-primary': checkSelect(countOption.id) }, buttonStyle]">
+                                    class="w-full flex items-center justify-between gap-10 text-sm px-3.5 py-2 duration-150 hover:text-primary hover:bg-primary/10"
+                                    :class="[{ '!bg-primary/10 !text-primary': checkSelect(countOption.id) }]">
                                     <div class="flex items-center gap-2">
                                         <img v-if="countOption.image || has_image"
                                             class="inline-block size-8 rounded-full"
@@ -73,10 +82,14 @@
                                         <div class="flex flex-col items-start">
                                             <h1 v-if="!countOption.slug" v-html="renderMarkdown(countOption.label)">
                                             </h1>
-                                            <h1 v-if="countOption.slug">
+                                            <h1 v-if="countOption.slug && isTrans">
                                                 {{ $t(`${parentKey}.${countOption.slug}`) }}
                                             </h1>
-                                            <p v-if="isInfo" class="text-xs text-gray-500">{{ countOption.description }}</p>
+                                            <h1 v-if="countOption.slug && !isTrans">
+                                                {{ countOption.label }}
+                                            </h1>
+                                            <p v-if="isInfo" class="text-xs text-gray-500">{{ countOption.description }}
+                                            </p>
                                             <p v-if="isInfo" class="text-xs text-gray-500">{{ countOption?.email }}</p>
                                         </div>
                                     </div>
@@ -174,6 +187,14 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    requireSelection: {
+        type: Boolean,
+        default: false,
+    },
+    isTrans: {
+        type: Boolean,
+        default: true,
+    },
 });
 
 const rtlClass = inject('rtlClass');
@@ -240,11 +261,19 @@ const selectOption = (option, hide) => {
     if (props.multiple) {
         const index = count.value.findIndex((item) => item.id === option.id);
         if (index !== -1) {
+            // Prevent deselecting if requireSelection is true and only one item is selected
+            if (props.requireSelection && count.value.length === 1) {
+                return;
+            }
             count.value.splice(index, 1);
         } else {
             count.value.push(option);
         }
     } else {
+        // Prevent deselecting if requireSelection is true and trying to select the same option
+        if (props.requireSelection && count.value.id === option.id) {
+            return;
+        }
         count.value = option;
     }
 
@@ -278,7 +307,12 @@ const clearFilter = () => {
 };
 
 const clearCount = () => {
-    count.value = [];
+    // Prevent clearing if requireSelection is true
+    if (props.requireSelection) {
+        return;
+    }
+
+    count.value = props.multiple ? [] : {};
     emit('update:modelValue', count.value);
     emit('change', count.value);
 };

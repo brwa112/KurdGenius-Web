@@ -5,6 +5,7 @@ return [
         'home' => 'Home',
         'about' => 'About',
         'campus' => 'Campus',
+        'classrooms' => 'Classrooms & Labs',
         'calendar' => 'Calendar',
         'academics' => 'Academics',
         'admission' => 'Admission',
@@ -12,21 +13,6 @@ return [
         'branches' => 'Branches',
         'school_name' => 'KURD GENIUS SCHOOLS',
         'school_abbr' => 'KGS',
-    ],
-    'contact' => [
-        'phone' => '+964 770 342 0606',
-        'email' => 'kurdgeniusschool@gmail.com',
-    ],
-    'branches' => [
-        'kurd_genius' => 'Kurd Genius Educational Communities',
-        'kurd_genius_2' => 'Kurd Genius Educational Communities 2',
-        'kurd_genius_qaiwan' => 'Kurd Genius Educational Communities Qaiwan Heights',
-        'smart_educational' => 'Smart Educational Communities',
-    ],
-    'languages' => [
-        'english' => 'English',
-        'kurdish' => 'Kurdish',
-        'arabic' => 'Arabic',
     ],
     'hero' => [
         'title' => 'Kurd Genius Schools',
@@ -49,6 +35,10 @@ return [
         'latest_news' => 'Latest News',
         'search_placeholder' => 'Search here...',
         'description' => 'Stay updated with the latest news and events from Kurd Genius School. Learn about our achievements, activities, and important announcements.',
+        // Empty state messages
+        'no_news_found' => 'No News Found',
+        'try_different_search' => 'Try adjusting your search or browse a different category.',
+        'no_news_available' => 'There are currently no news articles available.',
     ],
     'know_more' => [
         'title' => 'Know More',
@@ -56,16 +46,23 @@ return [
     'campus' => [
         'title' => 'Campus',
         'description' => 'Explore our modern campus facilities designed to provide the best learning environment for our students.',
+        'no_campus_found' => 'No Campus Found',
+        'no_campus_available' => 'There are currently no campus information available.',
     ],
     'classrooms' => [
         'title' => 'Classrooms and Labs',
         'description' => 'Our state-of-the-art classrooms and laboratories provide students with the best learning environment.',
+        'no_classrooms_found' => 'No Classrooms Found',
+        'no_classrooms_available' => 'There are currently no classroom information available.',
     ],
     'about' => [
         'title' => 'About Us',
     ],
     'media' => [
         'title' => 'Media Gallery',
+        // Empty state messages
+        'no_media_found' => 'No Media Found',
+        'no_media_available' => 'There are currently no media items available in our gallery.',
     ],
     'contact_form' => [
         'title' => 'Get in touch with us',

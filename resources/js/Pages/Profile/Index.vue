@@ -1,4 +1,9 @@
 <template>
+
+    <Head>
+        <title>{{ $t('nav.profile') }}</title>
+    </Head>
+
     <div class="space-y-6">
         <!-- Breadcrumb -->
         <ul class="flex space-x-2 rtl:space-x-reverse">
@@ -34,7 +39,7 @@
                         </p>
 
                         <!-- Profile Stats -->
-                        <div class="grid grid-cols-1 gap-4 text-center border-t pt-4 dark:border-gray-700">
+                        <div v-if="userRoles" class="grid grid-cols-1 gap-4 text-center border-t pt-4 dark:border-gray-700">
                             <div>
                                 <div class="b-text-lg font-semibold text-primary capitalize">
                                     {{ userRoles }}
@@ -147,7 +152,7 @@
 <script setup>
 import { wTrans, trans } from 'laravel-vue-i18n';
 import { inject, ref, computed, watch } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import MultiSelect from '@/Components/Inputs/MultiSelect.vue';
 import Svg from '@/Components/Svg.vue';
 import ImageUpload from '@/Components/Inputs/ImageUpload.vue';
@@ -204,7 +209,13 @@ console.log('Initial form:', form);
 
 const user = computed(() => page.props.auth.user || {});
 const userRoles = computed(() => (user.value.roles?.map(r => r.name).join(', ') || (user.value.role || '')));
-const userAuthority = computed(() => user.value.typeuser.slug || '-');
+const userAuthority = computed(() => {
+    try {
+        return (user.value && user.value.typeuser && user.value.typeuser.slug) ? user.value.typeuser.slug : '-';
+    } catch (e) {
+        return '-';
+    }
+});
 
 watch(fontScale, (newFontScale) => {
     const newFontScaleObject = scaleOptions.value.find(scale => scale.value === newFontScale);

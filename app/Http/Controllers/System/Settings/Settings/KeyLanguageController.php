@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\System\Settings\Settings\Key;
 use App\Traits\HandlesSorting;
-use App\Traits\LogsActivity;
 
 class KeyLanguageController extends Controller
 {
-    use logsActivity, HandlesSorting;
+    use HandlesSorting;
     public function index(Request $request)
     {
         $this->authorize('viewAny', Key::class);
@@ -49,8 +48,6 @@ class KeyLanguageController extends Controller
 
         $newKeyId = Key::create($validated);
 
-        $this->logCreated('Key' . $newKeyId->key, $newKeyId->id);
-
         return redirect()->back();
     }
 
@@ -64,8 +61,6 @@ class KeyLanguageController extends Controller
 
         $key->update($validated);
 
-        $this->logUpdated('Key' . $key->key, $key->id);
-
         return redirect()->back();
     }
 
@@ -73,10 +68,9 @@ class KeyLanguageController extends Controller
     {
         $key = Key::findOrFail($id);
 
-        $this->logDeleted('Key' . $key->key, $key->id);
-
         $key->delete();
 
         return redirect()->back();
     }
 }
+

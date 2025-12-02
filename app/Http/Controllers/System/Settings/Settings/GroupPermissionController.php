@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Traits\HandlesSorting;
-use App\Traits\LogsActivity;
 use App\Traits\GenerateSlugKey;
 use App\Models\System\Settings\System\GroupPermission;
 
 class GroupPermissionController extends Controller
 {
-    use LogsActivity, HandlesSorting, GenerateSlugKey;
+    use HandlesSorting, GenerateSlugKey;
 
     public function index(Request $request)
     {
@@ -60,8 +59,6 @@ class GroupPermissionController extends Controller
         // Call the function to generate or update the key and translations
         $this->GenerateSlugKey($validated);
 
-        $this->logCreated('Group Name Permission' . $GroupPermission->name, $GroupPermission->id);
-
         return redirect()->back();
     }
 
@@ -85,8 +82,6 @@ class GroupPermissionController extends Controller
 
         $this->authorize('update', $groupPermission);
 
-        $this->logUpdated('Group Name Permission' . $groupPermission->name, $groupPermission->id);
-
         return redirect()->back();
     }
 
@@ -99,9 +94,8 @@ class GroupPermissionController extends Controller
 
         $this->authorize('delete', $group_name);
 
-        $this->logDeleted('Group Name Permission' . $group_name->name, $group_name->id);
-
         $group_name->delete();
         return redirect()->back();
     }
 }
+

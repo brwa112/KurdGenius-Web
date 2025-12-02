@@ -10,13 +10,12 @@ use App\Http\Controllers\Controller;
 use App\Models\System\Users\Permission;
 use App\Traits\HandlesSorting;
 use App\Http\Requests\LayerTwoPermissionRequest;
-use App\Traits\LogsActivity;
 use App\Models\System\Settings\System\GroupPermission;
 
 
 class PermissionController extends Controller
 {
-    use LogsActivity, HandlesSorting;
+    use HandlesSorting;
 
     public function index(Request $request)
     {
@@ -33,6 +32,7 @@ class PermissionController extends Controller
         $permissions = $query->paginate($filters['number_rows']);
 
         $groupPermissions = GroupPermission::query()->select('id', 'name')->get();
+
         return Inertia::render('System/Users/Permissions/Index', [
             'permissions' => $permissions,
             'groupPermissions' => $groupPermissions,
@@ -40,15 +40,14 @@ class PermissionController extends Controller
         ]);
     }
 
-
     private function getSortableFields(): array
     {
         return [
-            // Simple column sorting (clients table)
+            // Simple column sorting 
             'id' => $this->simpleSort('permissions.id'),
             'name' => $this->simpleSort('permissions.name'),
 
-            // Related model sorting (package belongsTo)
+            // Related model sorting
             'groupPermissions.name' => $this->relatedSort(
                 GroupPermission::class,
                 'name',
@@ -73,8 +72,6 @@ class PermissionController extends Controller
             'group_permission_id' => $data['group_permission_id'],
         ]);
 
-        $this->logCreated('Permission ' . $permissionName, $permission->id);
-
         return redirect()->back();
     }
 
@@ -91,7 +88,7 @@ class PermissionController extends Controller
             'name' => $permissionName,
             'group_permission_id' => $data['group_permission_id'],
         ]);
-        $this->logUpdated('Permission ' . $permissionName, $permission->id);
+
         return redirect()->back();
     }
 
@@ -101,10 +98,9 @@ class PermissionController extends Controller
 
         $this->authorize('delete', $permission);
 
-        $this->logDeleted('Permission ' . $permission->name, $permission->id);
-
         $permission->delete();
 
         return redirect()->back();
     }
 }
+

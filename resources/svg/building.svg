@@ -1,9 +1,8 @@
-<svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15.4641 18.4304C15.4573 19.5854 14.5164 20.5156 13.3614 20.5088H6.07147C4.91746 20.5146 3.97654 19.5834 3.9707 18.4285V13.1576C3.97557 12.7041 4.19061 12.2789 4.55257 12.0055L8.51572 8.82467C9.21532 8.27199 10.2029 8.27199 10.9016 8.82467L14.8822 12.0026C15.2423 12.276 15.4563 12.7002 15.4641 13.1517V18.4304Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path opacity="0.4" d="M9.71582 16.7227V20.2713" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path opacity="0.4" d="M18.5356 20.4015H19.8337C21.0139 20.4015 21.9704 19.445 21.9704 18.2647V5.62896C21.9704 4.44867 21.0139 3.49219 19.8337 3.49219H14.6104C13.437 3.49219 12.4863 4.44284 12.4863 5.61631V6.49495" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path opacity="0.4" d="M18.7373 16.2578V16.2678" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path opacity="0.4" d="M18.7373 12.0452V12.0352" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path opacity="0.4" d="M15.6777 7.8125V7.8225" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path opacity="0.4" d="M18.7373 7.8125V7.8225" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path fill="currentColor" fill-rule="evenodd"
+        d="M7 5h4c1.886 0 2.828 0 3.414.586S15 7.114 15 9v12.25h7a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1 0-1.5h1V9c0-1.886 0-2.828.586-3.414S5.114 5 7 5M5.25 8A.75.75 0 0 1 6 7.25h6a.75.75 0 0 1 0 1.5H6A.75.75 0 0 1 5.25 8m0 3a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75m0 3a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75M9 18.25a.75.75 0 0 1 .75.75v2.25h-1.5V19a.75.75 0 0 1 .75-.75"
+        clip-rule="evenodd" />
+    <path fill="currentColor"
+        d="M15 2h2c1.886 0 2.828 0 3.414.586S21 4.114 21 6v15.25h-6V9c0-1.886 0-2.828-.586-3.414C13.842 5.013 12.928 5 11.126 5V3.5c.084-.387.225-.68.46-.914C12.17 2 13.114 2 15 2"
+        opacity="0.5" />
 </svg>

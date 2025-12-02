@@ -1,0 +1,301 @@
+<?php
+
+namespace App\Models\Pages;
+
+use App\Models\System\Users\User;
+use App\Models\Traits\NewsScopes;
+use App\Traits\LogsMediaActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Translatable\HasTranslations;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+
+class News extends Model implements HasMedia
+{
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations, NewsScopes, LogsActivity, LogsMediaActivity;
+
+    protected $table = 'news';
+
+    public $translatable = ['title', 'content'];
+
+    protected $fillable = [
+        'user_id',
+        'branch_id',
+        'news_category_id',
+        'slug',
+        'title',
+        'content',
+        'views',
+        'order',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    protected $appends = [
+        'images',
+        'branch_name',
+        'category_name',
+        'hashtag_ids',
+        'hashtag_names',
+        'formatted_date',
+    ];
+
+    public function getImagesAttribute()
+    {
+        return $this->getMedia('images')->map(function ($media) {
+            return [
+                'id' => $media->id,
+                'url' => $media->getUrl(),
+                'thumb' => $media->getUrl('thumb'),
+                'medium' => $media->getUrl('medium'),
+                'large' => $media->getUrl('large'),
+            ];
+        })->toArray(); // Convert to array to ensure it's always an array in JSON
+    }
+
+    public function getBranchNameAttribute()
+    {
+        if (!$this->branch) {
+            return null;
+        }
+        return [
+            'id' => $this->branch->id,
+            'name' => $this->branch->getTranslations('name'), // Get all translations as JSON
+            'slug' => $this->branch->slug,
+        ];
+    }
+
+    public function getCategoryNameAttribute()
+    {
+        if (!$this->category) {
+            return null;
+        }
+        return [
+            'id' => $this->category->id,
+            'name' => $this->category->getTranslations('name'), // Get all translations as JSON
+            'slug' => $this->category->slug,
+        ];
+    }
+
+    public function getHashtagIdsAttribute()
+    {
+        return $this->hashtags->pluck('id')->toArray();
+    }
+
+    public function getHashtagNamesAttribute()
+    {
+        return $this->hashtags->map(function ($hashtag) {
+            return [
+                'id' => $hashtag->id,
+                'name' => $hashtag->getTranslations('name'), // Get all translations as JSON
+                'slug' => $hashtag->slug,
+            ];
+        });
+    }
+
+    /**
+     * Get the options for activity logging.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['title', 'content', 'branch_id', 'news_category_id', 'is_active', 'order', 'views'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => "News article {$eventName}");
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // After create: generate slug using title and id -> guarantees uniqueness via id
+        static::created(function ($news) {
+            // Only set if slug is empty or doesn't include the id
+            $title = is_array($news->title)
+                ? ($news->title['en'] ?? $news->title[array_key_first($news->title)] ?? 'news')
+                : $news->title;
+
+            $generated = Str::slug($title . '-' . $news->id);
+
+            if (empty($news->slug) || $news->slug !== $generated) {
+                // use saveQuietly to avoid firing observers again
+                $news->slug = $generated;
+                $news->saveQuietly();
+            }
+        });
+
+        // Before update: if title changed, regenerate slug using title and id
+        static::updating(function ($news) {
+            if ($news->isDirty('title')) {
+                $title = is_array($news->title)
+                    ? ($news->title['en'] ?? $news->title[array_key_first($news->title)] ?? 'news')
+                    : $news->title;
+
+                $news->slug = Str::slug($title . '-' . $news->id);
+            }
+        });
+    }
+
+    /**
+     * Register media collections.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/webp']);
+
+        $this->addMediaCollection('attachments')
+            ->acceptsMimeTypes([
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            ]);
+    }
+
+    /**
+     * Register media conversions.
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(368)
+            ->height(232)
+            ->sharpen(10)
+            ->nonQueued();
+
+        $this->addMediaConversion('medium')
+            ->width(800)
+            ->height(600)
+            ->sharpen(10)
+            ->nonQueued();
+
+        $this->addMediaConversion('large')
+            ->width(1200)
+            ->height(900)
+            ->sharpen(10)
+            ->nonQueued();
+
+        $this->addMediaConversion('og_image')
+            ->width(1200)
+            ->height(630)
+            ->sharpen(10)
+            ->nonQueued();
+    }
+
+    /**
+     * Get the user that created this news article.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the category for this news article (one-to-many).
+     */
+    public function category()
+    {
+        return $this->belongsTo(NewsCategory::class, 'news_category_id');
+    }
+
+    /**
+     * Get the hashtags for this news article (many-to-many).
+     */
+    public function hashtags()
+    {
+        return $this->belongsToMany(Hashtag::class, 'news_hashtag');
+    }
+
+    /**
+     * Get the branch for this news article.
+     */
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    /**
+     * Scope a query to only include active news.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    /**
+     * Scope a query to filter by category.
+     */
+    public function scopeOfCategory($query, $categoryId)
+    {
+        return $query->where('category_id', $categoryId);
+    }
+
+    /**
+     * Scope a query to filter by hashtag.
+     */
+    public function scopeWithHashtag($query, $hashtagId)
+    {
+        return $query->whereHas('hashtags', function ($q) use ($hashtagId) {
+            $q->where('hashtags.id', $hashtagId);
+        });
+    }
+
+    /**
+     * Scope a query to filter by branch.
+     */
+    public function scopeOfBranch($query, $branchId)
+    {
+        if ($branchId) {
+            return $query->where('branch_id', $branchId);
+        }
+        return $query;
+    }
+
+    /**
+     * Scope a query to get published news.
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('created_at', '<=', Carbon::now());
+    }
+
+    /**
+     * Scope a query to get latest news.
+     */
+    public function scopeLatest($query)
+    {
+        return $query->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Increment the views count.
+     */
+    public function incrementViews()
+    {
+        $this->increment('views');
+    }
+
+    /**
+     * Get formatted published date.
+     */
+    public function getFormattedDateAttribute()
+    {
+        return $this->created_at->format('M d, Y');
+    }
+}

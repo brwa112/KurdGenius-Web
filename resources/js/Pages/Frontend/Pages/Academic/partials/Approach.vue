@@ -8,7 +8,7 @@
             {{ $t('frontend.academic.approach_title') }}
           </h2>
           <p class="!leading-6 text-base lg:text-base xl:text-xl font-normal text-pretty">
-            {{ $t('frontend.academic.approach_description') }}
+            {{ description }}
           </p>
           <p class="!leading-10 text-base lg:text-base xl:text-xl font-medium text-pretty text-f-primary">
             {{ $t('frontend.academic.approach_highlight') }}
@@ -23,12 +23,12 @@
         <!-- Bottom Content -->
         <div
           class="relative z-10 w-full flex flex-col gap-4 bg-[#FFA610] rounded-3xl md:rounded-[50px] px-4 md:px-7 lg:px-8 py-4 md:py-5">
-          <div v-for="approach in approaches" :key="approach.id"
+          <div v-for="(feature, index) in features" :key="index"
             class="relative z-10 group w-full xl:w-[70%] 2xl:w-[62.5%] flex items-center gap-2 rounded-full bg-white px-3 md:px-4 py-2 md:py-4 2xl:py-5 lg:min-w-[280px]">
             <img :src="'/img/academic/circle.svg'" alt="mission"
               class="size-4 md:size-4.5 2xl:size-[22px] duration-500 rotate-0 group-hover:-rotate-[150deg]" />
             <h2 class="relative z-[5] text-xs md:text-base 2xl:text-xl !leading-4">
-              {{ approach.title }}
+              {{ feature.title }}
             </h2>
           </div>
           <!-- Image -->
@@ -45,28 +45,46 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import helpers from '@/helpers';
 
-const approaches = ref([
-  {
-    id: 1,
-    title: 'International standards adapted to local needs',
-  },
-  {
-    id: 2,
-    title: 'English, Math, Science, and IT based on global benchmarks',
-  },
-  {
-    id: 3,
-    title: 'Strong focus on Kurdish and Arabic to preserve identity',
-  },
-  {
-    id: 4,
-    title: 'Technology-enhanced classrooms and practical teaching methods',
-  },
-  {
-    id: 5,
-    title: 'Emphasis on collaboration, communication, and critical thinking',
-  },
-]);
+const props = defineProps({
+  approach: {
+    type: Object,
+    default: null
+  }
+});
+
+const page = usePage();
+
+// Get description from database or fallback to translation
+const description = computed(() => {
+  if (props.approach?.description) {
+    return helpers.getTranslatedText(props.approach.description, page);
+  }
+  return page.props.locale === 'ckb' 
+    ? 'ئێمە باوەڕمان بە پەروەردەکردنی ژینگەیەکی فێربوونە کە خوێندکاران بەشداربووی چالاکن لە پەروەردەکەیاندا. ڕێبازەکەمان دانایی نەریتی بە شێوازە پەروەردەیی مۆدێرنەکان تێکەڵ دەکات.'
+    : 'We offer a holistic, student-centered educational experience that blends academic learning with personal development.';
+});
+
+// Get features from database or fallback to hardcoded list
+const features = computed(() => {
+  if (props.approach?.features) {
+    const translatedFeatures = helpers.getTranslatedText(props.approach.features, page);
+    // Check if it's an array
+    if (Array.isArray(translatedFeatures)) {
+      return translatedFeatures;
+    }
+  }
+  
+  // Fallback data
+  return [
+    { title: 'International standards adapted to local needs' },
+    { title: 'English, Math, Science, and IT based on global benchmarks' },
+    { title: 'Strong focus on Kurdish and Arabic to preserve identity' },
+    { title: 'Technology-enhanced classrooms and practical teaching methods' },
+    { title: 'Emphasis on collaboration, communication, and critical thinking' },
+  ];
+});
 </script>

@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\System\Users\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -25,11 +24,11 @@ class AuthController extends Controller
 
         $login = request('login');
         $user = User::where('email', $login);
-        
+
         if (!filter_var($login, FILTER_VALIDATE_EMAIL)) {
             $user->orWhere('phone', $login);
         }
-        
+
         $user = $user->first();
         // dd($user);
 
@@ -57,7 +56,7 @@ class AuthController extends Controller
         $this->login($user);
     }
 
-    public function login($user)
+    public function login(User $user)
     {
         $credentials = [
             'email' => $user->email,
@@ -67,11 +66,35 @@ class AuthController extends Controller
         Auth::attempt($credentials, request()->boolean('remember'));
 
         request()->session()->regenerate();
+
+        // Log user login activity
+        activity()
+            ->causedBy($user)
+            ->performedOn($user)
+            ->withProperties([
+                'ip' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+            ])
+            ->log('User logged in');
     }
 
     public function logout()
     {
-        // Todo:: fix the issue here...
+        /** @var User|null $user */
+        $user = auth()->user();
+
+        // Log user logout activity before logging out
+        if ($user) {
+            activity()
+                ->causedBy($user)
+                ->performedOn($user)
+                ->withProperties([
+                    'ip' => request()->ip(),
+                    'user_agent' => request()->userAgent(),
+                ])
+                ->log('User logged out');
+        }
+
         try {
             auth()->logout();
         } catch (\Throwable $th) {

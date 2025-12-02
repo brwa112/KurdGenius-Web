@@ -10,11 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Models\System\Users\Permission;
 use App\Models\System\Users\User;
 use App\Traits\HandlesSorting;
-use App\Traits\LogsActivity;
 
 class UserController extends Controller
 {
-    use LogsActivity, HandlesSorting;
+    use HandlesSorting;
     public function index(Request $request)
     {
         $this->authorize('viewAny', User::class);
@@ -23,6 +22,7 @@ class UserController extends Controller
 
         $query = User::query()
             ->with('roles', 'permissions')
+            ->withTrashed()
             ->search($filters['search']);
 
         $this->applySortingToQuery($query, $filters['sort_by'], $filters['sort_direction'], $this->getSortableFields());
@@ -37,12 +37,12 @@ class UserController extends Controller
     private function getSortableFields(): array
     {
         return [
-            // Simple column sorting (clients table)
+            // Simple column sorting
             'id' => $this->simpleSort('users.id'),
             'name' => $this->simpleSort('users.name'),
             'email' => $this->simpleSort('users.email'),
 
-            // Related model sorting (package belongsTo)
+            // Related model sorting
             'roles.name' => $this->relatedSort(
                 Role::class,
                 'name',
@@ -77,10 +77,12 @@ class UserController extends Controller
         // ]);
         $data = $request->validated();
 
+        // user_type has been removed from the system; no defaulting required
+
         $data['password'] = bcrypt($data['password']);
 
         $user = User::create($data);
-        $this->LogCreated("User " . $user->name, $user->id);
+
         $user->syncRoles(collect($data['roles'])->pluck('id'));
         $user->syncPermissions(collect($data['permissions'])->pluck('id'));
 
@@ -112,7 +114,7 @@ class UserController extends Controller
         }
 
         $user->update($data);
-        $this->LogUpdated("User " . $user->name, $user->id);
+
         // Avatar handling
         if ($request->hasFile('avatar')) {
             $user->clearMediaCollection('avatar');
@@ -165,11 +167,39 @@ class UserController extends Controller
         $this->authorize('delete', User::class);
 
         $user = User::findOrFail($user);
-        $this->LogDeleted("User " . $user->name, $user->id);
 
         $user->delete();
 
         // return redirect()->route('control.system.users.index');
+    }
+
+    public function forceDelete($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+
+        $this->authorize('delete', $user);
+
+        // Remove avatar media if exists
+        try {
+            $user->clearMediaCollection('avatar');
+        } catch (\Exception $e) {
+            // ignore media removal errors
+        }
+
+        $user->forceDelete();
+
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $user);
+
+        $user->restore();
+
+        return redirect()->back();
     }
 
     protected function options()
@@ -195,3 +225,4 @@ class UserController extends Controller
         ];
     }
 }
+

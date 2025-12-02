@@ -30,6 +30,11 @@ trait HandlesSorting
             'number_rows' => $filter['number_rows'] ?? 10,
             'sort_by' => $filter['sort_by'] ?? 'id',
             'sort_direction' => $filter['sort_direction'] ?? 'desc',
+            'start_date' => $filter['start_date'] ?? null,
+            'end_date' => $filter['end_date'] ?? null,
+            'branch_id' => $filter['branch_id'] ?? null,
+            'category_id' => $filter['category_id'] ?? null,
+            'hashtag_ids' => $filter['hashtag_ids'] ?? null,
         ]);
     }
 
@@ -59,11 +64,11 @@ trait HandlesSorting
     {
         return function ($query, $direction) use ($modelClass, $selectColumn, $joins, $whereColumn, $parentColumn) {
             $subQuery = $modelClass::select($selectColumn);
-            
+
             foreach ($joins as $join) {
                 $subQuery->join($join[0], $join[1], $join[2], $join[3]);
             }
-            
+
             $query->orderBy(
                 $subQuery->whereColumn($whereColumn, $parentColumn)->limit(1),
                 $direction

@@ -17,6 +17,7 @@ import helpers from './helpers';
 import permissions from './permissions';
 import Vue3Shortkey from 'vue3-shortkey';
 import PermissionPlugin from './Plugins/PermissionPlugin';
+import BranchRoutePlugin from './Plugins/BranchRoutePlugin';
 import ImageUploadVue from 'image-upload-vue'
 import Particles from "@tsparticles/vue3";
 import { loadFull } from "tsparticles";
@@ -29,7 +30,10 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 
 const app = createApp({});
 
+const appName = import.meta.env.VITE_APP_NAME || 'KurdGenius';
+
 const { el, App, props, plugin } = createInertiaApp({
+  title: (title) => `${title ? title + ' - ' : ''}${appName}`,
   resolve: name => {
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
     const page = pages[`./Pages/${name}.vue`];
@@ -68,12 +72,11 @@ const { el, App, props, plugin } = createInertiaApp({
       })
       .use(MotionPlugin)
       .use(PermissionPlugin)
-      .mount(el);
+      .use(BranchRoutePlugin);
 
-    // app.config.globalProperties.helpers = helpers;
+    // Make helpers available globally
+    app.config.globalProperties.$helpers = helpers;
 
-    // app.mount(el);
+    app.mount(el);
   },
 });
-
-app.mount(el);

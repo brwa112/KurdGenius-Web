@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::redirect('/', '/control');
 
+// Default routes (will use first branch or session branch)
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 Route::get('/admission', [AdmissionController::class, 'index'])->name('admission.index');

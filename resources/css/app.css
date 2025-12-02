@@ -67,6 +67,7 @@ label.required:after {
 :root {
     --font-scale: 1;
     --font-weight: 400;
+    --color-f-primary: #0028DF; /* Default branch color */
 }
 
 /* Font scale variations */
@@ -223,4 +224,7 @@ table td {
 }
 .v-popper__arrow-inner {
      @apply border-gray-200 dark:!border-gray-800 text-gray-800 dark:!text-gray-500;
+}
+.v-popper--theme-dropdown .v-popper__arrow-outer {
+    @apply !border-b-gray-200 dark:!border-b-[#1b2e4b] !border-t-transparent !border-x-transparent dark:!border-t-transparent dark:!border-x-transparent;
 }

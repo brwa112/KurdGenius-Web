@@ -165,16 +165,17 @@ export default {
                 field: col.field,
                 hide: col.hide
             }
-        })))
-
+        })));
     },
     getDatatableColumnVisibility(col) {
         const page_key = this.slugify(route().current());
         const columns = JSON.parse(localStorage.getItem(`${page_key}_columns`));
-        if (columns) {
-            const column = columns.find(column => column.field == col.field);
-            if (column) {
-                col.hide = column.hide;
+        if (typeof col.hide === 'undefined') {
+            if (columns) {
+                const column = columns.find(column => column.field == col.field);
+                if (column) {
+                    col.hide = column.hide;
+                }
             }
         }
 
@@ -183,6 +184,39 @@ export default {
     truncateText(text, length = 30) {
         text = text || '';
         return text.length > length ? text.substring(0, length) + '...' : text;
+    },
+    /**
+     * Strip HTML tags and return a truncated excerpt
+     * @param {String|Object} html
+     * @param {Number} length
+     */
+    excerpt(html, length = 75) {
+        if (!html) return '';
+        // If a translation object is passed accidentally, try to get english text
+        if (typeof html === 'object') {
+            html = this.getTranslation(html);
+        }
+        const stripped = String(html).replace(/<[^>]*>?/gm, '');
+        return stripped.length > length ? stripped.slice(0, length) + '...' : stripped;
+    },
+    /**
+     * Limit text to a specific number of words
+     * @param {String|Object} text
+     * @param {Number} wordLimit
+     */
+    limitWords(text, wordLimit = 100) {
+        if (!text) return '';
+        // If a translation object is passed, try to get the text
+        if (typeof text === 'object') {
+            text = this.getTranslation(text);
+        }
+        // Strip HTML tags
+        const stripped = String(text).replace(/<[^>]*>?/gm, '');
+        const words = stripped.split(/\s+/);
+        if (words.length > wordLimit) {
+            return words.slice(0, wordLimit).join(' ') + '...';
+        }
+        return stripped;
     },
     log(...args) {
         console.log(...args);
@@ -218,6 +252,101 @@ export default {
         const exampleType = data?.[0]?.id;
         const id = typeof exampleType === 'number' ? Number(rawId) : String(rawId);
         return data.find(opt => opt.id === id) || null;
+    },
+
+    /**
+     * Get translated value from multilingual object
+     * Useful for Spatie Translatable models that return: {"en": "...", "ckb": "...", "ar": "..."}
+     * 
+     * @param {Object|String} obj - Translation object or plain string
+     * @param {String} locale - Specific locale to use (optional, defaults to browser/page locale)
+     * @returns {String} Translated text with fallback chain: requested locale → 'en' → first available
+     * 
+     * @example
+     * getTranslation({en: 'Hello', ckb: 'سڵاو', ar: 'مرحبا'}, 'ckb') // Returns: 'سڵاو'
+     * getTranslation('Plain text') // Returns: 'Plain text'
+     * getTranslation(null) // Returns: ''
+     */
+    getTranslation(obj, locale = null) {
+        // Handle null/undefined
+        if (!obj) return '';
+
+        // If already a string, return as is
+        if (typeof obj === 'string') return obj;
+
+        // Determine which locale to use
+        const targetLocale = locale || document.documentElement.lang || 'en';
+
+        // Return translation with fallback chain
+        return obj[targetLocale] || obj['en'] || obj[Object.keys(obj)[0]] || '';
+    },
+
+    /**
+     * Generate branch-aware URL for frontend routes
+     * Automatically prepends the selected branch slug to paths when available
+     * 
+     * @param {String} path - The path to navigate to (e.g., '/about', '/news')
+     * @param {String|null} branchSlug - Optional branch slug override (defaults to current branch from page props)
+     * @returns {String} Full path with branch prefix if applicable
+     * 
+     * @example
+     * branchRoute('/about') // Returns: '/kurd-genius/about' (if kurd-genius is selected)
+     * branchRoute('/') // Returns: '/kurd-genius' (if kurd-genius is selected)
+     * branchRoute('/news', 'smart-education') // Returns: '/smart-education/news'
+     */
+    branchRoute(path, branchSlug = null) {
+        // Try to get branch prefix from page props (Inertia)
+        const branchPrefix = branchSlug ||
+            (typeof window !== 'undefined' && window.$page?.props?.branchPrefix) || '';
+
+        if (!branchPrefix) return path;
+
+        // Handle root path
+        if (path === '/' || path === '') {
+            return `/${branchPrefix}`;
+        }
+
+        // Ensure path starts with /
+        const cleanPath = path.startsWith('/') ? path : `/${path}`;
+        return `/${branchPrefix}${cleanPath}`;
+    },
+
+        // Convert reactive/Proxy translation objects into plain objects
+    toPlain(value) {
+        return Object.assign({}, value || {});
+    },
+
+    // Parse translation fields that may be stored as JSON strings or plain objects
+    parseTranslation(value) {
+        if (!value) return { en: '', ckb: '' };
+        if (typeof value === 'object') return value;
+        if (typeof value === 'string') {
+            try {
+                return JSON.parse(value);
+            } catch (e) {
+                return { en: value, ckb: '' };
+            }
+        }
+        return { en: '', ckb: '' };
+    },
+
+    // Get translated text based on current language
+    getTranslatedText(translations, page = null) {
+        if (!translations) return '';
+        if (typeof translations === 'string') return translations;
+        
+        // Try to get current language from multiple sources
+        const currentLang = page?.props?.locale || 
+                          page?.props?.lang || 
+                          (typeof window !== 'undefined' && document.documentElement.lang) || 
+                          'en';
+        
+        return translations[currentLang] || 
+               translations.en || 
+               translations.ckb || 
+               translations.ar || 
+               Object.values(translations)[0] || 
+               '';
     }
 
 }
