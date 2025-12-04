@@ -16,7 +16,7 @@
       <div v-if="activities && activities.length > 0"
         class="relative z-[5] grid grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-4 sm:w-11/12 mx-auto">
         <div v-for="(activity, index) in activities" :key="index" :class="getRingColor(index)"
-          class="bg-gray-50 ring-2 border-2 border-transparent duration-500 rounded-3xl text-center p-1 lg:p-3 h-36 flex items-center justify-center w-full hover:border-current">
+          class="bg-gray-50 ring-2 border-2 border-transparent duration-500 rounded-3xl text-center p-1 lg:p-3 h-36 flex items-center justify-center w-full">
           <span class="text-sm sm:text-base lg:text-xl font-medium">
             {{ activity }}
           </span>
@@ -66,10 +66,10 @@ const activities = computed(() => {
 
 const getRingColor = (index) => {
   const colors = [
-    'ring-[#0028DF]',
-    'ring-[#FED176]',
-    'ring-[#3DA8A5]',
-    'ring-[#FF966D]'
+    'ring-[#0028DF] hover:border-[#0028DF]',
+    'ring-[#FED176] hover:border-[#FED176]',
+    'ring-[#3DA8A5] hover:border-[#3DA8A5]',
+    'ring-[#FF966D] hover:border-[#FF966D]',
   ];
   return colors[index % colors.length];
 };
