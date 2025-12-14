@@ -12,26 +12,305 @@
         </ul>
 
         <div class="pt-5">
-            <div class="panel h-full">
-                <h1 class="b-text-xl">
-                    {{ $t('dashboard.welcome') }} - <span class="font-semibold">{{ $page.props.auth.user.name }}</span>
+            <!-- Welcome Panel -->
+            <div class="panel mb-5">
+                <h1 class="text-xl font-bold">
+                    {{ $t('dashboard.welcome') }} - <span class="font-semibold text-primary">{{
+                        $page.props.auth.user.name }}</span>
                 </h1>
+                <!-- <p class="text-white-dark mt-2">{{ $t('dashboard.overview') || 'Here\'s an overview of your system' }}</p> -->
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <!-- Total Users -->
+                <div class="panel bg-gradient-to-r from-cyan-500 to-cyan-400 text-white">
+                    <div class="flex justify-between">
+                        <div class="ltr:mr-1 rtl:ml-1 text-md font-semibold">
+                            {{ $t('dashboard.total_users') || 'Total Users' }}
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="text-3xl font-bold ltr:mr-3 rtl:ml-3">{{ stats.users.total }}</div>
+                    </div>
+                    <div class="flex items-center font-semibold mt-2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="ltr:mr-2 rtl:ml-2">
+                            <path opacity="0.5"
+                                d="M3.27489 15.2957C2.42496 14.1915 2 13.6394 2 12C2 10.3606 2.42496 9.80853 3.27489 8.70433C4.97196 6.49956 7.81811 4 12 4C16.1819 4 19.028 6.49956 20.7251 8.70433C21.575 9.80853 22 10.3606 22 12C22 13.6394 21.575 14.1915 20.7251 15.2957C19.028 17.5004 16.1819 20 12 20C7.81811 20 4.97196 17.5004 3.27489 15.2957Z"
+                                stroke="currentColor" stroke-width="1.5" />
+                            <path
+                                d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
+                                stroke="currentColor" stroke-width="1.5" />
+                        </svg>
+                        {{ stats.users.active }} {{ $t('dashboard.active') || 'Active' }}
+                    </div>
+                </div>
+
+                <!-- Total News -->
+                <div class="panel bg-gradient-to-r from-violet-500 to-violet-400 text-white">
+                    <div class="flex justify-between">
+                        <div class="ltr:mr-1 rtl:ml-1 text-md font-semibold">
+                            {{ $t('dashboard.total_news') || 'Total News' }}
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="text-3xl font-bold ltr:mr-3 rtl:ml-3">{{ stats.news.total }}</div>
+                    </div>
+                    <div class="flex items-center font-semibold mt-2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="ltr:mr-2 rtl:ml-2">
+                            <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M15.9998 12L15.9998 8" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M15.9998 16H16.0088" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        {{ stats.news.published }} {{ $t('dashboard.published') || 'Published' }}
+                    </div>
+                </div>
+
+                <!-- Total Visitors -->
+                <div class="panel bg-gradient-to-r from-blue-500 to-blue-400 text-white">
+                    <div class="flex justify-between">
+                        <div class="ltr:mr-1 rtl:ml-1 text-md font-semibold">
+                            {{ $t('dashboard.total_visitors') || 'Visitors (30d)' }}
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="text-3xl font-bold ltr:mr-3 rtl:ml-3">{{ stats.visitors.total }}</div>
+                    </div>
+                    <div class="flex items-center font-semibold mt-2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="ltr:mr-2 rtl:ml-2">
+                            <path d="M16 2V5M8 2V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M3.5 9.08984H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        {{ stats.visitors.unique }} {{ $t('dashboard.unique') || 'Unique' }}
+                    </div>
+                </div>
+
+                <!-- Total Branches -->
+                <div class="panel bg-gradient-to-r from-fuchsia-500 to-fuchsia-400 text-white">
+                    <div class="flex justify-between">
+                        <div class="ltr:mr-1 rtl:ml-1 text-md font-semibold">
+                            {{ $t('dashboard.content') || 'Content' }}
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="text-3xl font-bold ltr:mr-3 rtl:ml-3">{{ stats.branches }}</div>
+                        <div class="text-sm ltr:ml-auto rtl:mr-auto">{{ $t('dashboard.branches') || 'Branches' }}</div>
+                    </div>
+                    <div class="flex items-center font-semibold mt-2 justify-between">
+                        <span>{{ stats.galleries }} {{ $t('dashboard.galleries') || 'Galleries' }}</span>
+                        <span>{{ stats.campuses }} {{ $t('dashboard.campuses') || 'Campuses' }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Recent Activities -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <!-- Monthly Activity Chart -->
+                <div class="panel h-full">
+                    <div class="flex items-center justify-between mb-5">
+                        <h5 class="font-semibold text-lg dark:text-white-light">{{ $t('dashboard.monthly_activity') ||
+                            'Monthly Activity' }}</h5>
+                    </div>
+                    <div class="relative">
+                        <apexchart type="area" height="325" :options="monthlyChart" :series="monthlySeries"></apexchart>
+                    </div>
+                </div>
+
+                <!-- Visitors by Device -->
+                <div class="panel h-full">
+                    <div class="flex items-center justify-between mb-5">
+                        <h5 class="font-semibold text-lg dark:text-white-light">{{ $t('dashboard.visitors_device') ||
+                            'Visitors by Device' }}</h5>
+                    </div>
+                    <div class="relative">
+                        <apexchart type="donut" height="325" :options="deviceChart" :series="deviceSeries"></apexchart>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Data Tables -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <!-- Recent News -->
+                <div class="panel">
+                    <div class="flex items-center justify-between mb-5">
+                        <h5 class="font-semibold text-lg dark:text-white-light">{{ $t('dashboard.recent_news') ||
+                            'Recent News' }}</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{{ $t('dashboard.title') || 'Title' }}</th>
+                                    <th>{{ $t('dashboard.views') || 'Views' }}</th>
+                                    <th>{{ $t('dashboard.status') || 'Status' }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="news in recentNews" :key="news.id">
+                                    <td>
+                                        <div class="whitespace-nowrap">{{ news.title }}</div>
+                                        <div class="text-xs text-white-dark">{{ news.created_at }}</div>
+                                    </td>
+                                    <td>{{ news.views }}</td>
+                                    <td>
+                                        <span class="badge"
+                                            :class="news.is_active ? 'badge-outline-success' : 'badge-outline-danger'">
+                                            {{ news.is_active ? ($t('dashboard.active') || 'Active') :
+                                                ($t('dashboard.inactive') || 'Inactive') }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr v-if="recentNews.length === 0">
+                                    <td colspan="3" class="text-center">
+                                        {{ $t('dashboard.no_data') || 'No data available' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Users -->
+                <div class="panel">
+                    <div class="flex items-center justify-between mb-5">
+                        <h5 class="font-semibold text-lg dark:text-white-light">
+                            {{ $t('dashboard.recent_users') || 'Recent Users' }}
+                        </h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{{ $t('dashboard.name') || 'Name' }}</th>
+                                    <th>{{ $t('dashboard.email') || 'Email' }}</th>
+                                    <th>{{ $t('dashboard.status') || 'Status' }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="user in recentUsers" :key="user.id">
+                                    <td>
+                                        <div class="whitespace-nowrap">{{ user.name }}</div>
+                                        <div class="text-xs text-white-dark">{{ user.created_at }}</div>
+                                    </td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        <span class="badge"
+                                            :class="user.is_active ? 'badge-outline-success' : 'badge-outline-danger'">
+                                            {{ user.is_active ? ($t('dashboard.active') || 'Active') :
+                                                ($t('dashboard.inactive') || 'Inactive') }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr v-if="recentUsers.length === 0">
+                                    <td colspan="3" class="text-center">
+                                        {{ $t('dashboard.no_data') || 'No data available' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Popular News -->
+                <div class="panel">
+                    <div class="flex items-center justify-between mb-5">
+                        <h5 class="font-semibold text-lg dark:text-white-light">{{ $t('dashboard.popular_news') ||
+                            'Popular News' }}</h5>
+                    </div>
+                    <div class="space-y-4">
+                        <div v-for="news in popularNews" :key="news.id"
+                            class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="flex-1 truncate">{{ news.title }}</div>
+                            <div class="flex items-center ltr:ml-4 rtl:mr-4">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" class="ltr:mr-1 rtl:ml-1">
+                                    <path opacity="0.5"
+                                        d="M3.27489 15.2957C2.42496 14.1915 2 13.6394 2 12C2 10.3606 2.42496 9.80853 3.27489 8.70433C4.97196 6.49956 7.81811 4 12 4C16.1819 4 19.028 6.49956 20.7251 8.70433C21.575 9.80853 22 10.3606 22 12C22 13.6394 21.575 14.1915 20.7251 15.2957C19.028 17.5004 16.1819 20 12 20C7.81811 20 4.97196 17.5004 3.27489 15.2957Z"
+                                        stroke="currentColor" stroke-width="1.5" />
+                                    <path
+                                        d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
+                                        stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                                <span class="font-semibold text-sm">{{ news.views }}</span>
+                            </div>
+                        </div>
+                        <div v-if="popularNews.length === 0" class="text-center text-white-dark py-4">
+                            {{ $t('dashboard.no_data') || 'No data available' }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular Galleries -->
+                <div class="panel">
+                    <div class="flex items-center justify-between mb-5">
+                        <h5 class="font-semibold text-lg dark:text-white-light">
+                            {{ $t('dashboard.popular_galleries') || 'Popular Galleries' }}
+                        </h5>
+                    </div>
+                    <div class="space-y-4">
+                        <div v-for="gallery in popularGalleries" :key="gallery.id"
+                            class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="flex-1 truncate">{{ gallery.title }}</div>
+                            <div class="flex items-center ltr:ml-4 rtl:mr-4">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" class="ltr:mr-1 rtl:ml-1">
+                                    <path opacity="0.5"
+                                        d="M3.27489 15.2957C2.42496 14.1915 2 13.6394 2 12C2 10.3606 2.42496 9.80853 3.27489 8.70433C4.97196 6.49956 7.81811 4 12 4C16.1819 4 19.028 6.49956 20.7251 8.70433C21.575 9.80853 22 10.3606 22 12C22 13.6394 21.575 14.1915 20.7251 15.2957C19.028 17.5004 16.1819 20 12 20C7.81811 20 4.97196 17.5004 3.27489 15.2957Z"
+                                        stroke="currentColor" stroke-width="1.5" />
+                                    <path
+                                        d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
+                                        stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                                <span class="font-semibold text-sm">{{ gallery.views }}</span>
+                            </div>
+                        </div>
+                        <div v-if="popularGalleries.length === 0" class="text-center text-white-dark py-4">
+                            {{ $t('dashboard.no_data') || 'No data available' }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { ref, reactive, computed, inject } from 'vue';
+import { ref, computed, inject } from 'vue';
 import apexchart from 'vue3-apexcharts';
-import { Link, Head } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
+
+const props = defineProps({
+    stats: Object,
+    visitorsByDevice: Array,
+    recentNews: Array,
+    recentUsers: Array,
+    popularNews: Array,
+    popularGalleries: Array,
+    monthlyData: Array,
+});
 
 const theme = inject('theme');
 const rtlClass = inject('rtlClass');
 
-// revenue chart
-const revenueChart = computed(() => {
-    const isDark = theme === 'dark' ? true : false;
-    const isRtl = rtlClass === 'rtl' ? true : false;
+// Monthly Activity Chart
+const monthlyChart = computed(() => {
+    const isDark = theme.value === 'dark';
+    const isRtl = rtlClass.value === 'rtl';
     return {
         chart: {
             height: 325,
@@ -53,33 +332,8 @@ const revenueChart = computed(() => {
             width: 2,
             lineCap: 'square',
         },
-        dropShadow: {
-            enabled: true,
-            opacity: 0.2,
-            blur: 10,
-            left: -7,
-            top: 22,
-        },
-        colors: isDark ? ['#2196f3', '#e7515a'] : ['#1b55e2', '#e7515a'],
-        markers: {
-            discrete: [
-                {
-                    seriesIndex: 0,
-                    dataPointIndex: 6,
-                    fillColor: '#1b55e2',
-                    strokeColor: 'transparent',
-                    size: 7,
-                },
-                {
-                    seriesIndex: 1,
-                    dataPointIndex: 5,
-                    fillColor: '#e7515a',
-                    strokeColor: 'transparent',
-                    size: 7,
-                },
-            ],
-        },
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        colors: isDark ? ['#2196f3', '#e7515a', '#00ab55'] : ['#1b55e2', '#e7515a', '#00ab55'],
+        labels: props.monthlyData.map(item => item.month),
         xaxis: {
             axisBorder: {
                 show: false,
@@ -87,32 +341,24 @@ const revenueChart = computed(() => {
             axisTicks: {
                 show: false,
             },
-            crosshairs: {
-                show: true,
-            },
             labels: {
                 offsetX: isRtl ? 2 : 0,
                 offsetY: 5,
                 style: {
                     fontSize: '12px',
-                    cssClass: 'apexcharts-xaxis-title',
                 },
             },
         },
         yaxis: {
-            tickAmount: 7,
+            tickAmount: 5,
             labels: {
-                formatter: (value) => {
-                    return value / 1000 + 'K';
-                },
                 offsetX: isRtl ? -30 : -10,
                 offsetY: 0,
                 style: {
                     fontSize: '12px',
-                    cssClass: 'apexcharts-yaxis-title',
                 },
             },
-            opposite: isRtl ? true : false,
+            opposite: isRtl,
         },
         grid: {
             borderColor: isDark ? '#191e3a' : '#e0e6ed',
@@ -127,40 +373,26 @@ const revenueChart = computed(() => {
                     show: false,
                 },
             },
-            padding: {
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-            },
         },
         legend: {
             position: 'top',
             horizontalAlign: 'right',
-            fontSize: '16px',
+            fontSize: '14px',
             markers: {
                 width: 10,
                 height: 10,
-                offsetX: -2,
-            },
-            itemMargin: {
-                horizontal: 10,
-                vertical: 5,
             },
         },
         tooltip: {
             marker: {
                 show: true,
             },
-            x: {
-                show: false,
-            },
         },
         fill: {
             type: 'gradient',
             gradient: {
                 shadeIntensity: 1,
-                inverseColors: !1,
+                inverseColors: false,
                 opacityFrom: isDark ? 0.19 : 0.28,
                 opacityTo: 0.05,
                 stops: isDark ? [100, 100] : [45, 100],
@@ -169,24 +401,28 @@ const revenueChart = computed(() => {
     };
 });
 
-const revenueSeries = ref([
+const monthlySeries = computed(() => [
     {
-        name: 'Income',
-        data: [16800, 16800, 15500, 17800, 15500, 17000, 19000, 16000, 15000, 17000, 14000, 17000],
+        name: 'News',
+        data: props.monthlyData.map(item => item.news),
     },
     {
-        name: 'Expenses',
-        data: [16500, 17500, 16200, 17300, 16000, 19500, 16000, 17000, 16000, 19000, 18000, 19000],
+        name: 'Users',
+        data: props.monthlyData.map(item => item.users),
+    },
+    {
+        name: 'Visitors',
+        data: props.monthlyData.map(item => item.visitors),
     },
 ]);
 
-// sales by category
-const salesByCategory = computed(() => {
-    const isDark = theme.value == 'dark' ? true : false;
+// Device Chart
+const deviceChart = computed(() => {
+    const isDark = theme.value === 'dark';
     return {
         chart: {
             type: 'donut',
-            height: 460,
+            height: 325,
             fontFamily: 'Nunito, sans-serif',
         },
         dataLabels: {
@@ -197,7 +433,7 @@ const salesByCategory = computed(() => {
             width: 20,
             colors: isDark ? '#0e1726' : '#fff',
         },
-        colors: isDark ? ['#5c1ac3', '#e2a03f', '#e7515a', '#e2a03f'] : ['#e2a03f', '#5c1ac3', '#e7515a'],
+        colors: isDark ? ['#5c1ac3', '#e2a03f', '#e7515a', '#00ab55'] : ['#e2a03f', '#5c1ac3', '#e7515a', '#00ab55'],
         legend: {
             position: 'bottom',
             horizontalAlign: 'center',
@@ -205,7 +441,6 @@ const salesByCategory = computed(() => {
             markers: {
                 width: 10,
                 height: 10,
-                offsetX: -2,
             },
             height: 50,
             offsetY: 20,
@@ -219,12 +454,12 @@ const salesByCategory = computed(() => {
                         show: true,
                         name: {
                             show: true,
-                            fontSize: '29px',
+                            fontSize: '20px',
                             offsetY: -10,
                         },
                         value: {
                             show: true,
-                            fontSize: '26px',
+                            fontSize: '22px',
                             color: isDark ? '#bfc9d4' : undefined,
                             offsetY: 16,
                             formatter: (val) => {
@@ -235,174 +470,18 @@ const salesByCategory = computed(() => {
                             show: true,
                             label: 'Total',
                             color: '#888ea8',
-                            fontSize: '29px',
+                            fontSize: '20px',
                             formatter: (w) => {
-                                return w.globals.seriesTotals.reduce(function (a, b) {
-                                    return a + b;
-                                }, 0);
+                                return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
                             },
                         },
                     },
                 },
             },
         },
-        labels: ['Apparel', 'Sports', 'Others'],
-        states: {
-            hover: {
-                filter: {
-                    type: 'none',
-                    value: 0.15,
-                },
-            },
-            active: {
-                filter: {
-                    type: 'none',
-                    value: 0.15,
-                },
-            },
-        },
+        labels: props.visitorsByDevice.map(item => item.device_type || 'Unknown'),
     };
 });
 
-const salesByCategorySeries = ref([985, 737, 270]);
-
-// daily sales
-const dailySales = computed(() => {
-    const isDark = theme === 'dark' ? true : false;
-    return {
-        chart: {
-            height: 160,
-            type: 'bar',
-            fontFamily: 'Nunito, sans-serif',
-            toolbar: {
-                show: false,
-            },
-            stacked: true,
-            stackType: '100%',
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        stroke: {
-            show: true,
-            width: 1,
-        },
-        colors: ['#e2a03f', '#e0e6ed'],
-        responsive: [
-            {
-                breakpoint: 480,
-                options: {
-                    legend: {
-                        position: 'bottom',
-                        offsetX: -10,
-                        offsetY: 0,
-                    },
-                },
-            },
-        ],
-        xaxis: {
-            labels: {
-                show: false,
-            },
-            categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'],
-        },
-        yaxis: {
-            show: false,
-        },
-        fill: {
-            opacity: 1,
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '25%',
-            },
-        },
-        legend: {
-            show: false,
-        },
-        grid: {
-            show: false,
-            xaxis: {
-                lines: {
-                    show: false,
-                },
-            },
-            padding: {
-                top: 10,
-                right: -20,
-                bottom: -20,
-                left: -20,
-            },
-        },
-    };
-});
-
-const dailySalesSeries = ref([
-    {
-        name: 'Sales',
-        data: [44, 55, 41, 67, 22, 43, 21],
-    },
-    {
-        name: 'Last Week',
-        data: [13, 23, 20, 8, 13, 27, 33],
-    },
-]);
-
-// total orders
-const totalOrders = computed(() => {
-    const isDark = theme === 'dark' ? true : false;
-    return {
-        chart: {
-            height: 290,
-            type: 'area',
-            fontFamily: 'Nunito, sans-serif',
-            sparkline: {
-                enabled: true,
-            },
-        },
-        stroke: {
-            curve: 'smooth',
-            width: 2,
-        },
-        colors: isDark ? ['#00ab55'] : ['#00ab55'],
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-        yaxis: {
-            min: 0,
-            show: false,
-        },
-        grid: {
-            padding: {
-                top: 125,
-                right: 0,
-                bottom: 0,
-                left: 0,
-            },
-        },
-        fill: {
-            opacity: 1,
-            type: 'gradient',
-            gradient: {
-                type: 'vertical',
-                shadeIntensity: 1,
-                inverseColors: !1,
-                opacityFrom: 0.3,
-                opacityTo: 0.05,
-                stops: [100, 100],
-            },
-        },
-        tooltip: {
-            x: {
-                show: false,
-            },
-        },
-    };
-});
-
-const totalOrdersSeries = ref([
-    {
-        name: 'Sales',
-        data: [28, 40, 36, 52, 38, 60, 38, 52, 36, 40],
-    },
-]);
+const deviceSeries = computed(() => props.visitorsByDevice.map(item => item.count));
 </script>

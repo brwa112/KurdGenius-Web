@@ -34,9 +34,7 @@ use App\Http\Controllers\Analytics\VisitorController;
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     // profile route
     Route::get('/profile', [ProfileController::class, 'Index'])->name('profile');
