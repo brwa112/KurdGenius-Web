@@ -204,6 +204,8 @@ const props = defineProps({
     }
 });
 
+console.log('Datatable props:', props.rows);
+
 const datatable = ref(null);
 const selection = ref([]);
 const buttonRef = ref(null);

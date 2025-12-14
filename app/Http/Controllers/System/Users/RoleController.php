@@ -64,13 +64,19 @@ class RoleController extends Controller
 
         $role = Role::create(['name' => strtolower($request->name)]);
 
-        $role->syncPermissions(collect($request->permissions ?? [])->pluck('id'));
+        // Use permission names directly (consistent with update method)
+        $role->syncPermissions($request->permissions ?? []);
 
-        // Assign the permissions to the user if the any user has the role
+        // Force refresh the relationship cache
+        $role->load('permissions');
+
+        // Assign the permissions to users who have this role
         $users = $role->users;
         if ($users->isNotEmpty()) {
             foreach ($users as $user) {
-                $user->syncPermissions(collect($request->permissions ?? [])->pluck('id'));
+                // Get all permissions from all roles the user has
+                $allUserPermissions = $user->getAllPermissionsViaRoles()->pluck('name')->toArray();
+                $user->syncPermissions($allUserPermissions);
             }
         }
 
@@ -144,4 +150,3 @@ class RoleController extends Controller
         ]);
     }
 }
-

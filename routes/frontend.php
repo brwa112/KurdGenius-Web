@@ -10,7 +10,7 @@ use App\Http\Controllers\Pages\Frontend\NewsController;
 use Illuminate\Support\Facades\Route;
 
 // Branch-specific routes (e.g., /kurd-genius/news)
-Route::prefix('{branch_slug}')->group(function () {
+Route::middleware('track.visitors')->prefix('{branch_slug}')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('branch.home.index');
     Route::get('/about', [AboutController::class, 'index'])->name('branch.about.index');
     Route::get('/admission', [AdmissionController::class, 'index'])->name('branch.admission.index');

@@ -26,6 +26,7 @@ use App\Http\Controllers\System\Settings\Settings\ThemeController;
 use App\Http\Controllers\System\Settings\Settings\ImportExportController;
 use App\Http\Controllers\System\Settings\Settings\SyncTranslationController;
 use App\Http\Controllers\System\Settings\Settings\GroupPermissionController;
+use App\Http\Controllers\Analytics\VisitorController;
 
 // if (app()->isProduction()) {
 //     URL::forceScheme('https');
@@ -39,6 +40,13 @@ Route::middleware('auth')->group(function () {
 
     // profile route
     Route::get('/profile', [ProfileController::class, 'Index'])->name('profile');
+
+    // Visitor Analytics
+    Route::prefix('visitors')->as('visitors.')->group(function () {
+        Route::get('/', [VisitorController::class, 'index'])->name('index');
+        Route::delete('/{visitor}', [VisitorController::class, 'destroy'])->name('destroy');
+        Route::delete('/', [VisitorController::class, 'destroyAll'])->name('destroy_all');
+    });
 
     Route::prefix('pages')->as('pages.')->group(function () {
 
@@ -150,6 +158,14 @@ Route::middleware('auth')->group(function () {
                 Route::resource('/group-permission', GroupPermissionController::class)->only(['index', 'store', 'update', 'destroy'])->names('group_permissions');
                 // user types removed: route disabled
                 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+
+                // Visitor Analytics
+                Route::prefix('visitors')->as('visitors.')->group(function () {
+                    Route::get('/', [VisitorController::class, 'index'])->name('index');
+                    Route::delete('/{visitor}', [VisitorController::class, 'destroy'])->name('destroy');
+                    Route::delete('/', [VisitorController::class, 'destroyAll'])->name('destroy_all');
+                });
+
                 Route::resource('translations', TranslationsController::class)->only(['index', 'store', 'update', 'destroy'])->names('translations');
                 Route::resource('keys', KeyLanguageController::class)->only(['index', 'store', 'update', 'destroy'])->names('keys');
                 Route::resource('languages', LanguageController::class)->only(['index', 'store', 'update', 'destroy'])->names('languages');

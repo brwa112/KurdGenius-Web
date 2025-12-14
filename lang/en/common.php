@@ -157,10 +157,10 @@ return [
     'edit_global' => 'Edit Global',
     'delete_own' => 'Delete Own',
     'delete_global' => 'Delete Global',
-    'logged_in'=>'Logged In',
-    'logged_out'=>'Logged Out',
-    'restore_record_confirmation'=>'You are about to restore this record.',
-    'trashed'=>'Trashed',
+    'logged_in' => 'Logged In',
+    'logged_out' => 'Logged Out',
+    'restore_record_confirmation' => 'You are about to restore this record.',
+    'trashed' => 'Trashed',
 
     'event' => 'Event',
     'model' => 'Model',
@@ -170,4 +170,6 @@ return [
     'processing' => 'Processing',
 
     'cannot_delete_record' => 'Cannot delete record because it has related data.',
+
+    'guest' => 'Guest',
 ];

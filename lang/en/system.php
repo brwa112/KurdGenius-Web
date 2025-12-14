@@ -331,4 +331,22 @@ return [
     'uploading' => 'Uploading...',
     'max_size' => 'Max Size',
 
+    'visitors' => 'Visitor Analytics',
+    'total_visitors' => 'Total Visitors',
+    'unique_visitors' => 'Unique Visitors',
+    'today_visitors' => 'Today\'s Visitors',
+    'month_visitors' => 'This Month',
+    'browser_stats' => 'Browser Statistics',
+    'platform_stats' => 'Platform Statistics',
+    'device_stats' => 'Device Statistics',
+    'top_pages' => 'Top Visited Pages',
+    'ip_address' => 'IP Address',
+    'browser' => 'Browser',
+    'platform' => 'Platform',
+    'device_type' => 'Device Type',
+    'url' => 'URL',
+    'delete_all_visitors' => 'Delete All',
+    'confirm_delete_all_visitors' => 'Are you sure you want to delete all visitor records? This action cannot be undone!',
+    'select_date_range' => 'Select Date Range',
+
 ];

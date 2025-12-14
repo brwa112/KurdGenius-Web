@@ -16,7 +16,7 @@
                             <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
                                 <Link :href="route('control.system.users.index')"
                                     class="duration-200 hover:text-primary">
-                                {{ $t('system.users') }}
+                                    {{ $t('system.users') }}
                                 </Link>
                             </li>
                             <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
@@ -219,28 +219,30 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div v-for="(role, i) in roles" :key="i" class="flex flex-col gap-2 -my-1 py-1.5 pt-2">
-                                <div v-if="canViewRole(role)"
-                                    class="flex items-center justify-between w-full py-2.5 px-3.5 cursor-pointer rounded-md border border-gray-200 dark:border-gray-800 overflow-hidden">
-                                    <div :for="`role_${role.id}`" class="flex flex-col cursor-pointer">
-                                        <span class="flex flex-col">
-                                            <span class="capitalize">{{ role.name }}</span>
-                                        </span>
-                                        <p class="b-text-xs text-gray-500 dark:text-gray-400">
-                                            {{ role.permissions?.length || 0 }} {{ $t('system.permissions') }}
-                                        </p>
+                            <template v-for="(role, i) in roles" :key="i">
+                                <div v-if="canViewRole(role)" class="flex flex-col gap-2 -my-1 py-1.5 pt-2">
+                                    <div
+                                        class="flex items-center justify-between w-full py-2.5 px-3.5 cursor-pointer rounded-md border border-gray-200 dark:border-gray-800 overflow-hidden">
+                                        <div :for="`role_${role.id}`" class="flex flex-col cursor-pointer">
+                                            <span class="flex flex-col">
+                                                <span class="capitalize">{{ role.name }}</span>
+                                            </span>
+                                            <p class="b-text-xs text-gray-500 dark:text-gray-400">
+                                                {{ role.permissions?.length || 0 }} {{ $t('system.permissions') }}
+                                            </p>
+                                        </div>
+                                        <label class="w-12 h-6 relative m-0">
+                                            <input @change="toggleRole($event.target.checked, role, roles)"
+                                                :checked="form.roles?.filter(x => x.name == role.name)?.length"
+                                                type="checkbox"
+                                                class="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer"
+                                                :id="`role_${role.id}`" />
+                                            <label :for="`role_${role.id}`"
+                                                class="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></label>
+                                        </label>
                                     </div>
-                                    <label class="w-12 h-6 relative m-0">
-                                        <input @change="toggleRole($event.target.checked, role, roles)"
-                                            :checked="form.roles?.filter(x => x.name == role.name)?.length"
-                                            type="checkbox"
-                                            class="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer"
-                                            :id="`role_${role.id}`" />
-                                        <label :for="`role_${role.id}`"
-                                            class="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></label>
-                                    </label>
                                 </div>
-                            </div>
+                            </template>
                         </div>
 
                     </div>
@@ -324,7 +326,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <Link :href="route('control.system.users.index')" class="btn btn-sm btn-outline-secondary">
-                        {{ $t('common.back') }}
+                            {{ $t('common.back') }}
                         </Link>
                         <button :disabled="form.processing" class="btn btn-sm btn-primary min-w-[120px]">
                             <Spinner v-if="form.processing" />

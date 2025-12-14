@@ -295,4 +295,22 @@ return [
 
     'uploading' => 'بارکردن...',
     'max_size' => 'زۆرترین قەبارە',
+
+    'visitors' => 'شیکاری سەردانکەران',
+    'total_visitors' => 'کۆی گشتی سەردانکەران',
+    'unique_visitors' => 'سەردانکەرانی تایبەت',
+    'today_visitors' => 'سەردانکەرانی ئەمڕۆ',
+    'month_visitors' => 'ئەم مانگە',
+    'browser_stats' => 'ئاماری وێبگەڕ',
+    'platform_stats' => 'ئاماری سیستەم',
+    'device_stats' => 'ئاماری ئامێر',
+    'top_pages' => 'پەڕە سەرەکییەکان',
+    'ip_address' => 'ناونیشانی IP',
+    'browser' => 'وێبگەڕ',
+    'platform' => 'سیستەم',
+    'device_type' => 'جۆری ئامێر',
+    'url' => 'بەستەر',
+    'delete_all_visitors' => 'سڕینەوەی هەموو',
+    'confirm_delete_all_visitors' => 'دڵنیای لە سڕینەوەی هەموو تۆماری سەردانکەران؟ ئەم کردارە ناگەڕێتەوە!',
+    'select_date_range' => 'هەڵبژاردنی بەرواری',
 ];

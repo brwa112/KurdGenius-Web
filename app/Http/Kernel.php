@@ -39,6 +39,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\SetLocaleFromSession::class,
             \App\Http\Middleware\HandleBranchSelection::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
+            // \App\Http\Middleware\TrackVisitors::class,
         ],
 
         'api' => [
@@ -72,6 +73,9 @@ class Kernel extends HttpKernel
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+
+        // Track Visitors Middleware
+        'track.visitors' => \App\Http\Middleware\TrackVisitors::class,
         
     ];
 }

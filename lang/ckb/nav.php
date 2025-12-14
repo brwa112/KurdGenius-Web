@@ -29,4 +29,5 @@ return [
     'classroom' => 'پۆل',
     'gallery' => 'گەلەری',
     'branches' => 'لقەکان',
+    'visitors' => 'سەردانیەکان',
 ];

@@ -8,7 +8,7 @@
         <!-- Breadcrumb -->
         <ul class="flex space-x-2 rtl:space-x-reverse">
             <li class="text-gray-500">
-                <span>{{ $t('system.system') }}</span>
+                <span>{{ $t('nav.others') }}</span>
             </li>
             <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
                 <span>{{ $t('system.profile') }}</span>
