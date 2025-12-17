@@ -37,7 +37,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SetLocaleFromSession::class,
-            \App\Http\Middleware\HandleBranchSelection::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             // \App\Http\Middleware\TrackVisitors::class,
         ],
@@ -76,6 +75,6 @@ class Kernel extends HttpKernel
 
         // Track Visitors Middleware
         'track.visitors' => \App\Http\Middleware\TrackVisitors::class,
-        
+
     ];
 }

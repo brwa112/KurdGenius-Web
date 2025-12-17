@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        DB::transaction(function () {
+        // DB::transaction(function () {
             $user = $this->createTestUser();
             // user types removed: createUserTypes() skipped
             $this->createPermissions($user);
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             $this->createDeveloperUser();
             $this->createTheme($user);
             Artisan::call('translations:cache');
-        });
+        // });
     }
 
     private function createTheme($user): void
@@ -82,50 +82,20 @@ class DatabaseSeeder extends Seeder
     {
         $permissionsData = [
             [
-                'name' => 'news',
-                'slug' => 'news',
-                'description' => 'Manage news articles and their data',
-            ],
-            [
-                'name' => 'campus',
-                'slug' => 'campus',
-                'description' => 'Manage campus and their data',
-            ],
-            [
-                'name' => 'classroom',
-                'slug' => 'classroom',
-                'description' => 'Manage classroom and their data',
-            ],
-            [
-                'name' => 'branches',
-                'slug' => 'branches',
-                'description' => 'Manage branches and their data',
-            ],
-            [
-                'name' => 'gallery',
-                'slug' => 'gallery',
-                'description' => 'Manage gallery and their data',
+                'name' => 'dashboard',
+                'slug' => 'dashboard',
+                'description' => 'Access to the main dashboard',
             ],
             [
                 'name' => 'users',
                 'slug' => 'users',
                 'description' => 'Manage users and their permissions',
             ],
-            // [
-            //     'name' => 'settings',
-            //     'slug' => 'settings',
-            //     'description' => 'System settings and configurations',
-            // ],
             [
                 'name' => 'permissions',
                 'slug' => 'permissions',
                 'description' => 'System settings and configurations',
             ],
-            // [
-            //     'name' => 'status',
-            //     'slug' => 'status',
-            //     'description' => 'System settings and configurations',
-            // ],
             [
                 'name' => 'group_permissions',
                 'slug' => 'group-permissions',
@@ -159,31 +129,6 @@ class DatabaseSeeder extends Seeder
                 'name' => 'roles',
                 'slug' => 'roles',
                 'description' => 'Manage roles and their permissions',
-            ],
-            [
-                'name' => 'home',
-                'slug' => 'home',
-                'description' => 'Manage home page settings and content',
-            ],
-            [
-                'name' => 'about',
-                'slug' => 'about',
-                'description' => 'Manage about page settings and content',
-            ],
-            [
-                'name' => 'calendar',
-                'slug' => 'calendar',
-                'description' => 'Manage calendar page settings and content',
-            ],
-            [
-                'name' => 'academic',
-                'slug' => 'academic',
-                'description' => 'Manage academic page settings and content',
-            ],
-            [
-                'name' => 'admission',
-                'slug' => 'admission',
-                'description' => 'Manage admission page settings and content',
             ],
             [
                 'name' => 'products',
@@ -238,7 +183,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TranslationsSeeder::class,
             RolePermissionSeeder::class,
-            FrontendPagesSeeder::class,
         ]);
     }
 }

@@ -126,7 +126,7 @@ class HomeController extends Controller
 
         // dd($services, $clients, $products, $hosting);
 
-        return inertia('Frontend/Safe/Home', [
+        return inertia('Frontend/Home', [
             'clients' => $clients,
             'services' => $services,
             'products' => $products,

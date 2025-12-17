@@ -2,29 +2,17 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Pages\NewsController;
-use App\Http\Controllers\Pages\BranchController;
-use App\Http\Controllers\Pages\CampusController;
 use App\Http\Controllers\Pages\ClientController;
-use App\Http\Controllers\Pages\HashtagController;
 use App\Http\Controllers\Pages\HostingController;
 use App\Http\Controllers\Pages\ProductController;
 use App\Http\Controllers\Pages\ServiceController;
-use App\Http\Controllers\Pages\ClassroomController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Analytics\VisitorController;
 use App\Http\Controllers\System\Users\RoleController;
 use App\Http\Controllers\System\Users\UserController;
-use App\Http\Controllers\Pages\NewsCategoryController;
-use App\Http\Controllers\Pages\GalleryCategoryController;
 use App\Http\Controllers\System\Users\PermissionController;
-use App\Http\Controllers\System\Settings\Pages\HomeController;
-use App\Http\Controllers\System\Settings\Pages\AboutController;
 use App\Http\Controllers\System\Settings\Settings\LogController;
-use App\Http\Controllers\System\Settings\Pages\AcademicController;
-use App\Http\Controllers\System\Settings\Pages\CalendarController;
 use App\Http\Controllers\System\Settings\Settings\ThemeController;
-use App\Http\Controllers\System\Settings\Pages\AdmissionController;
 use App\Http\Controllers\System\Settings\Settings\LanguageController;
 use App\Http\Controllers\System\Settings\Settings\KeyLanguageController;
 use App\Http\Controllers\System\Settings\Settings\ImportExportController;
@@ -60,78 +48,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/{client}', [ClientController::class, 'update'])->name('update');
             Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
         });
-        Route::prefix('news')->as('news.')->group(function () {
-            Route::get('/', [NewsController::class, 'index'])->name('index');
-            Route::post('/', [NewsController::class, 'store'])->name('store');
-            Route::post('/{news}', [NewsController::class, 'update'])->name('update');
-            Route::delete('/{news}', [NewsController::class, 'destroy'])->name('destroy');
-            Route::delete('/{news}/force', [NewsController::class, 'forceDelete'])->name('force_delete');
-            Route::post('/{news}/restore', [NewsController::class, 'restore'])->name('restore');
-        });
 
-        Route::prefix('news-categories')->as('news-categories.')->group(function () {
-            Route::get('/', [NewsCategoryController::class, 'index'])->name('index');
-            Route::post('/', [NewsCategoryController::class, 'store'])->name('store');
-            Route::post('/{newsCategory}', [NewsCategoryController::class, 'update'])->name('update');
-            Route::delete('/{newsCategory}', [NewsCategoryController::class, 'destroy'])->name('destroy');
-            Route::delete('/{newsCategory}/force', [NewsCategoryController::class, 'forceDelete'])->name('force_delete');
-            Route::post('/{newsCategory}/restore', [NewsCategoryController::class, 'restore'])->name('restore');
-        });
-
-        Route::prefix('hashtags')->as('hashtags.')->group(function () {
-            Route::get('/', [HashtagController::class, 'index'])->name('index');
-            Route::post('/', [HashtagController::class, 'store'])->name('store');
-            Route::post('/{hashtag}', [HashtagController::class, 'update'])->name('update');
-            Route::delete('/{hashtag}', [HashtagController::class, 'destroy'])->name('destroy');
-            Route::delete('/{hashtag}/force', [HashtagController::class, 'forceDelete'])->name('force_delete');
-            Route::post('/{hashtag}/restore', [HashtagController::class, 'restore'])->name('restore');
-        });
-
-        Route::prefix('campus')->as('campus.')->group(function () {
-            Route::get('/', [CampusController::class, 'index'])->name('index');
-            Route::post('/', [CampusController::class, 'store'])->name('store');
-            Route::post('/{campus}', [CampusController::class, 'update'])->name('update');
-            Route::delete('/{campus}', [CampusController::class, 'destroy'])->name('destroy');
-            Route::delete('/{campus}/force', [CampusController::class, 'forceDelete'])->name('force_delete');
-            Route::post('/{campus}/restore', [CampusController::class, 'restore'])->name('restore');
-        });
-
-        Route::prefix('classrooms')->as('classrooms.')->group(function () {
-            Route::get('/', [ClassroomController::class, 'index'])->name('index');
-            Route::post('/', [ClassroomController::class, 'store'])->name('store');
-            Route::post('/{classroom}', [ClassroomController::class, 'update'])->name('update');
-            Route::delete('/{classroom}', [ClassroomController::class, 'destroy'])->name('destroy');
-            Route::delete('/{classroom}/force', [ClassroomController::class, 'forceDelete'])->name('force_delete');
-            Route::post('/{classroom}/restore', [ClassroomController::class, 'restore'])->name('restore');
-        });
-
-        Route::prefix('branches')->as('branches.')->group(function () {
-            Route::get('/', [BranchController::class, 'index'])->name('index');
-            Route::post('/', [BranchController::class, 'store'])->name('store');
-            Route::post('/{branch}', [BranchController::class, 'update'])->name('update');
-            Route::delete('/{branch}', [BranchController::class, 'destroy'])->name('destroy');
-            Route::delete('/{branch}/force', [BranchController::class, 'forceDelete'])->name('force_delete');
-            Route::post('/{branch}/restore', [BranchController::class, 'restore'])->name('restore');
-        });
-
-        // Gallery admin (separate page similar to News)
-        Route::prefix('gallery')->as('gallery.')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Pages\GalleryController::class, 'index'])->name('index');
-            Route::post('/', [\App\Http\Controllers\Pages\GalleryController::class, 'store'])->name('store');
-            Route::post('/{gallery}', [\App\Http\Controllers\Pages\GalleryController::class, 'update'])->name('update');
-            Route::delete('/{gallery}', [\App\Http\Controllers\Pages\GalleryController::class, 'destroy'])->name('destroy');
-            Route::delete('/{gallery}/force', [\App\Http\Controllers\Pages\GalleryController::class, 'forceDelete'])->name('force_delete');
-            Route::post('/{gallery}/restore', [\App\Http\Controllers\Pages\GalleryController::class, 'restore'])->name('restore');
-        });
-
-        Route::prefix('gallery-categories')->as('gallery-categories.')->group(function () {
-            Route::get('/', [GalleryCategoryController::class, 'index'])->name('index');
-            Route::post('/', [GalleryCategoryController::class, 'store'])->name('store');
-            Route::post('/{galleryCategory}', [GalleryCategoryController::class, 'update'])->name('update');
-            Route::delete('/{galleryCategory}', [GalleryCategoryController::class, 'destroy'])->name('destroy');
-            Route::delete('/{galleryCategory}/force', [GalleryCategoryController::class, 'forceDelete'])->name('force_delete');
-            Route::post('/{galleryCategory}/restore', [GalleryCategoryController::class, 'restore'])->name('restore');
-        });
     });
 
     Route::prefix('system')->as('system.')->group(function () {
@@ -187,48 +104,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('sync-translations', [SyncTranslationController::class, 'syncTranslations'])->name('translations.sync');
             });
 
-            // Pages controllers
-            Route::as('pages.')->group(function () {
-                Route::prefix('home')->as('home.')->group(function () {
-                    Route::get('/', [HomeController::class, 'index'])->name('index');
-                    Route::post('/hero', [HomeController::class, 'updateHero'])->name('hero.update');
-                    Route::post('/history', [HomeController::class, 'updateHistory'])->name('history.update');
-                    Route::post('/message', [HomeController::class, 'updateMessage'])->name('message.update');
-                    Route::post('/mission', [HomeController::class, 'updateMission'])->name('mission.update');
-                    Route::post('/social', [HomeController::class, 'updateSocial'])->name('social.update');
-                });
-
-                // About page settings (mirror Home settings)
-                Route::prefix('about')->as('about.')->group(function () {
-                    Route::get('/', [AboutController::class, 'index'])->name('index');
-                    Route::post('/about', [AboutController::class, 'updateAbout'])->name('about.update');
-                    Route::post('/message', [AboutController::class, 'updateMessage'])->name('message.update');
-                    Route::post('/mission', [AboutController::class, 'updateMission'])->name('mission.update');
-                    Route::post('/touch', [AboutController::class, 'updateTouch'])->name('touch.update');
-                });
-
-                // Calendar page settings
-                Route::prefix('calendar')->as('calendar.')->group(function () {
-                    Route::get('/', [CalendarController::class, 'index'])->name('index');
-                    Route::post('/academic', [CalendarController::class, 'updateAcademic'])->name('academic.update');
-                    Route::post('/official', [CalendarController::class, 'updateOfficial'])->name('official.update');
-                    Route::post('/important', [CalendarController::class, 'updateImportant'])->name('important.update');
-                });
-
-                // Academic page settings
-                Route::prefix('academic')->as('academic.')->group(function () {
-                    Route::get('/', [AcademicController::class, 'index'])->name('index');
-                    Route::post('/choose', [AcademicController::class, 'updateChoose'])->name('choose.update');
-                    Route::post('/approach', [AcademicController::class, 'updateApproach'])->name('approach.update');
-                });
-
-                // Admission page settings
-                Route::prefix('admission')->as('admission.')->group(function () {
-                    Route::get('/', [AdmissionController::class, 'index'])->name('index');
-                    Route::post('/policy', [AdmissionController::class, 'updatePolicy'])->name('policy.update');
-                    Route::post('/documents', [AdmissionController::class, 'updateDocuments'])->name('documents.update');
-                });
-            });
         });
     });
 });
