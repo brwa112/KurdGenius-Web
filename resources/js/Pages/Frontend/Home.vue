@@ -59,7 +59,7 @@
       <div class="outer size-full overflow-y-hidden">
         <div class="inner size-full overflow-y-hidden">
           <div class="bg flex items-center justify-center abdolute size-full min-h-dvh bg-cover">
-            <AboutPage />
+            <AboutPage :links="links" />
           </div>
         </div>
       </div>
@@ -84,6 +84,7 @@ const props = defineProps([
     'clients',
     'products',
     'hosting',
+    'links',
 ]);
 </script>
 

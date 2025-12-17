@@ -19,7 +19,7 @@
                             </div>
                             <div v-motion-slide-visible-bottom :duration="300"
                                 class="flex flex-wrap gap-x-3 xl:gap-x-7 gap-y-3 xl:gap-y-5">
-                                <a href="https://www.facebook.com/safedatacompany" target="_blank"
+                                <a :href="links.facebook" target="_blank"
                                     class="relative group ps-8 xs:ps-10 sm:ps-16 p-1 px-2.5 text-white/70 cursor-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 size-6"
                                         viewBox="0 0 24 24">
@@ -30,8 +30,7 @@
                                         class="absolute inset-0 z-0 size-full backdrop-blur-xl duration-500 bg-white/[4%] group-hover:bg-f-secondary">
                                     </div>
                                 </a>
-                                <a href="https://www.instagram.com/safedatacompany?igsh=MThvbmM4Zm80MDJ4eg=="
-                                    target="_blank"
+                                <a :href="links.instagram" target="_blank"
                                     class="relative group ps-8 xs:ps-10 sm:ps-16 p-1 px-2.5 text-white/70 cursor-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 size-6"
                                         viewBox="0 0 1024 1024">
@@ -42,7 +41,7 @@
                                         class="absolute inset-0 z-0 size-full backdrop-blur-xl duration-500 bg-white/[4%] group-hover:bg-f-secondary">
                                     </div>
                                 </a>
-                                <a href="mailto:info@safedatait.com" target="_blank"
+                                <a :href="`mailto:${links.email}`" target="_blank"
                                     class="relative group ps-8 xs:ps-10 sm:ps-16 p-1 px-2.5 text-white/70 cursor-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 size-6"
                                         viewBox="0 0 256 256">
@@ -53,7 +52,7 @@
                                         class="absolute inset-0 z-0 size-full backdrop-blur-xl duration-500 bg-white/[4%] group-hover:bg-f-secondary">
                                     </div>
                                 </a>
-                                <a href="https://t.me/safedatacompany" target="_blank"
+                                <a :href="links.telegram" target="_blank"
                                     class="relative group ps-8 xs:ps-10 sm:ps-16 p-1 px-2.5 text-white/70 cursor-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 size-6"
                                         viewBox="0 0 24 24">
@@ -113,8 +112,10 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-
+import { onMounted,defineProps } from 'vue'
+defineProps({
+    'links': Object
+    })
 onMounted(() => {
     let button = document.querySelector(".primary-button-about");
     let item = document.querySelector(".primary-button-about .round");

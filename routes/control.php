@@ -13,6 +13,7 @@ use App\Http\Controllers\System\Users\UserController;
 use App\Http\Controllers\System\Users\PermissionController;
 use App\Http\Controllers\System\Settings\Settings\LogController;
 use App\Http\Controllers\System\Settings\Settings\ThemeController;
+use App\Http\Controllers\System\Settings\Pages\SocialLinkController;
 use App\Http\Controllers\System\Settings\Settings\LanguageController;
 use App\Http\Controllers\System\Settings\Settings\KeyLanguageController;
 use App\Http\Controllers\System\Settings\Settings\ImportExportController;
@@ -82,6 +83,10 @@ Route::middleware('auth')->group(function () {
 
             // Settings controller
             Route::as('settings.')->group(function () {
+                // Social Links
+                Route::get('/social-links', [SocialLinkController::class, 'index'])->name('social-links.index');
+                Route::put('/social-links', [SocialLinkController::class, 'update'])->name('social-links.update');
+
                 Route::resource('/group-permission', GroupPermissionController::class)->only(['index', 'store', 'update', 'destroy'])->names('group_permissions');
                 // user types removed: route disabled
                 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');

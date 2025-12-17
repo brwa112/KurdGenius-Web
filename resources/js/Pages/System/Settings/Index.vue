@@ -28,8 +28,9 @@
                         </Tab>
 
                         <!-- Pages -->
+                        <!-- v-if="$can('view_home|view_about|view_calendar|view_academic|view_admission')" -->
                         <Tab as="template" v-slot="{ selected }"
-                            v-if="$can('view_home|view_about|view_calendar|view_academic|view_admission')">
+                            >
                             <button type="button"
                                 class="p-5 py-3 -mb-[1px] flex items-center gap-2 hover:border-b border-transparent hover:!border-secondary hover:text-secondary !outline-none transition duration-300"
                                 :class="{ 'border-b !border-secondary text-secondary': selected }">
@@ -71,22 +72,13 @@
                     </div>
                 </TabPanel>
                 <!-- Pages -->
-                <TabPanel v-if="$can('view_home|view_about|view_calendar|view_academic|view_admission')">
+                <!-- v-if="$can('')" -->
+                <TabPanel>
                     <div class="panel p-2">
                         <div class="border-2 rounded dark:border-[#191e3a] overflow-hidden">
                             <div class="flex flex-col divide-y-2 dark:divide-[#191e3a]">
-
-                                <SettingMenu link="control.system.pages.home.index" label="home" icon="home_angle"
-                                    can="view_home" />
-                                <SettingMenu link="control.system.pages.about.index" label="about" icon="user_id"
-                                    can="view_about" />
-                                <SettingMenu link="control.system.pages.calendar.index" label="calendar"
-                                    icon="calender_date" can="view_calendar" />
-                                <SettingMenu link="control.system.pages.academic.index" label="academic"
-                                    icon="academic_cap" can="view_academic" />
-                                <SettingMenu link="control.system.pages.admission.index" label="admission"
-                                    icon="archive_check" can="view_admission" />
-
+                                <SettingMenu link="control.system.settings.social-links.index" label="social_links" icon="link"
+                                     />
                             </div>
                         </div>
                     </div>

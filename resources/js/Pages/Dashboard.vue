@@ -46,9 +46,25 @@
                         {{ stats.users.active }} {{ $t('dashboard.active') || 'Active' }}
                     </div>
                 </div>
+                <!-- Total Clients -->
+                <div class="panel bg-gradient-to-r from-indigo-500 to-indigo-400 text-white">
+                    <div class="flex justify-between">
+                        <div class="ltr:mr-1 rtl:ml-1 text-md font-semibold">
+                            {{ $t('dashboard.total_clients') || 'Total Clients' }}
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="text-3xl font-bold ltr:mr-3 rtl:ml-3">{{ stats.clients }}</div>
+                    </div>
+                    <div class="flex items-center font-semibold mt-2">
+                        <Svg name="users" class="size-5"></Svg>
+
+                        <!-- {{ stats.roles }} {{ $t('dashboard.roles') || 'Roles' }} -->
+                    </div>
+                </div>
 
                 <!-- Total News -->
-                <div class="panel bg-gradient-to-r from-violet-500 to-violet-400 text-white">
+                <!-- <div class="panel bg-gradient-to-r from-violet-500 to-violet-400 text-white">
                     <div class="flex justify-between">
                         <div class="ltr:mr-1 rtl:ml-1 text-md font-semibold">
                             {{ $t('dashboard.total_news') || 'Total News' }}
@@ -70,7 +86,7 @@
                         </svg>
                         {{ stats.news.published }} {{ $t('dashboard.published') || 'Published' }}
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Total Visitors -->
                 <div class="panel bg-gradient-to-r from-blue-500 to-blue-400 text-white">
@@ -98,20 +114,28 @@
                     </div>
                 </div>
 
-                <!-- Total Branches -->
+                <!-- Total Languages -->
                 <div class="panel bg-gradient-to-r from-fuchsia-500 to-fuchsia-400 text-white">
                     <div class="flex justify-between">
                         <div class="ltr:mr-1 rtl:ml-1 text-md font-semibold">
-                            {{ $t('dashboard.content') || 'Content' }}
+                            {{ $t('dashboard.languages') || 'Languages' }}
                         </div>
                     </div>
                     <div class="flex items-center mt-2">
-                        <div class="text-3xl font-bold ltr:mr-3 rtl:ml-3">{{ stats.branches }}</div>
-                        <div class="text-sm ltr:ml-auto rtl:mr-auto">{{ $t('dashboard.branches') || 'Branches' }}</div>
+                        <div class="text-3xl font-bold ltr:mr-3 rtl:ml-3">{{ stats.languages }}</div>
                     </div>
-                    <div class="flex items-center font-semibold mt-2 justify-between">
-                        <span>{{ stats.galleries }} {{ $t('dashboard.galleries') || 'Galleries' }}</span>
-                        <span>{{ stats.campuses }} {{ $t('dashboard.campuses') || 'Campuses' }}</span>
+                    <div class="flex items-center font-semibold mt-2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="ltr:mr-2 rtl:ml-2">
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="currentColor" stroke-width="1.5" />
+                            <path d="M2 12H22" stroke="currentColor" stroke-width="1.5" />
+                            <path
+                                d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z"
+                                stroke="currentColor" stroke-width="1.5" />
+                        </svg>
+                        {{ $t('dashboard.total_languages') || 'Total Languages' }}
                     </div>
                 </div>
             </div>
@@ -143,38 +167,29 @@
 
             <!-- Recent Data Tables -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <!-- Recent News -->
+                <!-- Recent Clients -->
                 <div class="panel">
                     <div class="flex items-center justify-between mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">{{ $t('dashboard.recent_news') ||
-                            'Recent News' }}</h5>
+                        <h5 class="font-semibold text-lg dark:text-white-light">{{ $t('dashboard.recent_clients') ||
+                            'Recent Clients' }}</h5>
                     </div>
                     <div class="table-responsive">
                         <table class="table-hover">
                             <thead>
                                 <tr>
-                                    <th>{{ $t('dashboard.title') || 'Title' }}</th>
-                                    <th>{{ $t('dashboard.views') || 'Views' }}</th>
-                                    <th>{{ $t('dashboard.status') || 'Status' }}</th>
+                                    <th>{{ $t('dashboard.name') || 'Name' }}</th>
+                                    <th>{{ $t('dashboard.created_at') || 'Created At' }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="news in recentNews" :key="news.id">
+                                <tr v-for="client in recentClients" :key="client.id">
                                     <td>
-                                        <div class="whitespace-nowrap">{{ news.title }}</div>
-                                        <div class="text-xs text-white-dark">{{ news.created_at }}</div>
+                                        <div class="whitespace-nowrap">{{ client.name }}</div>
                                     </td>
-                                    <td>{{ news.views }}</td>
-                                    <td>
-                                        <span class="badge"
-                                            :class="news.is_active ? 'badge-outline-success' : 'badge-outline-danger'">
-                                            {{ news.is_active ? ($t('dashboard.active') || 'Active') :
-                                                ($t('dashboard.inactive') || 'Inactive') }}
-                                        </span>
-                                    </td>
+                                    <td>{{ client.created_at }}</td>
                                 </tr>
-                                <tr v-if="recentNews.length === 0">
-                                    <td colspan="3" class="text-center">
+                                <tr v-if="recentClients.length === 0">
+                                    <td colspan="2" class="text-center">
                                         {{ $t('dashboard.no_data') || 'No data available' }}
                                     </td>
                                 </tr>
@@ -224,68 +239,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Popular Content -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Popular News -->
-                <div class="panel">
-                    <div class="flex items-center justify-between mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">{{ $t('dashboard.popular_news') ||
-                            'Popular News' }}</h5>
-                    </div>
-                    <div class="space-y-4">
-                        <div v-for="news in popularNews" :key="news.id"
-                            class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                            <div class="flex-1 truncate">{{ news.title }}</div>
-                            <div class="flex items-center ltr:ml-4 rtl:mr-4">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg" class="ltr:mr-1 rtl:ml-1">
-                                    <path opacity="0.5"
-                                        d="M3.27489 15.2957C2.42496 14.1915 2 13.6394 2 12C2 10.3606 2.42496 9.80853 3.27489 8.70433C4.97196 6.49956 7.81811 4 12 4C16.1819 4 19.028 6.49956 20.7251 8.70433C21.575 9.80853 22 10.3606 22 12C22 13.6394 21.575 14.1915 20.7251 15.2957C19.028 17.5004 16.1819 20 12 20C7.81811 20 4.97196 17.5004 3.27489 15.2957Z"
-                                        stroke="currentColor" stroke-width="1.5" />
-                                    <path
-                                        d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
-                                        stroke="currentColor" stroke-width="1.5" />
-                                </svg>
-                                <span class="font-semibold text-sm">{{ news.views }}</span>
-                            </div>
-                        </div>
-                        <div v-if="popularNews.length === 0" class="text-center text-white-dark py-4">
-                            {{ $t('dashboard.no_data') || 'No data available' }}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Popular Galleries -->
-                <div class="panel">
-                    <div class="flex items-center justify-between mb-5">
-                        <h5 class="font-semibold text-lg dark:text-white-light">
-                            {{ $t('dashboard.popular_galleries') || 'Popular Galleries' }}
-                        </h5>
-                    </div>
-                    <div class="space-y-4">
-                        <div v-for="gallery in popularGalleries" :key="gallery.id"
-                            class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                            <div class="flex-1 truncate">{{ gallery.title }}</div>
-                            <div class="flex items-center ltr:ml-4 rtl:mr-4">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg" class="ltr:mr-1 rtl:ml-1">
-                                    <path opacity="0.5"
-                                        d="M3.27489 15.2957C2.42496 14.1915 2 13.6394 2 12C2 10.3606 2.42496 9.80853 3.27489 8.70433C4.97196 6.49956 7.81811 4 12 4C16.1819 4 19.028 6.49956 20.7251 8.70433C21.575 9.80853 22 10.3606 22 12C22 13.6394 21.575 14.1915 20.7251 15.2957C19.028 17.5004 16.1819 20 12 20C7.81811 20 4.97196 17.5004 3.27489 15.2957Z"
-                                        stroke="currentColor" stroke-width="1.5" />
-                                    <path
-                                        d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
-                                        stroke="currentColor" stroke-width="1.5" />
-                                </svg>
-                                <span class="font-semibold text-sm">{{ gallery.views }}</span>
-                            </div>
-                        </div>
-                        <div v-if="popularGalleries.length === 0" class="text-center text-white-dark py-4">
-                            {{ $t('dashboard.no_data') || 'No data available' }}
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -297,10 +250,9 @@ import { Head } from '@inertiajs/vue3';
 const props = defineProps({
     stats: Object,
     visitorsByDevice: Array,
-    recentNews: Array,
+    recentClients: Array,
     recentUsers: Array,
-    popularNews: Array,
-    popularGalleries: Array,
+    recentServices: Array,
     monthlyData: Array,
 });
 
@@ -402,10 +354,6 @@ const monthlyChart = computed(() => {
 });
 
 const monthlySeries = computed(() => [
-    {
-        name: 'News',
-        data: props.monthlyData.map(item => item.news),
-    },
     {
         name: 'Users',
         data: props.monthlyData.map(item => item.users),

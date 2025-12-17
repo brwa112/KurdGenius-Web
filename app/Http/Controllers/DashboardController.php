@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\System\Users\User;
-use App\Models\System\Users\Role;
-
-use App\Models\Analytics\Visitor;
-use App\Models\System\Settings\Settings\Language;
-use Illuminate\Support\Facades\DB;
-use Inertia\Inertia;
 use Carbon\Carbon;
+use Inertia\Inertia;
+
+use App\Models\Pages\Client;
+use App\Models\Analytics\Visitor;
+use App\Models\Pages\Service;
+use App\Models\System\Users\Role;
+use App\Models\System\Users\User;
+use Illuminate\Support\Facades\DB;
+use App\Models\System\Settings\Settings\Language;
 
 class DashboardController extends Controller
 {
@@ -19,6 +21,7 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $activeUsers = User::where('is_active', true)->count();
         $totalRoles = Role::count();
+        $totalClients = Client::count();
 
         // Languages
         $totalLanguages = Language::count();
@@ -58,6 +61,26 @@ class DashboardController extends Controller
                     'created_at' => $user->created_at->format('Y-m-d H:i'),
                 ];
             });
+        $recentClients = Client::orderBy('created_at', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'created_at' => $user->created_at->format('Y-m-d H:i'),
+                ];
+            });
+        $recentServices = Service::orderBy('created_at', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'created_at' => $user->created_at->format('Y-m-d H:i'),
+                ];
+            });
 
 
         // Monthly data for chart (last 12 months)
@@ -81,15 +104,8 @@ class DashboardController extends Controller
                     'total' => $totalUsers,
                     'active' => $activeUsers,
                 ],
+                'clients' => $totalClients,
                 'roles' => $totalRoles,
-                'branches' => 0,
-                'news' => [
-                    'total' => 0,
-                    'published' => 0,
-                ],
-                'galleries' => 0,
-                'campuses' => 0,
-                'classrooms' => 0,
                 'languages' => $totalLanguages,
                 'visitors' => [
                     'total' => $totalVisitors,
@@ -98,10 +114,9 @@ class DashboardController extends Controller
                 ],
             ],
             'visitorsByDevice' => $visitorsByDevice->isEmpty() ? [] : $visitorsByDevice,
-            'recentNews' => [],
+            'recentClients' => $recentClients,
+            'recentServices' => $recentServices,
             'recentUsers' => $recentUsers,
-            'popularNews' => [],
-            'popularGalleries' => [],
             'monthlyData' => $monthlyData,
         ]);
     }
