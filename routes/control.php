@@ -40,16 +40,46 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('pages')->as('pages.')->group(function () {
-        Route::resource('services', ServiceController::class);
-        Route::resource('products', ProductController::class);
-        Route::resource('hostings', HostingController::class);
+
+        // services routes
+        Route::prefix('services')->as('services.')->group(function () {
+            Route::get('/', [ServiceController::class, 'index'])->name('index');
+            Route::post('/', [ServiceController::class, 'store'])->name('store');
+            Route::post('/{service}', [ServiceController::class, 'update'])->name('update');
+            Route::delete('/{service}', [ServiceController::class, 'destroy'])->name('destroy');
+            Route::delete('/{service}/force', [ServiceController::class, 'forceDelete'])->name('force_delete');
+            Route::post('/{service}/restore', [ServiceController::class, 'restore'])->name('restore');
+        });
+
+        // products routes
+        Route::prefix('products')->as('products.')->group(function () {
+            Route::get('/', [ProductController::class, 'index'])->name('index');
+            Route::post('/', [ProductController::class, 'store'])->name('store');
+            Route::post('/{product}', [ProductController::class, 'update'])->name('update');
+            Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
+            Route::delete('/{product}/force', [ProductController::class, 'forceDelete'])->name('force_delete');
+            Route::post('/{product}/restore', [ProductController::class, 'restore'])->name('restore');
+        });
+
+        // hostings routes
+        Route::prefix('hostings')->as('hostings.')->group(function () {
+            Route::get('/', [HostingController::class, 'index'])->name('index');
+            Route::post('/', [HostingController::class, 'store'])->name('store');
+            Route::post('/{hosting}', [HostingController::class, 'update'])->name('update');
+            Route::delete('/{hosting}', [HostingController::class, 'destroy'])->name('destroy');
+            Route::delete('/{hosting}/force', [HostingController::class, 'forceDelete'])->name('force_delete');
+            Route::post('/{hosting}/restore', [HostingController::class, 'restore'])->name('restore');
+        });
+        
+        // clients routes
         Route::prefix('clients')->as('clients.')->group(function () {
             Route::get('/', [ClientController::class, 'index'])->name('index');
             Route::post('/', [ClientController::class, 'store'])->name('store');
             Route::post('/{client}', [ClientController::class, 'update'])->name('update');
             Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
+            Route::delete('/{client}/force', [ClientController::class, 'forceDelete'])->name('force_delete');
+            Route::post('/{client}/restore', [ClientController::class, 'restore'])->name('restore');
         });
-
     });
 
     Route::prefix('system')->as('system.')->group(function () {
@@ -108,7 +138,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('/translations/export', [ImportExportController::class, 'export'])->name('translations.export');
                 Route::get('sync-translations', [SyncTranslationController::class, 'syncTranslations'])->name('translations.sync');
             });
-
         });
     });
 });

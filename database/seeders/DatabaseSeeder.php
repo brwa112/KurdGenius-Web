@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pages\SocialLink;
 use App\Models\System\Settings\Settings\Language;
 use App\Models\System\Settings\System\GroupPermission;
 use Illuminate\Database\Seeder;
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
             $this->createUserSettings($user);
             $this->createDeveloperUser();
             $this->createTheme($user);
+            $this->createSocialLinks();
             Artisan::call('translations:cache');
         // });
     }
@@ -46,6 +48,20 @@ class DatabaseSeeder extends Seeder
         foreach ($themes as $theme) {
             $user->theme()->firstOrCreate($theme);
         }
+    }
+    private function createSocialLinks(){
+        $links = [
+            'facebook' => 'https://www.facebook.com/safedatacompany',
+            'telegram' => 'https://www.instagram.com/safedatacompany?igsh=MThvbmM4Zm80MDJ4eg==',
+            'email' => 'https://linkedin.com/',
+            'instagram' => 'info@safedatait.com',
+        ];
+        SocialLink::create([
+            'facebook' => $links['facebook'],
+            'telegram' => $links['telegram'],
+            'email' => $links['email'],
+            'instagram' => $links['instagram'],
+        ]);
     }
 
     // user types were removed from the system; seeding not required
@@ -150,6 +166,12 @@ class DatabaseSeeder extends Seeder
                 'slug' => 'hostings',
                 'description' => 'Manage hostings page settings and content',
             ],
+            [
+                'name' => 'settings',
+                'slug' => 'settings',
+                'description' => 'Manage settings page settings and content',
+            ],
+
 
         ];
 

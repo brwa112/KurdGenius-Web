@@ -349,4 +349,13 @@ return [
     'confirm_delete_all_visitors' => 'Are you sure you want to delete all visitor records? This action cannot be undone!',
     'select_date_range' => 'Select Date Range',
 
+
+
+    'social_links' => 'Social Media Links',
+    'social_link' => 'Social Media Link',
+    'link' => 'Link',
+
+    'facebook' => 'Facebook',
+    'instagram' => 'Instagram',
+    'telegram' => 'Telegram',
 ];

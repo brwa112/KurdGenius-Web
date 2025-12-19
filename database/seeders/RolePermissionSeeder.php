@@ -12,6 +12,7 @@ class RolePermissionSeeder extends Seeder
 {
     public function run()
     {
+        
         $groupPermissions = GroupPermission::all();
 
         $allPermissionNames = [];

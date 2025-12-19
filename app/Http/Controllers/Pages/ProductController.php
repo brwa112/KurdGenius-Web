@@ -15,7 +15,9 @@ class ProductController extends Controller
 
         $filters = $this->getFilters($request);
 
-        $products = Product::query()->with('user')
+        $products = Product::query()
+            ->with('user')
+            ->withTrashed()
             ->search($filters['search'])
             ->orderBy($filters['sort_by'], $filters['sort_direction'])
             ->paginate($filters['number_rows']);
@@ -56,5 +58,28 @@ class ProductController extends Controller
         $this->authorize('delete', $product);
 
         $product->delete();
+    }
+
+    public function forceDelete($id)
+    {
+        $product = Product::withTrashed()->findOrFail($id);
+
+        $this->authorize('delete', $product);
+
+        // Permanently delete the product
+        $product->forceDelete();
+
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $product = Product::withTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $product);
+
+        $product->restore();
+
+        return redirect()->back();
     }
 }

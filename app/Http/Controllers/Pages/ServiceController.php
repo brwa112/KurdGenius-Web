@@ -15,7 +15,9 @@ class ServiceController extends Controller
 
         $filters = $this->getFilters($request);
 
-        $services = Service::query()->with('user')
+        $services = Service::query()
+            ->with('user')
+            ->withTrashed()
             ->search($filters['search'])
             ->orderBy($filters['sort_by'], $filters['sort_direction'])
             ->paginate($filters['number_rows']);
@@ -69,5 +71,30 @@ class ServiceController extends Controller
         $this->authorize('delete', $service);
 
         $service->delete();
+    }
+
+    public function forceDelete($id)
+    {
+        $service = Service::withTrashed()->findOrFail($id);
+
+        $this->authorize('delete', $service);
+        // Delete all associated media
+        $service->clearMediaCollection('logo');
+
+        // Permanently delete the service
+        $service->forceDelete();
+
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $service = Service::withTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $service);
+
+        $service->restore();
+
+        return redirect()->back();
     }
 }

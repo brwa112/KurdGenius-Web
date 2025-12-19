@@ -15,7 +15,9 @@ class HostingController extends Controller
 
         $filters = $this->getFilters($request);
 
-        $hostings = Hosting::query()->with('user')
+        $hostings = Hosting::query()
+            ->with('user')
+            ->withTrashed()
             ->search($filters['search'])
             ->orderBy($filters['sort_by'], $filters['sort_direction'])
             ->paginate($filters['number_rows']);
@@ -55,5 +57,28 @@ class HostingController extends Controller
         $this->authorize('delete', $hosting);
 
         $hosting->delete();
+    }
+
+    public function forceDelete($id)
+    {
+        $hosting = Hosting::withTrashed()->findOrFail($id);
+
+        $this->authorize('delete', $hosting);
+
+        // Permanently delete the hosting
+        $hosting->forceDelete();
+
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $hosting = Hosting::withTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $hosting);
+
+        $hosting->restore();
+        
+        return redirect()->back();
     }
 }

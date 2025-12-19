@@ -78,7 +78,8 @@
                         <div class="border-2 rounded dark:border-[#191e3a] overflow-hidden">
                             <div class="flex flex-col divide-y-2 dark:divide-[#191e3a]">
                                 <SettingMenu link="control.system.settings.social-links.index" label="social_links" icon="link"
-                                     />
+                                can="view_settings"
+                                />
                             </div>
                         </div>
                     </div>
