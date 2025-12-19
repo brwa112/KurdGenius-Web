@@ -80,18 +80,18 @@
                         <div v-motion-slide-visible-bottom :duration="300"
                             class="w-full max-w-md xl:max-w-lg hidden lg:flex flex-col gap-4">
                             <h2 class="text-2xl xl:text-3xl font-audi">Contact</h2>
-                            <form @submit.prevent="" class="flex flex-col gap-4">
+                            <form @submit.prevent="save" class="flex flex-col gap-4">
                                 <div class="flex items-center gap-3 xl:gap-8">
-                                    <input type="email" placeholder="Email" autocomplete="off"
+                                    <input type="email" placeholder="Email" autocomplete="off" v-model="form.email"
                                         class="w-full py-4 px-3 text-sm bg-white/[4%] outline-0 cursor-none" />
-                                    <input type="text" placeholder="Subject" autocomplete="off"
+                                    <input type="text" placeholder="Subject" autocomplete="off" v-model="form.subject"
                                         class="w-full py-4 px-3 text-sm bg-white/[4%] outline-0 cursor-none" />
                                 </div>
-                                <textarea placeholder="Message" rows="5" autocomplete="off"
+                                <textarea placeholder="Message" rows="5" autocomplete="off" v-model="form.message"
                                     class="w-full py-4 px-3 text-sm bg-white/[4%] outline-0 resize-none cursor-none"></textarea>
                                 <!-- Button -->
                                 <div class="button-about">
-                                    <button class="primary-button-about py-4 px-3 cursor-none">
+                                    <button type="submit" class="primary-button-about py-4 px-3 cursor-none">
                                         SEND MESSAGE
                                         <span class="round" />
                                     </button>
@@ -113,10 +113,26 @@
 
 <script setup>
 import { onMounted } from 'vue'
-
+import { useForm } from '@inertiajs/vue3';
 defineProps({
     'links': Object
 })
+const form = useForm({
+    email: '',
+    subject: '',
+    message: ''
+});
+
+const save = () => {
+    form.post(route('send.mail'), {
+        forceFormData: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            alert('Message sent successfully!');
+            form.reset();
+        },
+    });
+}
 
 onMounted(() => {
     let button = document.querySelector(".primary-button-about");

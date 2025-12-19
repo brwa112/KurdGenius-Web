@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Pages\Frontend;
 
 use App\Models\Pages\Client;
+use Illuminate\Http\Request;
 use App\Models\Pages\Hosting;
 use App\Models\Pages\Product;
 use App\Models\Pages\Service;
-use App\Models\Pages\SocialLink;
 
+use App\Models\Pages\SocialLink;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -29,5 +31,33 @@ class HomeController extends Controller
             'hosting' => $hosting,
             'links' => $links,
         ]);
+    }
+
+    public function sendMail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|max:255',
+            'subject' => 'nullable|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        $email = $request->email;
+        $subject = $request->subject ?? 'No Subject';
+        $messageContent = $request->message;
+
+        Mail::send([], [], function ($message) use ($email, $subject, $messageContent) {
+            $message->to('brwa.rajab112@gmail.com')
+                ->replyTo($email, $email)  // Shows client's email as name
+                ->subject($subject . ' - from ' . $email)  // Shows email in subject
+                ->html("
+                    <h3>New Contact Form Submission</h3>
+                    <p><strong>From:</strong> {$email}</p>
+                    <p><strong>Subject:</strong> {$subject}</p>
+                    <p><strong>Message:</strong></p>
+                    <p>{$messageContent}</p>
+                ");
+        });
+
+        return back()->with('success', 'Message sent successfully!');
     }
 }
