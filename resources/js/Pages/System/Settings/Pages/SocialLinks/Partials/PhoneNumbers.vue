@@ -6,8 +6,8 @@
                 <button v-if="phoneNumbersList.length > 0 || newPhoneNumbers.length > 0" :disabled="phoneForm.processing" type="button"
                     @click="updateAllPhoneNumbers" class="btn btn-success btn-sm flex items-center gap-1">
                     <Spinner v-if="phoneForm.processing" class="size-4" />
-                    <Svg v-else name="pencil" class="size-4"></Svg>
-                    <span>{{ $t('common.update') }}</span>
+                    <Svg v-else name="check" class="size-4"></Svg>
+                    <span>{{ $t('common.save') }}</span>
                 </button>
                 <button type="button" @click="addNewPhoneNumber" class="btn btn-primary btn-sm flex items-center gap-1">
                     <Svg name="plus" class="size-4"></Svg>
