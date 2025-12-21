@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Pages\SocialLink;
-use App\Models\System\Settings\Settings\Language;
-use App\Models\System\Settings\System\GroupPermission;
+use App\Traits\GenerateSlugKey;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\Pages\SocialLink;
+use App\Models\System\Users\User;
+use App\Models\Pages\PhoneNumbers;
+use App\Models\Pages\MailInformation;
 use App\Models\System\Users\UserSettings;
 use Database\Seeders\RolePermissionSeeder;
-use App\Models\System\Users\User;
-use App\Traits\GenerateSlugKey;
+use App\Models\System\Settings\Settings\Language;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->createDeveloperUser();
         $this->createTheme($user);
         $this->createSocialLinks();
+        $this->createMailInformation();
     }
 
     private function createTheme($user): void
@@ -47,12 +48,13 @@ class DatabaseSeeder extends Seeder
             $user->theme()->firstOrCreate($theme);
         }
     }
-    private function createSocialLinks(){
+    private function createSocialLinks()
+    {
         $links = [
             'facebook' => 'https://www.facebook.com/safedatacompany',
             'telegram' => 'https://www.instagram.com/safedatacompany?igsh=MThvbmM4Zm80MDJ4eg==',
             'email' => 'info@safedatait.com',
-            'instagram' => 'https://www.instagram.com/safedatacompany?igsh=MThvbmM4Zm80MDJ4eg==',
+            'instagram' => 'https://t.me/safedatacompany',
         ];
         SocialLink::create([
             'facebook' => $links['facebook'],
@@ -60,6 +62,10 @@ class DatabaseSeeder extends Seeder
             'email' => $links['email'],
             'instagram' => $links['instagram'],
         ]);
+
+        // PhoneNumbers::create([
+        //     'phone_number' => '+9647762191',
+        // ]);
     }
 
     // user types were removed from the system; seeding not required
@@ -104,6 +110,21 @@ class DatabaseSeeder extends Seeder
                 'language_id' => Language::where('slug', 'en')->first()->id ?? null,
             ]
         );
+    }
+
+    public function createMailInformation()
+    {
+
+        MailInformation::create([
+            'mailer' => 'smtp',
+            'host' => 'smtp.gmail.com',
+            'port' => 587,
+            'username' => 'info@safedatait.com',
+            'password' => 'xczlbdmjjroohqmu',
+            'encryption' => 'tls',
+            'from_address' => 'info@safedatait.com',
+            'from_name' => 'SafeData IT Company',
+        ]);
     }
 
     private function callAdditionalSeeders(): void

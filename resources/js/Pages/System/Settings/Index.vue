@@ -95,7 +95,6 @@ import { ref, onMounted } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import SettingMenu from '@/Components/Ui/SettingMenu.vue';
-
 // Check URL hash to determine which tab to open
 const selectedTab = ref(0);
 

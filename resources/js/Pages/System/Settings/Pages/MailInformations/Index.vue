@@ -134,7 +134,6 @@ import { inject, ref, watch, computed } from 'vue';
 import { Head, Link, useForm, router, usePage } from '@inertiajs/vue3';
 import Spinner from '@/Components/Spinner.vue';
 import { trans } from 'laravel-vue-i18n';
-
 const props = defineProps([
     'mail_Information',
 ]);
