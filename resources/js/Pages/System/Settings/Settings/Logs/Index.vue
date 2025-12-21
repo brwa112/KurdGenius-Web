@@ -53,7 +53,7 @@
                 <!-- Datatable -->
                 <Datatable :rows="logs" :columns="columns" :totalRows="logs.data?.length" @change="apply_filter"
                     v-model:search="filters.search" v-model:numberRows="filters.number_rows" :filter="props.filter"
-                    v-model:sortBy="filters.sort_by" v-model:sortDirection="filters.sort_direction">
+                    v-model:sortBy="filters.sort_by" v-model:sortDirection="filters.sort_direction" :checkable="false">
 
                     <template #updated_at="data">
                         <span v-tippy dir="ltr" class="text-sm font-bold ltr">

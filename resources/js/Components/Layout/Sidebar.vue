@@ -33,7 +33,7 @@
 
                                 <li v-if="$can('view_services')" class="nav-item">
                                     <Link :href="route('control.pages.services.index')" class="nav-link group w-full"
-                                        :class="{ active: $page.component === 'Pages/Service/Index' }">
+                                        :class="{ active: $page.component.startsWith('Pages/Services') }">
                                         <div class="flex items-center">
                                             <Svg name="service" class="size-5"></Svg>
                                             <span
@@ -45,7 +45,7 @@
                                 </li>
                                 <li v-if="$can('view_products')" class="nav-item">
                                     <Link :href="route('control.pages.products.index')" class="nav-link group w-full"
-                                        :class="{ active: $page.component === 'Pages/Product/Index' }">
+                                        :class="{ active: $page.component.startsWith('Pages/Products') }">
                                         <div class="flex items-center">
                                             <Svg name="box" class="size-5"></Svg>
                                             <span
@@ -57,7 +57,7 @@
                                 </li>
                                 <li v-if="$can('view_hostings')" class="nav-item">
                                     <Link :href="route('control.pages.hostings.index')" class="nav-link group w-full"
-                                        :class="{ active: $page.component === 'Pages/Hosting/Index' }">
+                                        :class="{ active: $page.component.startsWith('Pages/Hostings') }">
                                         <div class="flex items-center">
                                             <Svg name="box" class="size-5"></Svg>
                                             <span
@@ -69,7 +69,7 @@
                                 </li>
                                 <li v-if="$can('view_clients')" class="nav-item">
                                     <Link :href="route('control.pages.clients.index')" class="nav-link group w-full"
-                                        :class="{ active: $page.component === 'Pages/Client/Index' }">
+                                        :class="{ active: $page.component.startsWith('Pages/Clients') }">
                                         <div class="flex items-center">
                                             <Svg name="user" class="size-5"></Svg>
                                             <span

@@ -12,7 +12,7 @@
                     data-tilt-max="5">
                     <div class="relative z-10 flex gap-1">
                         <div class="block">
-                            <Svg :name="service.icon" class="size-9 2xl:size-12 text-white me-3"></Svg>
+                            <img :src="service.logo" class="size-9 2xl:size-12 text-white me-3" />
                         </div>
                         <div class="flex flex-col justify-center gap-1">
                             <h2 class="text-base sm:text-lg 2xl:text-xl font-medium">{{ service.name }}</h2>

@@ -15,7 +15,9 @@ class ClientController extends Controller
 
         $filters = $this->getFilters($request);
 
-        $clients = Client::query()->with('user')
+        $clients = Client::query()
+            ->with('user')
+            ->withTrashed()
             ->search($filters['search'])
             ->orderBy($filters['sort_by'], $filters['sort_direction'])
             ->paginate($filters['number_rows']);
@@ -73,5 +75,29 @@ class ClientController extends Controller
         $this->authorize('delete', $client);
 
         $client->delete();
+    }
+
+    public function forceDelete($id)
+    {
+        $client = Client::withTrashed()->findOrFail($id);
+
+        $this->authorize('delete', $client);
+        // Delete all associated media
+        $client->clearMediaCollection('logo');
+        // Permanently delete the client
+        $client->forceDelete();
+
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $client = Client::withTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $client);
+
+        $client->restore();
+
+        return redirect()->back();
     }
 }

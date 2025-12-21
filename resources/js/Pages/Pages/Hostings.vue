@@ -127,9 +127,9 @@
                     <template #user="data">
                         <Link class="flex items-center gap-2 text-center"
                             :href="route('control.system.users.edit', data.value.user.id)">
-                        <img :src="data.value.user.avatar ? data.value.user.avatar : `/assets/images/avatar.png`"
-                            class="w-9 h-9 rounded-full max-w-none" alt="user-profile" />
-                        <div class="text-[15px] font-bold">{{ data.value.user.name }}</div>
+                            <img :src="data.value.user.avatar ? data.value.user.avatar : `/assets/images/avatar.png`"
+                                class="w-9 h-9 rounded-full max-w-none" alt="user-profile" />
+                            <div class="text-[15px] font-bold">{{ data.value.user.name }}</div>
                         </Link>
                     </template>
 
@@ -162,8 +162,9 @@
                         <tippy>{{ $helpers.formatCustomDate(data.value.created_at, true) }}</tippy>
                     </template>
 
-                    <template v-if="$can('edit_hostings') || $can('delete_hostings')" #actions="data">
-                        <div class="flex gap-2">
+                    <template v-if="$can('edit_hostings') || $can('delete_hostings') || $can('restore_hostings')"
+                        #actions="data">
+                        <div v-if="data.value.deleted_at == null" class="flex gap-2">
                             <div v-if="$can('edit_hostings')" class="text-center">
                                 <button type="button" v-tippy @click="toggleModal(data.value)">
                                     <Svg name="pencil" class="size-5"></Svg>
@@ -175,6 +176,21 @@
                                     <Svg name="trash" class="size-5"></Svg>
                                 </button>
                                 <tippy>{{ $t('common.delete') }}</tippy>
+                            </div>
+                        </div>
+                        <!-- Deleted Record Actions -->
+                        <div v-else class="flex gap-2">
+                            <div v-if="$can('delete_hostings')" class="text-center">
+                                <button type="button" v-tippy @click="callForceDelete(data.value)">
+                                    <Svg name="trash" class="size-5"></Svg>
+                                </button>
+                                <tippy>{{ $t('common.delete') }}</tippy>
+                            </div>
+                            <div v-if="$can('restore_hostings')" class="text-center">
+                                <button type="button" v-tippy @click="callRestore(data.value)">
+                                    <Svg name="restore" class="size-5 opacity-65"></Svg>
+                                </button>
+                                <tippy>{{ $t('common.restore') }}</tippy>
                             </div>
                         </div>
                     </template>
@@ -340,5 +356,47 @@ const callDelete = (id) => {
         }
     });
 };
+
+
+// Force delete services with confirmation
+const callForceDelete = (row) => {
+    Swal.fire({
+        icon: 'warning',
+        title: trans('common.are_you_sure'),
+        text: trans('common.force_delete_this'),
+        showCancelButton: true,
+        confirmButtonText: trans('common.confirm'),
+        cancelButtonText: trans('common.cancel'),
+        padding: '2em',
+        customClass: 'sweet-alerts',
+    }).then((result) => {
+        if (result.value) {
+            form.delete(route('control.pages.hostings.force_delete', row.id), {
+                onSuccess: () => $helpers.toast(trans('common.record') + ' ' + trans('common.deleted')),
+            });
+        }
+    });
+};
+
+// Restore campus with confirmation
+const callRestore = (row) => {
+    Swal.fire({
+        icon: 'warning',
+        title: trans('common.are_you_sure'),
+        text: trans('common.restore_this'),
+        showCancelButton: true,
+        confirmButtonText: trans('common.confirm'),
+        cancelButtonText: trans('common.cancel'),
+        padding: '2em',
+        customClass: 'sweet-alerts',
+    }).then((result) => {
+        if (result.value) {
+            form.post(route('control.pages.hostings.restore', row.id), {
+                onSuccess: () => $helpers.toast(trans('common.record') + ' ' + trans('common.restored')),
+            });
+        }
+    });
+};
+
 
 </script>

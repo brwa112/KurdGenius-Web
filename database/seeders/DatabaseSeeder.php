@@ -34,8 +34,6 @@ class DatabaseSeeder extends Seeder
         $this->createDeveloperUser();
         $this->createTheme($user);
         $this->createSocialLink();
-        Artisan::call('translations:cache');
-        // });
     }
 
     private function createTheme($user): void
@@ -49,22 +47,21 @@ class DatabaseSeeder extends Seeder
             $user->theme()->firstOrCreate($theme);
         }
     }
-    public function createSocialLink()
-    {
+    private function createSocialLinks(){
         $links = [
-            'facebook' => 'https://www.facebook.com/yourpage',
-            'instagram' => 'https://www.instagram.com/yourprofile',
-            'telegram' => 'https://t.me/yourchannel',
-            'email' => 'mailto:info@safedata.com',
+            'facebook' => 'https://www.facebook.com/safedatacompany',
+            'telegram' => 'https://www.instagram.com/safedatacompany?igsh=MThvbmM4Zm80MDJ4eg==',
+            'email' => 'https://linkedin.com/',
+            'instagram' => 'info@safedatait.com',
         ];
-        //social links seeding removed
-        SocialLink::firstOrCreate([
+        SocialLink::create([
             'facebook' => $links['facebook'],
-            'instagram' => $links['instagram'],
             'telegram' => $links['telegram'],
             'email' => $links['email'],
+            'instagram' => $links['instagram'],
         ]);
     }
+
     // user types were removed from the system; seeding not required
 
     private function createTestUser(): User
@@ -95,93 +92,7 @@ class DatabaseSeeder extends Seeder
         $this->createUserSettings($user);
     }
 
-    private function createPermissions(User $user): void
-    {
-        $permissionsData = [
-            [
-                'name' => 'dashboard',
-                'slug' => 'dashboard',
-                'description' => 'Access to the main dashboard',
-            ],
-            [
-                'name' => 'users',
-                'slug' => 'users',
-                'description' => 'Manage users and their permissions',
-            ],
-            [
-                'name' => 'permissions',
-                'slug' => 'permissions',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'group_permissions',
-                'slug' => 'group-permissions',
-                'description' => 'System settings and configurations',
-            ],
-            [
-                'name' => 'languages',
-                'slug' => 'languages',
-            ],
-            [
-                'name' => 'keys',
-                'slug' => 'keys',
-                'description' => 'Custom permissions for specific use cases',
-            ],
-            [
-                'name' => 'translations',
-                'slug' => 'translations',
-                'description' => 'Manage translations for the application',
-            ],
-            [
-                'name' => 'themes',
-                'slug' => 'themes',
-                'description' => 'Manage themes for the application',
-            ],
-            [
-                'name' => 'logs',
-                'slug' => 'logs',
-                'description' => 'View system logs and activities',
-            ],
-            [
-                'name' => 'roles',
-                'slug' => 'roles',
-                'description' => 'Manage roles and their permissions',
-            ],
-            [
-                'name' => 'products',
-                'slug' => 'products',
-                'description' => 'Manage products page settings and content',
-            ],
-            [
-                'name' => 'services',
-                'slug' => 'services',
-                'description' => 'Manage services page settings and content',
-            ],
-            [
-                'name' => 'clients',
-                'slug' => 'clients',
-                'description' => 'Manage clients page settings and content',
-            ],
-            [
-                'name' => 'hostings',
-                'slug' => 'hostings',
-                'description' => 'Manage hostings page settings and content',
-            ],
 
-        ];
-
-        foreach ($permissionsData as $permissionData) {
-            GroupPermission::firstOrCreate(
-                [
-                    'name' => $permissionData['name'],
-                    'slug' => $permissionData['slug'],
-                    'description' => $permissionData['description'] ?? null,
-                    'user_id' => $user->id,
-                ],
-                array_merge($permissionData, ['user_id' => $user->id])
-            );
-        }
-    }
 
     private function createUserSettings(User $user): void
     {

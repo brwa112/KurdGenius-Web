@@ -172,4 +172,6 @@ return [
     'cannot_delete_record' => 'Cannot delete record because it has related data.',
 
     'guest' => 'Guest',
+    'restore_this' => 'Do you want to restore this record?',
+    'restored' => 'Restored!',
 ];

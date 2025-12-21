@@ -89,19 +89,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Icon -->
-                                                    <div class="col-span-full">
-                                                        <label for="icon">
-                                                            {{ $t('pages.icon') }}
-                                                        </label>
-                                                        <input id="icon" type="text" v-model="form.icon"
-                                                            :placeholder="$t('pages.icon')" class="form-input"
-                                                            :class="{ 'border border-red-300 rounded-md': form.errors.icon }" />
-                                                        <div class="mt-1 text-danger" v-if="form.errors.icon"
-                                                            v-html="form.errors.icon">
-                                                        </div>
-                                                    </div>
-
                                                     <div class="col-span-full">
                                                         <label for="logo">
                                                             {{ $t('pages.logo') }}
@@ -138,7 +125,6 @@
         </div>
         <div class="pt-5">
             <div class="panel pb-0">
-
                 <!-- Datatable -->
                 <Datatable :rows="services" :columns="columns" :totalRows="services.data?.length" @change="apply_filter"
                     v-model:search="filters.search" v-model:numberRows="filters.number_rows" :filter="props.filter"
@@ -181,8 +167,9 @@
                         <tippy>{{ $helpers.formatCustomDate(data.value.created_at, true) }}</tippy>
                     </template>
 
-                    <template v-if="$can('edit_services') || $can('delete_services')" #actions="data">
-                        <div class="flex gap-2">
+                    <template v-if="$can('edit_services') || $can('delete_services') || $can('restore_services')"
+                        #actions="data">
+                        <div v-if="data.value.deleted_at == null" class="flex gap-2">
                             <div v-if="$can('edit_services')" class="text-center">
                                 <button type="button" v-tippy @click="toggleModal(data.value)">
                                     <Svg name="pencil" class="size-5"></Svg>
@@ -196,10 +183,24 @@
                                 <tippy>{{ $t('common.delete') }}</tippy>
                             </div>
                         </div>
-                    </template>
 
+                        <!-- Deleted Record Actions -->
+                        <div v-else class="flex gap-2">
+                            <div v-if="$can('delete_services')" class="text-center">
+                                <button type="button" v-tippy @click="callForceDelete(data.value)">
+                                    <Svg name="trash" class="size-5"></Svg>
+                                </button>
+                                <tippy>{{ $t('common.delete') }}</tippy>
+                            </div>
+                            <div v-if="$can('restore_services')" class="text-center">
+                                <button type="button" v-tippy @click="callRestore(data.value)">
+                                    <Svg name="restore" class="size-5 opacity-65"></Svg>
+                                </button>
+                                <tippy>{{ $t('common.restore') }}</tippy>
+                            </div>
+                        </div>
+                    </template>
                 </Datatable>
-                {{ services }}
             </div>
         </div>
     </div>
@@ -259,7 +260,6 @@ let form = useForm({
     id: '',
     name: '',
     description: '',
-    icon: '',
     logo: null,
     remove_logo: false,
     user_id: usePage().props.auth.user.id,
@@ -282,7 +282,8 @@ const save = () => {
     }
 
     if (form?.id) {
-        form.put(route('control.pages.services.update', form), {
+        form.post(route('control.pages.services.update', form.id), {
+            forceFormData: true,
             onSuccess: () => {
                 toggleModal();
                 $helpers.toast(trans('common.record') + ' ' + trans('common.updated'));
@@ -292,20 +293,19 @@ const save = () => {
     }
 
     form.post(route('control.pages.services.store'), {
+        forceFormData: true,
         onSuccess: () => {
             toggleModal();
             $helpers.toast(trans('common.record') + ' ' + trans('common.created'));
         },
     });
 }
-
 const toggleModal = (row) => {
     if (row) {
         form = useForm({
             id: row.id,
             name: row.name,
             description: row.description,
-            icon: row.icon,
             logo: '',
             remove_logo: false,
             user_id: row.user.id,
@@ -322,7 +322,6 @@ const toggleModal = (row) => {
         form = useForm({
             name: '',
             description: '',
-            icon: '',
             logo: null,
             remove_logo: false,
             user_id: usePage().props.auth.user.id,
@@ -362,11 +361,6 @@ const columns =
         {
             field: 'logo',
             title: wTrans('pages.logo'),
-            sort: false,
-        },
-        {
-            field: 'icon',
-            title: wTrans('pages.icon'),
             sort: false,
         },
         {
@@ -410,5 +404,47 @@ const callDelete = (id) => {
         }
     });
 };
+
+
+// Force delete services with confirmation
+const callForceDelete = (row) => {
+    Swal.fire({
+        icon: 'warning',
+        title: trans('common.are_you_sure'),
+        text: trans('common.force_delete_this'),
+        showCancelButton: true,
+        confirmButtonText: trans('common.confirm'),
+        cancelButtonText: trans('common.cancel'),
+        padding: '2em',
+        customClass: 'sweet-alerts',
+    }).then((result) => {
+        if (result.value) {
+            form.delete(route('control.pages.services.force_delete', row.id), {
+                onSuccess: () => $helpers.toast(trans('common.record') + ' ' + trans('common.deleted')),
+            });
+        }
+    });
+};
+
+// Restore campus with confirmation
+const callRestore = (row) => {
+    Swal.fire({
+        icon: 'warning',
+        title: trans('common.are_you_sure'),
+        text: trans('common.restore_this'),
+        showCancelButton: true,
+        confirmButtonText: trans('common.confirm'),
+        cancelButtonText: trans('common.cancel'),
+        padding: '2em',
+        customClass: 'sweet-alerts',
+    }).then((result) => {
+        if (result.value) {
+            form.post(route('control.pages.services.restore', row.id), {
+                onSuccess: () => $helpers.toast(trans('common.record') + ' ' + trans('common.restored')),
+            });
+        }
+    });
+};
+
 
 </script>
