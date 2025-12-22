@@ -1,10 +1,10 @@
 <template>
     <div class="relative mx-auto overflow-hidden z-20">
-        <div class="w-full h-screen flex flex-col items-center justify-end gap-4 text-white px-5 2xl:px-7">
+        <div class="w-full min-h-screen flex flex-col items-center justify-center md:justify-end gap-4 text-white px-5 2xl:px-7 py-8">
             <div class="w-full relative z-10">
                 <div
                     class="relative z-10 text-white flex flex-col items-center gap-12 xs:gap-20 p-12 md:p-16 xl:p-24 2xl:pt-24 2xl:pb-16 2xl:px-28">
-                    <div class="w-full flex items-start justify-between gap-20">
+                    <div class="flex flex-col md:flex-row w-full items-start justify-between gap-4 md:gap-20">
                         <!-- About Section -->
                         <div class="flex flex-col gap-12 xs:gap-20 xl:gap-28">
                             <div v-motion-slide-visible-bottom :duration="300" class="flex flex-col gap-2 xs:gap-4">
@@ -82,10 +82,10 @@
                         </div>
                         <!-- Contact Form Section -->
                         <div v-motion-slide-visible-bottom :duration="300"
-                            class="w-full max-w-md xl:max-w-lg hidden lg:flex flex-col gap-4">
+                            class="w-full max-w-md xl:max-w-lg lg:flex flex-col mt-8 md:mt-0 gap-4">
                             <h2 class="text-2xl xl:text-3xl font-audi">Contact</h2>
                             <form @submit.prevent="save" class="flex flex-col gap-4">
-                                <div class="flex items-center gap-3 xl:gap-8">
+                                <div class="flex flex-col sm:flex-row items-center gap-3 xl:gap-8">
                                     <div class="w-full flex flex-col gap-1">
                                         <input type="email" placeholder="Email" autocomplete="off" v-model="form.email"
                                             class="w-full py-4 px-3 text-sm bg-white/[4%] outline-0 cursor-none border transition-colors duration-300"
