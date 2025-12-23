@@ -46,7 +46,7 @@
             </div>
             <!-- ADD NOTIVUE HERE - Right before the closing div -->
             <Notivue v-slot="item">
-                <Notification :item="item" :theme="notivueTheme"   :icons="outlinedIcons"/>
+                <Notification :item="item" :theme="notivueTheme" />
             </Notivue>
         </div>
     </template>

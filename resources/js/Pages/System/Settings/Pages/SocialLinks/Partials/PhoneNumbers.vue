@@ -16,14 +16,14 @@
                     </div>
                 </div>
                 <button :disabled="phoneForm.processing" type="submit"
-                    class="btn btn-sm h-[38px] flex items-center gap-1"
+                    class="btn btn-sm h-[38px] flex items-center gap-1 mt-0.5"
                     :class="isEditing ? 'btn-success' : 'btn-primary'">
                     <Spinner v-if="phoneForm.processing" class="size-4" />
                     <Svg v-else :name="isEditing ? 'check' : 'plus'" class="size-4"></Svg>
                     <span>{{ isEditing ? $t('common.edit') : $t('common.save') }}</span>
                 </button>
                 <button v-if="isEditing" type="button" @click="cancelEdit"
-                    class="btn btn-dark btn-sm h-[38px] flex items-center justify-center" v-tippy="$t('common.cancel')">
+                    class="btn btn-dark btn-sm h-[38px] flex items-center justify-center mt-0.5" v-tippy="$t('common.cancel')">
                     <Svg name="close" class="size-4"></Svg>
                 </button>
             </form>

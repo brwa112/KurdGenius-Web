@@ -246,7 +246,7 @@ let form = useForm({
 const save = () => {
 
     if (form?.id) {
-        form.put(route('control.pages.hostings.update', form), {
+        form.post(route('control.pages.hostings.update', form), {
             onSuccess: () => {
                 toggleModal();
                 $helpers.toast(trans('common.record') + ' ' + trans('common.updated'));
