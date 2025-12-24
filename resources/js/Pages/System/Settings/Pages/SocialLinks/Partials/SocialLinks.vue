@@ -15,7 +15,7 @@
                 <div class="mt-1 text-sm text-danger" v-if="form.errors['facebook']" v-html="form.errors['facebook']">
                 </div>
             </div>
-            
+
             <div>
                 <label>{{ $t('system.instagram') }}</label>
                 <input v-model="form.instagram" type="text" class="form-input" />
@@ -27,6 +27,13 @@
                 <label>{{ $t('system.telegram') }}</label>
                 <input v-model="form.telegram" type="text" class="form-input" />
                 <div class="mt-1 text-sm text-danger" v-if="form.errors['telegram']" v-html="form.errors['telegram']">
+                </div>
+            </div>
+
+            <div>
+                <label>{{ $t('system.whatsapp') }}</label>
+                <input v-model="form.whatsapp" type="text" class="form-input" />
+                <div class="mt-1 text-sm text-danger" v-if="form.errors['whatsapp']" v-html="form.errors['whatsapp']">
                 </div>
             </div>
 

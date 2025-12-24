@@ -78,6 +78,7 @@ const linksForm = useForm({
     facebook: props.links?.facebook || '',
     instagram: props.links?.instagram || '',
     telegram: props.links?.telegram || '',
+    whatsapp: props.links?.whatsapp || '',
     email: props.links?.email || '',
 });
 

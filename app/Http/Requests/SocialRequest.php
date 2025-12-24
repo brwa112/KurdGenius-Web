@@ -25,6 +25,7 @@ class SocialRequest extends FormRequest
             'facebook'  => 'required|url|max:255',
             'instagram' => 'required|url|max:1024',
             'telegram'  => 'nullable|url|max:255',
+            'whatsapp'  => 'nullable|max:255',
             'email'     => 'email|max:255',
         ];
     }

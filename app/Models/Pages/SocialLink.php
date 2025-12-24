@@ -17,6 +17,7 @@ class SocialLink extends Model
         'facebook',
         'instagram',
         'telegram',
+        'whatsapp',
         'email',
     ];
 
