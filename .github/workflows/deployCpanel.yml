@@ -27,17 +27,18 @@ jobs:
     - name: 🔧 Test if API endpoint exists
       run: |
         echo "Testing if the API endpoint is accessible..."
-        curl -X GET http://safedatait.com/api/deploy/migrate -I
+        curl -X GET https://safedatait.com/api/deploy/migrate -I -L
 
     - name: 🔧 Run Migrations via HTTP
       run: |
         echo "Running migrations..."
-        response=$(curl -X POST http://safedatait.com/api/deploy/migrate \
-          -H "X-Deploy-Token: 7k9mP2vL8nQ4wR6xT3yU1zB5cD0eF7gH9jK2mN4pQ6sT8vW0xY3zA5bC7dE9fG1h" \
+        response=$(curl -X POST https://safedatait.com/api/deploy/migrate \
+          -H "X-Deploy-Token: ${{ secrets.DEPLOY_TOKEN }}" \
           -w "\n%{http_code}" \
           --max-time 300 \
           --retry 3 \
           --retry-delay 5 \
+          -L \
           -s)
         
         http_code=$(echo "$response" | tail -n1)
