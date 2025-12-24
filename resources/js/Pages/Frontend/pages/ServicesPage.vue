@@ -20,6 +20,7 @@
                             <p class="text-white block text-xs 2xl:text-sm font-light text-justify leading-tight">
                                 {{ service.description }}
                             </p>
+                            
                         </div>
                     </div>
                     <div class="absolute inset-0 -z-10 size-full backdrop-blur-xl bg-white/[4%]"></div>
