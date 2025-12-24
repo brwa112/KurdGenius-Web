@@ -1,4 +1,4 @@
-name: FTP Deploy to cPanel
+name: Deploy to cPanel
 
 on:
   push:
@@ -6,34 +6,48 @@ on:
       - master
 
 jobs:
-  ftp-deploy:
-    name: Upload via FTP
+  deploy:
+    name: Deploy and Migrate
     runs-on: ubuntu-latest
 
     steps:
     - name: ⬇ Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Deploy to FTP
+    - name: 📦 Deploy to FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: 192.250.229.30
         username: ftpgithub@safedatait.com
         password: fXIV}m2Ws&Z0ofbI
+        server-dir: /public_html/
 
-    # - name: � Clear Cache
-    #   run: |
-    #     curl -X POST http://192.250.229.30/api/deploy/cache-clear \
-    #       -H "Host: safedatait.com" \
-    #       -H "X-Deploy-Token: 7k9mP2vL8nQ4wR6xT3yU1zB5cD0eF7gH9jK2mN4pQ6sT8vW0xY3zA5bC7dE9fG1h" \
-    #       --max-time 60 \
-    #       --fail-with-body
+    - name: ⏳ Wait for files to sync
+      run: sleep 15
 
-    - name: �🔧 Run Migrations
+    - name: 🔧 Run Migrations via HTTP
       run: |
-        curl -X POST http://192.250.229.30/api/deploy/migrate \
-          -H "Host: 192.250.229.30" \
+        response=$(curl -X POST http://192.250.229.30/api/deploy/migrate \
+          -H "Host: safedatait.com" \
           -H "X-Deploy-Token: 7k9mP2vL8nQ4wR6xT3yU1zB5cD0eF7gH9jK2mN4pQ6sT8vW0xY3zA5bC7dE9fG1h" \
+          -w "\n%{http_code}" \
           --max-time 300 \
-          --fail-with-body
+          --retry 3 \
+          --retry-delay 5 \
+          -v)
+        
+        http_code=$(echo "$response" | tail -n1)
+        body=$(echo "$response" | sed '$d')
+        
+        echo "Response Body: $body"
+        echo "HTTP Code: $http_code"
+        
+        if [ "$http_code" = "200" ]; then
+          echo "✅ Migration completed successfully"
+        else
+          echo "❌ Migration failed with HTTP code $http_code"
+          exit 1
+        fi
 
+    - name: 🎉 Deployment Complete
+      run: echo "Deployment and migration completed successfully!"
