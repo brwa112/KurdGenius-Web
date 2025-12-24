@@ -26,7 +26,7 @@ jobs:
       with:
         host: 192.250.229.30
         username: id_rsa
-        password: YKb},YS+f1WwuNg$
+        key: YKb},YS+f1WwuNg$
         port: 22
         script: |
           cd /home/safedata/public_html
