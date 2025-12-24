@@ -27,3 +27,4 @@ jobs:
           -H "X-Deploy-Token: ${{ secrets.DEPLOY_TOKEN }}" \
           --max-time 300 \
           --fail-with-body
+
