@@ -21,7 +21,15 @@ jobs:
         username: ftpgithub@safedatait.com
         password: fXIV}m2Ws&Z0ofbI
 
-    - name: 🔧 Run Migrations
+    - name: � Clear Cache
+      run: |
+        curl -X POST http://192.250.229.30/api/deploy/cache-clear \
+          -H "Host: safedatait.com" \
+          -H "X-Deploy-Token: ${{ secrets.DEPLOY_TOKEN }}" \
+          --max-time 60 \
+          --fail-with-body
+
+    - name: �🔧 Run Migrations
       run: |
         curl -X POST http://192.250.229.30/api/deploy/migrate \
           -H "Host: safedatait.com" \

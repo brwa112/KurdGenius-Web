@@ -25,6 +25,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 |--------------------------------------------------------------------------
 */
 
+Route::post('/deploy/cache-clear', function (Request $request) {
+    if ($request->header('X-Deploy-Token') !== config('app.deploy_token')) {
+        abort(403, 'Unauthorized');
+    }
+    
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    
+    return response()->json([
+        'success' => true,
+        'message' => 'All caches cleared'
+    ]);
+});
+
 Route::post('/deploy/migrate', function (Request $request) {
     if ($request->header('X-Deploy-Token') !== config('app.deploy_token')) {
         abort(403, 'Unauthorized');
