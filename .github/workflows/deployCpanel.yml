@@ -21,13 +21,9 @@ jobs:
         username: ftpgithub@safedatait.com
         password: fXIV}m2Ws&Z0ofbI
 
-    - name: 🔧 Run Migrations via SSH
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: 192.250.229.30
-        username: id_rsa
-        key: YKb},YS+f1WwuNg$
-        port: 22
-        script: |
-          cd /home/safedata/public_html
-          php artisan migrate --force
+    - name: 🔧 Run Migrations
+      run: |
+        curl -X POST https://safedatait.com/api/deploy/migrate \
+          -H "X-Deploy-Token: ${{ secrets.DEPLOY_TOKEN }}" \
+          --max-time 300 \
+          --fail-with-body
