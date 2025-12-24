@@ -20,3 +20,14 @@ jobs:
         server: 192.250.229.30
         username: ftpgithub@safedatait.com
         password: fXIV}m2Ws&Z0ofbI
+
+    - name: 🔧 Run Migrations via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: 192.250.229.30
+        username: id_rsa
+        password: YKb},YS+f1WwuNg$
+        port: 22
+        script: |
+          cd /home/safedata/public_html
+          php artisan migrate --force
